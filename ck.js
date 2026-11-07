@@ -55,7 +55,8 @@
 
   // the painter: a pencil sketch that fills with watercolour. data-painter="a.jpg|a_sketch.jpg|caption; b.jpg|…"
   function painter(host) {
-    const items = host.dataset.painter.split(';').map(s => { const [c, k, cap] = s.trim().split('|'); return { c, k, cap }; });
+    const items = host.dataset.painter.split(';').map(s => { const [c, k, cap, o] = s.trim().split('|'); return { c, k, cap, o: o ? o.split(',').map(Number) : null }; });
+    const LIGHT = host.dataset.mode === 'light';   // light mode: a dark painting lit from a lamp outward (Roshni), soft glow instead of brush
     const cv = document.createElement('canvas'), g = cv.getContext('2d'); host.prepend(cv);
     const mask = document.createElement('canvas'), mg = mask.getContext('2d'), tmp = document.createElement('canvas'), tg = tmp.getContext('2d');
     const capEl = (host.closest('figure, .frame') || host).querySelector('[data-cap]');
@@ -64,7 +65,9 @@
     function size() { dpr = Math.min(devicePixelRatio || 1, 2); W = host.clientWidth; H = host.clientHeight; for (const c of [cv, tmp]) { c.width = W * dpr; c.height = H * dpr; } mask.width = Math.ceil(W / 2); mask.height = Math.ceil(H / 2); mg.clearRect(0, 0, mask.width, mask.height); cover = 0; }
     function fit(ctx, im) { const s = Math.max(W / im.width, H / im.height), w = im.width * s, h = im.height * s; ctx.drawImage(im, (W - w) / 2, (H - h) / 2, w, h); }
     function blob(x, y, r) {   // a watercolour dab: an uneven edge, soft inside, a little bloom at the rim
-      const k = .5, n = 14, ph = Math.random() * 6.3; mg.save(); mg.translate(x * k, y * k); mg.beginPath();
+      const k = .5, n = 14, ph = Math.random() * 6.3; mg.save(); mg.translate(x * k, y * k);
+      if (LIGHT) { const gl = mg.createRadialGradient(0, 0, 0, 0, 0, r * k); gl.addColorStop(0, 'rgba(0,0,0,.55)'); gl.addColorStop(.6, 'rgba(0,0,0,.25)'); gl.addColorStop(1, 'rgba(0,0,0,0)'); mg.fillStyle = gl; mg.fillRect(-r * k, -r * k, r * k * 2, r * k * 2); mg.restore(); cover += r * r * .4 / (W * H) * 3.1; return; }
+      mg.beginPath();
       for (let i = 0; i <= n; i++) { const a = i / n * 6.283, rr = r * k * (.78 + .22 * Math.sin(a * 3 + ph) + .12 * Math.random()); i ? mg.lineTo(Math.cos(a) * rr, Math.sin(a) * rr) : mg.moveTo(rr, 0); }
       const gr = mg.createRadialGradient(0, 0, 0, 0, 0, r * k); gr.addColorStop(0, 'rgba(0,0,0,.55)'); gr.addColorStop(.75, 'rgba(0,0,0,.4)'); gr.addColorStop(1, 'rgba(0,0,0,0)');
       mg.fillStyle = gr; mg.fill(); mg.restore(); cover += r * r * .55 / (W * H) * 3.1;
@@ -76,6 +79,14 @@
       tg.globalCompositeOperation = 'destination-in'; tg.drawImage(mask, 0, 0, W, H);
       g.drawImage(tmp, 0, 0, W, H, 0, 0, W, H);
       if (fade < 1) { g.globalAlpha = 1 - fade; g.fillStyle = '#f5ecdd'; g.fillRect(0, 0, W, H); fade = Math.min(1, fade + .04); }
+    }
+    function spread(dur, o) {   // light mode: from the lamp, the light reaches further and further, a little unevenly, like flames catching
+      const t0 = performance.now(), ox = o[0] * W, oy = o[1] * H, R = Math.hypot(W, H) * 1.05;
+      return new Promise(done => { (function f(t) {
+        const u = Math.min(1, (t - t0) / dur), reach = R * (1 - Math.pow(1 - u, 2.2));
+        for (let i = 0; i < 7; i++) { const a = Math.random() * 6.283, d = reach * Math.sqrt(Math.random()); blob(ox + Math.cos(a) * d, oy + Math.sin(a) * d * .8, Math.max(W, H) * (.05 + .07 * Math.random())); }
+        blob(ox, oy, Math.max(W, H) * .12 * (u + .2)); draw(); u < 1 ? requestAnimationFrame(f) : done();
+      })(t0); });
     }
     function stroke(dur) {   // the brush crosses the paper in loose diagonal sweeps
       const t0 = performance.now(), rows = 7, base = Math.max(W, H) * .11;
@@ -101,11 +112,12 @@
         if (capEl) capEl.textContent = items[idx].cap || '';
         mg.clearRect(0, 0, mask.width, mask.height); cover = 0; fade = 0; user = 0;
         for (let i = 0; i < 20; i++) { draw(); await frame(); }
-        if (touch || still) { await wait(900); await stroke(still ? 1 : 4200); }
+        const go = d => LIGHT ? spread(d, items[idx].o || [.5, .75]) : stroke(d);
+        if (touch || still) { await wait(900); await go(still ? 1 : 4200); }
         else {
           const t0 = performance.now(); while (!user && performance.now() - t0 < 3500) await wait(100);   // a few seconds for them to start
           if (user) { while (painted() < .7 && performance.now() - lastMove < 2600) await wait(150); }   // they paint; we wait while they do
-          else await stroke(4200);
+          else await go(4200);
         }
         await settle(); host.classList.toggle('painted', true);
         await wait(user ? 3200 : 4200); host.classList.toggle('painted', false);
