@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kitne Rang · Chitrakissa</title>
+<meta name="description" content="Kitne Rang: a painted film of every mood of the one you love, each mood a petal of a flower that opens on them, laughing. Watch Riya's film. Coming soon from Chitrakissa.">
+<meta property="og:title" content="Kitne Rang · every mood of the one you love, painted">
+<meta property="og:description" content="Watch Riya's film, then tell us who you'd make one for.">
+<meta property="og:image" content="media/moods/centre.jpg">
+<meta name="theme-color" content="#f5ecdd">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Mukta:wght@300;400;500;700&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="ck.css">
+<style>
+/* Films: Kitne Rang. The film first, then its story, the moods as a gallery, when to give it, and how we'd make it (asked, not assumed). */
+.player { position: relative; width: min(380px, 88%); margin: 0 auto; border-radius: 34px; padding: 11px; background: #0d0a12; box-shadow: 0 50px 90px -40px rgba(20, 10, 5, .8); }
+.player video { width: 100%; aspect-ratio: 9 / 16; border-radius: 24px; background: #000; object-fit: cover; }
+.player .play { position: absolute; inset: 11px; border-radius: 24px; border: 0; cursor: pointer; display: grid; place-items: center; background: linear-gradient(transparent 55%, rgba(0, 0, 0, .55)); }
+.player .play span { width: 84px; height: 84px; border-radius: 50%; background: rgba(251, 242, 226, .94); display: grid; place-items: center; box-shadow: 0 10px 40px rgba(0, 0, 0, .4); transition: transform .3s var(--ease); }
+.player .play:hover span { transform: scale(1.08); }
+.player .play span::before { content: ''; border-left: 24px solid var(--kumkum); border-top: 15px solid transparent; border-bottom: 15px solid transparent; margin-left: 6px; }
+.player .play em { position: absolute; bottom: 26px; left: 0; right: 0; text-align: center; color: var(--cream); font: italic 18px var(--display); }
+.player .play[hidden] { display: none; }
+.hero-title .deva { display: block; font-size: .4em; color: var(--gold); margin-bottom: .25em; line-height: 1.2; }
+
+.moods { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(14px, 2vw, 26px); }
+.mood { margin: 0; }
+.mood .im { overflow: hidden; border-radius: 2px; background: var(--paper-3); aspect-ratio: 2 / 3; box-shadow: 0 24px 40px -30px rgba(60, 35, 20, .6); }
+.mood img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.4s var(--ease); }
+.mood:hover img { transform: scale(1.05); }
+.mood figcaption { margin-top: 12px; }
+.mood b { display: block; font: 500 24px/1.1 var(--display); }
+.mood span { font: italic 15.5px/1.35 var(--display); color: var(--ink-3); }
+.mood.centre { grid-column: span 2; grid-row: span 2; }
+.mood.centre .im { aspect-ratio: auto; height: calc(100% - 70px); }
+.mood.centre b { color: var(--kumkum); font-size: 30px; }
+.mood:nth-child(4n+2) { transform: translateY(30px); }
+@media (max-width: 900px) { .moods { grid-template-columns: repeat(2, 1fr); } .mood.centre { grid-column: span 2; grid-row: auto; } .mood.centre .im { aspect-ratio: 2 / 3; height: auto; } .mood:nth-child(4n+2) { transform: none; } }
+.recipe { counter-reset: r; display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(26px, 4vw, 54px); }
+.recipe div { border-top: 1px solid rgba(251, 242, 226, .18); padding-top: 24px; }
+.recipe div::before { counter-increment: r; content: counter(r, lower-roman) '.'; font: italic 46px/1 var(--display); color: #f3b94d; display: block; margin-bottom: 14px; }
+.recipe b { display: block; font: 500 26px/1.15 var(--display); color: var(--cream); margin-bottom: 10px; }
+.recipe span { color: #cbbca3; font-size: 16.5px; }
+@media (max-width: 860px) { .recipe { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<header class="nav"><div class="wrap">
+  <a class="mark" href="./"><i>चि</i>Chitrakissa</a>
+  <button class="menu" aria-label="Menu" aria-expanded="false"><span></span><span></span></button>
+  <nav><a href="diwali.html">Diwali</a><a href="comics.html">Comics</a><a href="gifts.html">Gifts</a><a href="films.html" aria-current="page">Films</a><a class="pill" href="diwali.html#roshni">Make a free Diwali film</a></nav>
+</div></header>
+
+<section class="page-hero" data-petals="14"><div class="wrap grid">
+  <div>
+    <span class="kicker c rv">A painted film for the one you love · coming soon</span>
+    <h1 class="display-xl lines hero-title"><span class="deva"><span>कितने रंग</span></span><span><span>Every mood</span></span><span><span>of the one</span></span><span><span>you <em>love.</em></span></span></h1>
+    <p class="lede rv d1">The sulk that lasts exactly four minutes. The face they make when the food arrives. The way they fall asleep mid-sentence. Kitne Rang paints each of their moods as one petal of a flower, and lets the flower open on them, laughing.</p>
+    <div class="meta rv d2"><span class="tag soon">Coming soon</span><span class="tag">About 90 seconds</span><a class="link" href="#tell">Tell us who you'd make one for ↓</a></div>
+  </div>
+  <div class="rv d1">
+    <div class="player">
+      <video id="film" src="media/riya.mp4" poster="media/moods/centre.jpg" playsinline preload="none" controls></video>
+      <button class="play" id="play" type="button" aria-label="Play Riya's film with sound"><span></span><em>Riya ke kitne rang · with sound</em></button>
+    </div>
+    <p class="cap" style="text-align:center">A sample film for Riya, a fictional character, from Kabir</p>
+  </div>
+</div></section>
+
+<section class="pad band"><div class="wrap two">
+  <div class="sticky"><span class="kicker c">The story behind it</span><h2 class="display-l" style="margin-top:20px">To say <em>"I see all of you."</em></h2></div>
+  <div>
+    <p class="body-l dropcap rv">Kitne Rang began as a surprise for someone very dear. Everyone who loves her knows her moods by heart, and loves every one of them, even the ones she would rather we forgot. So we painted them, one by one.</p>
+    <p class="body-l rv">Each mood became a petal. The petals bloom one after another, a little story in each, and the flower turns until it opens on her at the centre. The film was made to make her feel special, to say what is hard to say out loud: I have noticed every side of you, and I adore all of it.</p>
+    <p class="body-l rv">It turned out too lovely to make only once. So we are making it a film anyone can give.</p>
+    <p class="pull rv" style="margin-top:44px">"So many moods, and that is what makes you adorable."</p>
+  </div>
+</div></section>
+
+<section class="pad"><div class="wrap">
+  <span class="kicker c">Riya's moods</span>
+  <h2 class="display-l" style="margin:20px 0 50px;max-width:16ch">Eleven moods, <em>one person.</em></h2>
+  <div class="moods">
+    <figure class="mood centre rv"><div class="im"><img src="media/moods/centre.jpg" alt="Riya laughing, surrounded by shopping bags, her laptop and falling petals" loading="lazy"></div><figcaption><b>…and at the centre, Riya</b><span>every mood at once, laughing</span></figcaption></figure>
+    <figure class="mood rv"><div class="im"><img src="media/moods/m01.jpg" alt="Riya laughing and pointing teasingly" loading="lazy"></div><figcaption><b>Natkhat</b><span>the one who starts it, and denies it</span></figcaption></figure>
+    <figure class="mood rv d1"><div class="im"><img src="media/moods/m02.jpg" alt="Riya with arms crossed, refusing a flower" loading="lazy"></div><figcaption><b>Gussa</b><span>a flower will not fix this. Two might.</span></figcaption></figure>
+    <figure class="mood rv"><div class="im"><img src="media/moods/m03.jpg" alt="Riya on the sofa, ignoring her phone" loading="lazy"></div><figcaption><b>Farak nahi padta</b><span>seen at 9:14. Reply pending.</span></figcaption></figure>
+    <figure class="mood rv d1"><div class="im"><img src="media/moods/m04.jpg" alt="Riya in a warm hug" loading="lazy"></div><figcaption><b>Pyaar</b><span>the hug that ends every argument</span></figcaption></figure>
+    <figure class="mood rv"><div class="im"><img src="media/moods/m05.jpg" alt="Riya resting her head on a shoulder at sunset" loading="lazy"></div><figcaption><b>Emotional</b><span>one sunset, and the tears arrive</span></figcaption></figure>
+    <figure class="mood rv d1"><div class="im"><img src="media/moods/m06.jpg" alt="Riya with arms wide in the mountains" loading="lazy"></div><figcaption><b>Ghumakkad</b><span>already planning the next trip</span></figcaption></figure>
+    <figure class="mood rv d2"><div class="im"><img src="media/moods/m07.jpg" alt="Riya eating happily from a plate" loading="lazy"></div><figcaption><b>Foodie</b><span>"I'm not hungry." Eats half of yours.</span></figcaption></figure>
+    <figure class="mood rv d3"><div class="im"><img src="media/moods/m08.jpg" alt="Riya in a dramatic pose" loading="lazy"></div><figcaption><b>Drama queen</b><span>every story deserves a performance</span></figcaption></figure>
+    <figure class="mood rv"><div class="im"><img src="media/moods/m09.jpg" alt="Riya fast asleep" loading="lazy"></div><figcaption><b>Neend ki rani</b><span>five more minutes, every morning</span></figcaption></figure>
+    <figure class="mood rv d1"><div class="im"><img src="media/moods/m10.jpg" alt="Riya presenting confidently at work" loading="lazy"></div><figcaption><b>Boss lady</b><span>runs the meeting, owns the room</span></figcaption></figure>
+    <figure class="mood rv d2"><div class="im"><img src="media/moods/m11.jpg" alt="Riya taking a selfie" loading="lazy"></div><figcaption><b>Insta ki queen</b><span>forty takes, one perfect selfie</span></figcaption></figure>
+  </div>
+</div></section>
+
+<section class="night pad"><div class="wrap">
+  <span class="kicker">What it would be</span>
+  <h2 class="display-l" style="margin:20px 0 54px;max-width:18ch">Their moods, your words, <em>their film.</em></h2>
+  <div class="recipe">
+    <div class="rv"><b>You pick the moods</b><span>Six to eleven of the moods everyone knows them by, in your own words: "the 4 p.m. chai mood", "the one who cries at every wedding".</span></div>
+    <div class="rv d1"><b>We paint them</b><span>Each mood as one painting in warm watercolour, set as a petal, blooming one by one to music.</span></div>
+    <div class="rv d2"><b>The flower opens</b><span>It ends on them at the centre, with the line you write and your name. About 90 seconds, made to be sent at midnight.</span></div>
+  </div>
+  <h3 style="font:500 13px/1 var(--body);letter-spacing:.26em;text-transform:uppercase;color:#f3b94d;margin:70px 0 18px">When to give it</h3>
+  <div class="occasions" style="border-color:rgba(251,242,226,.14)">
+    <div class="rv"><i>12:00 a.m.</i><b style="color:var(--cream)">Their birthday</b><span style="color:#cbbca3">A film all about them, with every mood they'd pretend to deny.</span></div>
+    <div class="rv d1"><i>another year</i><b style="color:var(--cream)">Your anniversary</b><span style="color:#cbbca3">All the moods you've loved through, in one film.</span></div>
+    <div class="rv d2"><i>for her, for him</i><b style="color:var(--cream)">A best friend</b><span style="color:#cbbca3">The friend who's seen every mood, and stayed anyway.</span></div>
+    <div class="rv"><i>for Didi</i><b style="color:var(--cream)">A sister, a brother</b><span style="color:#cbbca3">Rakhi, a birthday, the day they move away.</span></div>
+    <div class="rv d1"><i>for Maa</i><b style="color:var(--cream)">A mother, a daughter</b><span style="color:#cbbca3">Every side of the person who raised you, or the one you're raising.</span></div>
+    <div class="rv d2"><i>the last day</i><b style="color:var(--cream)">A farewell</b><span style="color:#cbbca3">For a colleague or a friend moving cities: what you'll miss, painted.</span></div>
+  </div>
+</div></section>
+
+<section class="pad band" id="tell"><div class="wrap two">
+  <div class="sticky"><span class="kicker c">Shape it with us</span><h2 class="display-l" style="margin:20px 0 24px">Who would you make <em>one for?</em></h2>
+    <p class="body-l">Kitne Rang isn't open for orders yet. Your answers decide how we make it, and who it's for first. Leave your handle and we'll tell you the day it opens.</p></div>
+  <form class="ask" data-voice="films" data-thanks="Thank you. We'll make it with your answers in mind, and if you left your handle, you'll hear first.">
+    <div class="q"><p>Who would you make one for?</p><div class="chips" data-q="for_whom">
+      <button type="button" class="chip" aria-pressed="false" data-v="partner">My partner</button><button type="button" class="chip" aria-pressed="false" data-v="best_friend">My best friend</button><button type="button" class="chip" aria-pressed="false" data-v="sister">My sister</button><button type="button" class="chip" aria-pressed="false" data-v="brother">My brother</button><button type="button" class="chip" aria-pressed="false" data-v="mother">My mother</button><button type="button" class="chip" aria-pressed="false" data-v="father">My father</button><button type="button" class="chip" aria-pressed="false" data-v="daughter">My daughter</button></div></div>
+    <div class="q"><p>How should their moods be painted? <small>one answer</small></p><div class="chips" data-q="made_from" data-one>
+      <button type="button" class="chip" aria-pressed="false" data-v="my_photos">From photos I already have of each mood</button><button type="button" class="chip" aria-pressed="false" data-v="painted_from_words">Painted only from my words, no photos</button><button type="button" class="chip" aria-pressed="false" data-v="either">Either is fine</button></div></div>
+    <div class="q"><p>For which moment?</p><div class="chips" data-q="occasion">
+      <button type="button" class="chip" aria-pressed="false" data-v="birthday">Birthday</button><button type="button" class="chip" aria-pressed="false" data-v="anniversary">Anniversary</button><button type="button" class="chip" aria-pressed="false" data-v="valentines">Valentine's</button><button type="button" class="chip" aria-pressed="false" data-v="farewell">A farewell</button><button type="button" class="chip" aria-pressed="false" data-v="just_because">Just because</button></div></div>
+    <div class="q"><p>What would it be worth to you? <small>one answer</small></p><div class="chips" data-q="price" data-one>
+      <button type="button" class="chip" aria-pressed="false" data-v="free_only">Only if free</button><button type="button" class="chip" aria-pressed="false" data-v="99">₹99</button><button type="button" class="chip" aria-pressed="false" data-v="299">₹299</button><button type="button" class="chip" aria-pressed="false" data-v="799">₹799</button><button type="button" class="chip" aria-pressed="false" data-v="1999">₹1,999</button></div></div>
+    <div class="q" style="border-bottom:0"><p>Their moods, in your words?</p><textarea class="field" name="note" maxlength="400" placeholder="Sleeps through alarms, cries at every movie, the best biryani in Pune… (optional)"></textarea>
+      <input class="field" name="ig" maxlength="40" placeholder="@your Instagram, to hear the day it opens (optional)" style="margin-top:10px" autocapitalize="off"></div>
+    <div class="send"><button class="btn red" type="submit">Send <span class="ar">→</span></button><span class="ok" role="status"></span></div>
+  </form>
+</div></section>
+
+<section class="pad-s"><div class="wrap">
+  <span class="kicker c">More from Chitrakissa</span>
+  <div class="more" style="margin-top:30px">
+    <a href="diwali.html"><div class="im"><img src="media/f_west.jpg" alt="A family together at their painted doorway on Diwali" loading="lazy"></div><b>Roshni</b><span>A free Diwali greeting film</span></a>
+    <a href="gifts.html"><div class="im"><img src="media/gift_stars.jpg" alt="Two stars in orbit over a night lake" loading="lazy"></div><b>Gifts that move</b><span>A rose, two stars · make one today</span></a>
+    <a href="comics.html"><div class="im"><img src="media/comic/b_mysuru.jpg" alt="A painted comic page" loading="lazy"></div><b>Your story, as a comic</b><span>Coming soon · read a sample</span></a>
+  </div>
+</div></section>
+
+<footer class="foot"><div class="wrap">
+  <div class="sig">चित्रकिस्सा<span>a picture, a story</span></div>
+  <div class="cols">
+    <a href="./">Home</a><a href="diwali.html">Diwali films</a><a href="comics.html">Comics</a><a href="gifts.html">Gifts</a><a href="films.html">Films</a>
+    <a href="privacy.html">Privacy promise</a><a href="https://instagram.com/chitrakissa">Instagram @chitrakissa</a>
+    <span class="r">© <span data-year>2026</span> Chitrakissa</span>
+  </div>
+</div></footer>
+<script src="ck.js"></script>
+<script>
+const film = document.getElementById('film'), play = document.getElementById('play');
+play.onclick = () => { play.hidden = true; film.muted = false; film.play().catch(() => {}); };
+film.addEventListener('play', () => play.hidden = true);
+</script>
+</body>
+</html>

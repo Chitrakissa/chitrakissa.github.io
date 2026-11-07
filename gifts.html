@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Gifts · Ek diya, a rose, two stars · Chitrakissa</title>
+<meta name="description" content="A rose written in mathematics that never wilts, and two stars that find each other under the real sky of the night you met. Gifts that open like a letter on any phone. Make one in two minutes.">
+<meta property="og:title" content="Gifts that move · Chitrakissa">
+<meta property="og:description" content="A rose that never wilts. Two stars under the sky of the night you met. Make one in two minutes.">
+<meta property="og:image" content="media/gift_rose.jpg">
+<meta name="theme-color" content="#f5ecdd">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Mukta:wght@300;400;500;700&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="ck.css">
+<style>
+/* Gifts: two pieces, each told like a feature in a magazine: the story behind it, what it is, when to give it, and a way to make one now. */
+.gift { padding: clamp(80px, 10vw, 140px) 0; }
+.gift.night { overflow: hidden; }
+.gift .title { display: grid; grid-template-columns: auto 1fr; gap: 0 28px; align-items: end; margin-bottom: clamp(44px, 6vw, 80px); }
+.gift .title .no { font: italic 400 clamp(90px, 13vw, 190px)/.75 var(--display); color: var(--paper-3); grid-row: span 2; }
+.night .title .no { color: rgba(251, 242, 226, .1); }
+.gift .title h2 { font-size: clamp(42px, 6.6vw, 96px); line-height: .95; }
+.screen { width: min(340px, 86%); margin: 0 auto; border-radius: 34px; padding: 11px; background: #0d0a12; box-shadow: 0 50px 90px -40px rgba(20, 10, 5, .8), 0 0 0 1px rgba(255, 255, 255, .06); }
+.screen video { width: 100%; aspect-ratio: 9 / 16; border-radius: 24px; object-fit: cover; background: #000; }
+.screen-cap { text-align: center; font: italic 16px var(--display); color: var(--ink-3); margin-top: 16px; }
+.night .screen-cap { color: #b9a98f; }
+.what { list-style: none; margin: 30px 0 0; padding: 0; counter-reset: w; }
+.what li { padding: 18px 0 18px 54px; border-top: 1px solid var(--line); position: relative; color: var(--ink-2); font-size: 17px; }
+.what li::before { counter-increment: w; content: counter(w, lower-roman) '.'; position: absolute; left: 0; top: 16px; font: italic 22px var(--display); color: var(--gold); }
+.what li b { color: var(--ink); font-weight: 500; }
+.night .what li { border-color: rgba(251, 242, 226, .12); color: #d8c9b0; } .night .what li b { color: var(--cream); }
+.verse { margin: 34px 0 0; padding: 26px 0 0; border-top: 1px solid var(--line); }
+.verse .deva { font-size: 24px; line-height: 1.7; color: var(--ink); white-space: pre-line; }
+.verse .tr { font: italic 18px/1.5 var(--display); color: var(--ink-2); margin-top: 8px; white-space: pre-line; }
+.verse .by { font-size: 13px; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-3); margin-top: 12px; }
+h3.sec { font: 500 13px/1 var(--body); letter-spacing: .26em; text-transform: uppercase; color: var(--kumkum); margin: 56px 0 18px; }
+.night h3.sec { color: #f3b94d; }
+.maker { margin-top: clamp(60px, 8vw, 100px); display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(30px, 5vw, 70px); align-items: start; }
+.maker .ask label { display: block; font: 500 20px var(--display); margin: 18px 0 8px; }
+.maker .ask label:first-child { margin-top: 0; }
+.maker .ask label small { font: 400 14px var(--body); color: var(--ink-3); margin-left: 6px; }
+.result { margin-top: 24px; padding: 20px; border: 1px dashed var(--line-2); border-radius: 4px; display: none; }
+.result.on { display: block; }
+.result code { display: block; font: 13px/1.5 ui-monospace, Menlo, monospace; color: var(--ink-2); word-break: break-all; max-height: 4.6em; overflow: hidden; }
+.result .row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+.result .row .btn { padding: 13px 20px; font-size: 15px; }
+@media (max-width: 900px) { .maker { grid-template-columns: 1fr; } }
+.stars-bg { position: absolute; inset: 0; pointer-events: none; opacity: .7;
+  background-image: radial-gradient(1px 1px at 12% 18%, #fff, transparent), radial-gradient(1px 1px at 72% 12%, #fff, transparent), radial-gradient(1.5px 1.5px at 40% 30%, #ffe9c4, transparent),
+  radial-gradient(1px 1px at 88% 44%, #fff, transparent), radial-gradient(1px 1px at 20% 70%, #fff, transparent), radial-gradient(1.5px 1.5px at 62% 82%, #ffe9c4, transparent),
+  radial-gradient(1px 1px at 92% 88%, #fff, transparent), radial-gradient(1px 1px at 6% 92%, #fff, transparent), radial-gradient(1px 1px at 52% 6%, #fff, transparent), radial-gradient(1px 1px at 30% 50%, #fff, transparent); }
+.night .gift-inner { position: relative; }
+.night .btn.ghost { color: var(--cream); box-shadow: inset 0 0 0 1px rgba(251, 242, 226, .4); }
+.makebar { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; }
+.device-s { width: min(340px, 86%); margin: 0 auto; aspect-ratio: 9 / 18.5; border-radius: 34px; padding: 10px; background: #0b0910; box-shadow: 0 50px 90px -40px #000, 0 0 0 1px rgba(255, 255, 255, .07); }
+.device-s iframe { width: 100%; height: 100%; border: 0; border-radius: 25px; display: block; background: #0b0912; }
+.night .ask label { color: var(--cream); } .night .ask label small { color: #a9997f; }
+select.field { appearance: none; -webkit-appearance: none; background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%); background-position: calc(100% - 20px) 55%, calc(100% - 14px) 55%; background-size: 6px 6px; background-repeat: no-repeat; padding-right: 40px; }
+.night .occasions span { color: #cbbca3; } .night .occasions b { color: var(--cream); }
+.night .occasions > div { border-color: rgba(251, 242, 226, .12) !important; }
+@media (max-width: 640px) { .gift .title { grid-template-columns: 1fr; gap: 14px; } .gift .title .no { display: none; } }
+</style>
+</head>
+<body>
+<header class="nav"><div class="wrap">
+  <a class="mark" href="./"><i>चि</i>Chitrakissa</a>
+  <button class="menu" aria-label="Menu" aria-expanded="false"><span></span><span></span></button>
+  <nav><a href="diwali.html">Diwali</a><a href="comics.html">Comics</a><a href="gifts.html" aria-current="page">Gifts</a><a href="films.html">Films</a><a class="pill" href="diwali.html#roshni">Make a free Diwali film</a></nav>
+</div></header>
+
+<section class="page-hero" data-petals="9"><div class="wrap grid">
+  <div>
+    <span class="kicker c rv">Gifts that move · ready today</span>
+    <h1 class="display-xl lines"><span><span>Say it in a way</span></span><span><span>they will <em>keep.</em></span></span></h1>
+    <p class="lede rv d1">The right words can do wonders. These gifts give your words a moment of their own: a diya lit in their name, a rose that blooms around their name, two stars that tell your story. Each one opens like a letter, on any phone, and stays with them to open again.</p>
+    <div class="makebar rv d2"><a class="btn red" href="#make-diya">🪔 Make a Diwali diya</a><a class="btn ghost" href="#make-rose">🌹 Make a rose</a><a class="btn ghost" href="#make-stars">✨ Make Two Stars</a></div>
+    <div class="meta rv d2"><span class="tag ready">Free while we test</span><span class="tag">Any phone · no app</span><span class="tag">Ready in a minute</span></div>
+  </div>
+  <div class="rv d1"><div class="screen"><video data-auto src="media/gift_rose.mp4" poster="media/gift_rose.jpg" muted loop playsinline preload="none"></video></div></div>
+</div></section>
+
+<!-- ───────── Diwali: Ek diya, aapke naam ───────── -->
+<section class="gift night" id="diya"><div class="wrap gift-inner">
+  <div class="title"><span class="no">i.</span><span class="kicker">For Diwali · free · ready in a minute</span><h2 class="rv">Ek diya, <em>aapke naam</em></h2></div>
+  <div class="two mid">
+    <div><div class="device-s"><iframe src="gifts/diya.html" title="Ek diya, aapke naam: tap to light the diya" loading="lazy"></iframe></div>
+      <p class="screen-cap">Tap the diya to light it. This is what they receive.</p></div>
+    <div id="make-diya">
+      <h3 class="sec" style="margin-top:0">A diya, lit in their name</h3>
+      <p class="body-l">They open your link to a dark doorway with one clay diya on the threshold. One tap lights it. The light travels from lamp to lamp, the doorway fills with light, and your greeting rises in their language, with your name. Then they get a phuljhadi of their own to draw with.</p>
+      <form class="ask" id="diya-form" style="margin-top:28px">
+        <label for="d-to">For <small>a family or a person: the Sharma family, Dadi, Ananya</small></label><input class="field" id="d-to" maxlength="40" required placeholder="the Sharma family">
+        <label for="d-from">From</label><input class="field" id="d-from" maxlength="40" required placeholder="Riya">
+        <label for="d-lang">Greeting in</label>
+        <select class="field" id="d-lang"><option value="hi">हिन्दी · शुभ दीपावली</option><option value="en">English · Happy Diwali</option><option value="mr">मराठी · दिवाळीच्या हार्दिक शुभेच्छा</option><option value="bn">বাংলা · শুভ দীপাবলি</option><option value="gu">ગુજરાતી · શુભ દીપાવલી</option><option value="pa">ਪੰਜਾਬੀ · ਦੀਵਾਲੀ ਦੀਆਂ ਲੱਖ ਲੱਖ ਵਧਾਈਆਂ</option><option value="ta">தமிழ் · தீபாவளி நல்வாழ்த்துக்கள்</option><option value="te">తెలుగు · దీపావళి శుభాకాంక్షలు</option><option value="kn">ಕನ್ನಡ · ದೀಪಾವಳಿ ಹಬ್ಬದ ಶುಭಾಶಯಗಳು</option><option value="ml">മലയാളം · ദീപാവലി ആശംസകൾ</option></select>
+        <label for="d-region">Their doorway</label>
+        <select class="field" id="d-region"><option value="north">North · a haveli doorway, rangoli</option><option value="east">East · a Calcutta doorway, alpana</option><option value="west">West · a wada door, kandil, rangoli</option><option value="south">South · a carved door, kolam</option></select>
+        <label for="d-msg">Your line <small>optional</small></label><input class="field" id="d-msg" maxlength="120" placeholder="Saath hain, toh roshan hai">
+        <div class="send"><button class="btn light" type="submit">🪔 Make my diya link</button></div>
+        <div class="result" id="diya-out" role="status"><p class="small" style="margin-bottom:8px;color:#cbbca3">Ready. Open it first, then send it:</p><code></code>
+          <div class="row"><a class="btn light" data-open target="_blank" rel="noopener">Open it ↗</a><button class="btn ghost" type="button" data-copy style="color:var(--cream)">Copy link</button><a class="btn ghost" data-wa target="_blank" rel="noopener" style="color:var(--cream)">Send on WhatsApp</a></div></div>
+      </form>
+    </div>
+  </div>
+</div></section>
+
+<!-- ───────── I. The Rose ───────── -->
+<section class="gift band" id="rose"><div class="wrap">
+  <div class="title"><span class="no">ii.</span><span class="kicker c">A gift for the one you love</span><h2 class="rv">A Rose, Written <em>in Mathematics</em></h2></div>
+  <div class="two">
+    <div>
+      <h3 class="sec" style="margin-top:0">The story behind it</h3>
+      <p class="body-l dropcap rv">It began with someone who deserved more than a rose from the shop on the corner. Real roses are beautiful for three days, then they droop on a windowsill and are forgotten. We wanted to give a rose that would still be there on the bad days, the far-away days, the days that needed one most.</p>
+      <p class="body-l rv">So we made one that blooms the moment they open it, petal by petal, with their name drifting around it and a line of old Urdu poetry beneath. It never wilts. It opens a little differently every time. And months later, on an ordinary evening, they can open it again and feel exactly what they felt the first time: that someone thought they were worth something no shop sells.</p>
+      <p class="pull rv" style="margin-top:44px">"I couldn't find a rose good enough, so I wrote one for you."</p>
+      <h3 class="sec">What they receive</h3>
+      <ul class="what">
+        <li class="rv"><b>A rose that blooms as they watch,</b> one they can turn in their fingers, which never wilts.</li>
+        <li class="rv"><b>Their name</b> drifting around it, with yours, and your own line beneath.</li>
+        <li class="rv"><b>A couplet by Mir Taqi Mir,</b> in Devanagari with an English rendering.</li>
+        <li class="rv"><b>A gentle melody</b> on flute and harp in Raag Yaman, if they tap Play.</li>
+        <li class="rv"><b>A gift to keep,</b> opened again on any day they need to feel loved.</li>
+      </ul>
+      <div class="verse rv"><div class="deva">नाज़ुकी उस के लब की क्या कहिए
+पंखुड़ी इक गुलाब की सी है</div><div class="tr">How can I describe the softness of those lips?
+Like a single petal of a rose.</div><div class="by">Mir Taqi Mir · 18th century</div></div>
+    </div>
+    <div class="sticky">
+      <div class="screen"><video data-auto src="media/gift_rose.mp4" poster="media/gift_rose.jpg" muted loop playsinline preload="none"></video></div>
+      <p class="screen-cap">"For Tara" · a sample rose</p>
+      <div style="text-align:center;margin-top:20px"><a class="btn ghost" href="gifts/rose.html" target="_blank" rel="noopener">Open the rose ↗</a></div>
+    </div>
+  </div>
+
+  <h3 class="sec">When to give it</h3>
+  <div class="occasions">
+    <div class="rv"><i>at 12:00 a.m.</i><b>A birthday</b><span>Be the first message they open, and the one they show everyone.</span></div>
+    <div class="rv d1"><i>7 February</i><b>Rose Day</b><span>Every other rose will be gone by the fourteenth. This one won't.</span></div>
+    <div class="rv d2"><i>after a fight</i><b>"I'm sorry"</b><span>When the words won't come out right, let a rose start the conversation.</span></div>
+    <div class="rv"><i>the first month</i><b>A small milestone</b><span>Thirty days in. Too early for diamonds, perfect for a rose.</span></div>
+    <div class="rv d1"><i>miles apart</i><b>Missing you</b><span>For the nights a video call isn't quite enough.</span></div>
+    <div class="rv d2"><i>a Tuesday</i><b>Just because</b><span>The best gifts arrive for no reason at all.</span></div>
+  </div>
+
+  <div class="maker" id="make-rose">
+    <div><span class="kicker c">Make yours</span><h2 class="display-m" style="margin:18px 0 18px">Write them <em>a rose.</em></h2>
+      <p class="body-l">Type their name and yours. You get a private link to send on WhatsApp or Instagram; it opens their rose on any phone. Nothing is stored on our side: their names live only inside the link.</p></div>
+    <form class="ask" id="rose-form">
+      <label for="r-to">Their name <small>any script works: नमिता, Ananya, அன்பு</small></label><input class="field" id="r-to" maxlength="40" required placeholder="Ananya">
+      <label for="r-from">Your name</label><input class="field" id="r-from" maxlength="40" required placeholder="Kabir">
+      <label for="r-msg">Your line <small>optional</small></label><textarea class="field" id="r-msg" maxlength="160" placeholder="I couldn't find a rose good enough, so I wrote one for you."></textarea>
+      <div class="send"><button class="btn red" type="submit">Make my rose <span class="ar">→</span></button></div>
+      <div class="result" id="rose-out" role="status"><p class="small" style="margin-bottom:8px">Your rose is ready. Open it first, then send it:</p><code></code>
+        <div class="row"><a class="btn" data-open target="_blank" rel="noopener">Open it ↗</a><button class="btn ghost" type="button" data-copy>Copy link</button><a class="btn ghost" data-wa target="_blank" rel="noopener">Send on WhatsApp</a></div></div>
+    </form>
+  </div>
+</div></section>
+
+<!-- ───────── II. Two Stars ───────── -->
+<section class="gift night" id="stars"><div class="stars-bg"></div><div class="wrap gift-inner">
+  <div class="title"><span class="no">iii.</span><span class="kicker">How the two of you came together</span><h2 class="rv">Two <em>Stars</em></h2></div>
+  <div class="two">
+    <div class="sticky">
+      <div class="screen"><video data-auto src="media/gift_stars.mp4" poster="media/gift_stars.jpg" muted loop playsinline preload="none"></video></div>
+      <p class="screen-cap">Riya &amp; Kabir · Jaipur · a sample</p>
+      <div style="text-align:center;margin-top:20px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap"><a class="btn light" href="gifts/two-stars.html" target="_blank" rel="noopener">Open the sample ↗</a></div>
+    </div>
+    <div>
+      <h3 class="sec" style="margin-top:0">The story behind it</h3>
+      <p class="body-l dropcap rv">Two stars that pull each other into one shared orbit are the oldest picture of a couple there is. Each moves through its own life, unaware. Then, somehow, they come close enough to feel the pull, and they never quite let go.</p>
+      <p class="body-l rv">We made the first one for two people living far apart, to tell them their own story in that language. The sky in it is the <em>actual</em> night sky above your city on the night you met, exactly as it was. They break a wax seal, watch two stars find each other, and read your own story as it unfolds, and for a minute the whole distance between you disappears.</p>
+      <p class="pull rv" style="margin-top:44px;border-color:#f3b94d;color:var(--cream)">"Until they locked together, like two stars, orbiting as one."</p>
+      <h3 class="sec">What they receive</h3>
+      <ul class="what">
+        <li class="rv"><b>A wax-sealed envelope,</b> "For them, from you". Breaking the seal begins it.</li>
+        <li class="rv"><b>Two stars</b> that drift, feel the pull, and lock into one orbit, with your story told line by line.</li>
+        <li class="rv"><b>The real sky</b> of the place and night you met, reflected in a still lake.</li>
+        <li class="rv"><b>A secret line</b> that appears only the second time they open it.</li>
+        <li class="rv"><b>Your voice,</b> if you like: a short voice note that plays as the heart appears.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 class="sec">When to give it</h3>
+  <div class="occasions" style="border-color:rgba(251,242,226,.12)">
+    <div class="rv"><i>year one, or year ten</i><b>An anniversary</b><span>Tell the story of how it began, under the sky it began under.</span></div>
+    <div class="rv d1"><i>miles apart</i><b>Long distance</b><span>Two stars, one orbit, however far apart the two of you are tonight.</span></div>
+    <div class="rv d2"><i>before the question</i><b>A proposal</b><span>Let the stars say it first, then ask.</span></div>
+    <div class="rv"><i>the morning of</i><b>Your wedding day</b><span>A quiet thing to open before the noise begins.</span></div>
+    <div class="rv d1"><i>for them</i><b>Your parents' story</b><span>Thirty years in one orbit. Made by their children.</span></div>
+    <div class="rv d2"><i>the date you met</i><b>"The night we met"</b><span>Every couple has one. Give it back to them.</span></div>
+  </div>
+
+  <div class="maker" id="make-stars">
+    <div><span class="kicker">Make yours</span><h2 class="display-m" style="margin:18px 0 18px">Tell your story <em>in stars.</em></h2>
+      <p class="body-l">Your two names, the night you met and the city, and a few lines of your story. Preview it, then copy its link and send it. Everything stays inside the link; with a voice note, you download it as a file instead.</p></div>
+    <div class="ask">
+      <ol class="what" style="margin:0">
+        <li><b>Open the maker</b> and fill in your names, the date, the city and your story.</li>
+        <li><b>Preview it</b> exactly as they will see it.</li>
+        <li><b>Copy the link</b> and send it on WhatsApp. That's all.</li>
+      </ol>
+      <div class="send"><a class="btn light" href="gifts/two-stars.html#create" target="_blank" rel="noopener">Open the Two Stars maker ↗</a></div>
+    </div>
+  </div>
+</div></section>
+
+<section class="pad"><div class="wrap two">
+  <div><span class="kicker c">Tell us</span><h2 class="display-l" style="margin:20px 0 24px">Help us make the <em>next one.</em></h2>
+    <p class="body-l">These two are the first. Your answers decide which gift we make next and what it should cost once we stop testing. It takes thirty seconds.</p></div>
+  <form class="ask" data-voice="gifts">
+    <div class="q"><p>Which one did you love?</p><div class="chips" data-q="liked">
+      <button type="button" class="chip" aria-pressed="false" data-v="rose">The Rose</button><button type="button" class="chip" aria-pressed="false" data-v="two_stars">Two Stars</button></div></div>
+    <div class="q"><p>Who would you give one to?</p><div class="chips" data-q="for_whom">
+      <button type="button" class="chip" aria-pressed="false" data-v="partner">My partner</button><button type="button" class="chip" aria-pressed="false" data-v="parents">My parents</button><button type="button" class="chip" aria-pressed="false" data-v="friend">A friend</button><button type="button" class="chip" aria-pressed="false" data-v="sibling">A sibling</button><button type="button" class="chip" aria-pressed="false" data-v="kids">My children</button></div></div>
+    <div class="q"><p>For which moment?</p><div class="chips" data-q="occasion">
+      <button type="button" class="chip" aria-pressed="false" data-v="birthday">Birthday</button><button type="button" class="chip" aria-pressed="false" data-v="anniversary">Anniversary</button><button type="button" class="chip" aria-pressed="false" data-v="sorry">Saying sorry</button><button type="button" class="chip" aria-pressed="false" data-v="long_distance">Long distance</button><button type="button" class="chip" aria-pressed="false" data-v="proposal">A proposal</button><button type="button" class="chip" aria-pressed="false" data-v="just_because">Just because</button></div></div>
+    <div class="q"><p>What would it be worth to you? <small>one answer</small></p><div class="chips" data-q="price" data-one>
+      <button type="button" class="chip" aria-pressed="false" data-v="free_only">Only if free</button><button type="button" class="chip" aria-pressed="false" data-v="49">₹49</button><button type="button" class="chip" aria-pressed="false" data-v="99">₹99</button><button type="button" class="chip" aria-pressed="false" data-v="199">₹199</button><button type="button" class="chip" aria-pressed="false" data-v="499">₹499</button></div></div>
+    <div class="q" style="border-bottom:0"><p>What gift should we make next?</p><textarea class="field" name="note" maxlength="400" placeholder="An idea, a moment, a person you'd make it for (optional)"></textarea>
+      <input class="field" name="ig" maxlength="40" placeholder="@your Instagram, to hear when it's ready (optional)" style="margin-top:10px" autocapitalize="off"></div>
+    <div class="send"><button class="btn red" type="submit">Send <span class="ar">→</span></button><span class="ok" role="status"></span></div>
+  </form>
+</div></section>
+
+<section class="pad-s band"><div class="wrap">
+  <span class="kicker c">More from Chitrakissa</span>
+  <div class="more" style="margin-top:30px">
+    <a href="diwali.html"><div class="im"><img src="media/f_north.jpg" alt="A family together at their painted doorway on Diwali" loading="lazy"></div><b>Roshni</b><span>A free Diwali greeting film</span></a>
+    <a href="comics.html"><div class="im"><img src="media/comic/b_mumbai.jpg" alt="A painted comic page" loading="lazy"></div><b>Your story, as a comic</b><span>Coming soon · read a sample</span></a>
+    <a href="films.html"><div class="im"><img src="media/moods/centre.jpg" alt="A painted girl among her moods" loading="lazy"></div><b>Kitne rang</b><span>Every mood of the one you love</span></a>
+  </div>
+</div></section>
+
+<footer class="foot"><div class="wrap">
+  <div class="sig">चित्रकिस्सा<span>a picture, a story</span></div>
+  <div class="cols">
+    <a href="./">Home</a><a href="diwali.html">Diwali films</a><a href="comics.html">Comics</a><a href="gifts.html">Gifts</a><a href="films.html">Films</a>
+    <a href="privacy.html">Privacy promise</a><a href="https://instagram.com/chitrakissa">Instagram @chitrakissa</a>
+    <span class="r">© <span data-year>2026</span> Chitrakissa</span>
+  </div>
+</div></footer>
+<script src="ck.js"></script>
+<script>
+// the diya maker: the greeting travels inside the link (#g=…)
+const df = document.getElementById('diya-form'), dout = document.getElementById('diya-out');
+const b64 = o => btoa(unescape(encodeURIComponent(JSON.stringify(o)))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+df.addEventListener('submit', e => {
+  e.preventDefault(); const v = id => document.getElementById(id).value.trim();
+  const to = v('d-to'), from = v('d-from'); if (!to || !from) return;
+  const cfg = { to, from, lang: v('d-lang'), region: v('d-region') }; if (v('d-msg')) cfg.msg = v('d-msg');
+  const link = new URL('gifts/diya.html#g=' + b64(cfg), location.href).href;
+  dout.querySelector('code').textContent = link; dout.querySelector('[data-open]').href = link;
+  dout.querySelector('[data-wa]').href = 'https://wa.me/?text=' + encodeURIComponent('🪔 Ek diya, aapke naam: ' + link);
+  dout.classList.add('on'); dout.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+});
+dout.querySelector('[data-copy]').onclick = async e => { const l = dout.querySelector('code').textContent; try { await navigator.clipboard.writeText(l); e.target.textContent = 'Copied ✓'; } catch (x) { prompt('Copy your diya link:', l); } };
+// the rose maker: the names travel inside the link (#g=…), never to a server
+const rf = document.getElementById('rose-form'), out = document.getElementById('rose-out');
+rf.addEventListener('submit', e => {
+  e.preventDefault();
+  const to = document.getElementById('r-to').value.trim(), from = document.getElementById('r-from').value.trim(), message = document.getElementById('r-msg').value.trim();
+  if (!to || !from) return;
+  const cfg = { to, from }; if (message) cfg.message = message;
+  const g = btoa(unescape(encodeURIComponent(JSON.stringify(cfg)))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+  const link = new URL('gifts/rose.html#g=' + g, location.href).href;
+  out.querySelector('code').textContent = link; out.querySelector('[data-open]').href = link;
+  out.querySelector('[data-wa]').href = 'https://wa.me/?text=' + encodeURIComponent('For you, ' + to + ' 🌹 ' + link);
+  out.classList.add('on'); out.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+});
+out.querySelector('[data-copy]').onclick = async e => {
+  const l = out.querySelector('code').textContent;
+  try { await navigator.clipboard.writeText(l); e.target.textContent = 'Copied ✓'; } catch (x) { prompt('Copy your rose link:', l); }
+};
+</script>
+</body>
+</html>

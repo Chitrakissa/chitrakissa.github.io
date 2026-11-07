@@ -1,0 +1,1644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>A Rose, Written in Mathematics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi:ital@0;1&display=swap" rel="stylesheet">
+<!--
+  A ROSE, WRITTEN IN MATHEMATICS — customisable template.
+  PERSONALIZATION: everything visible comes from #giftConfig (tokens {to} {from}); inserted with textContent.
+  PALETTES: rose (the original, night) · ivory (blush dawn, light) · peach (cream & gold, light) · plum (lit dusk).
+  QA hooks: ?seed=N  ?palette=rose|ivory|peach|plum  ?raga=yaman|khamaj|mohanam  window.__debug
+-->
+<style>
+  :root{
+    --ink:#07040a;
+    --blush:#f6dde6;
+    --rose:#e4658d;
+    --rose-deep:#8d2246;
+    --muted:#9a7887;
+    --line:rgba(228,101,141,.22);
+    --title:#fff0f5;
+    --formula:#e9c9d5;
+    --orbit:#ffe6ef;
+    --orbit-glow:0 0 10px rgba(255,120,170,.75), 0 0 30px rgba(255,60,130,.45), 0 0 60px rgba(255,40,110,.25);
+    --bg:radial-gradient(120% 80% at 50% 34%, #1b0a15 0%, #0d0510 45%, #07040a 100%);
+    --glow:radial-gradient(46% 34% at 50% 42%, rgba(224,80,124,.20) 0%, rgba(150,30,70,.07) 42%, transparent 72%);
+    --btn-bg:rgba(255,255,255,.02);
+    --btn-hover:rgba(228,101,141,.07);
+    --grain-op:.05;
+    --display:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+    --deva:"Tiro Devanagari Hindi","Kohinoor Devanagari","Noto Serif Devanagari","Mangal",serif;
+    --ui:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+  }
+  /* ivory — an ivory rose at blush dawn (light) */
+  html[data-palette="ivory"]{
+    --ink:#3a1f2a; --blush:#3a1f2a; --rose:#a33a5c; --rose-deep:#b06a82; --muted:#7a5563;
+    --line:rgba(163,58,92,.24); --title:#3a1626; --formula:#4e2a38; --orbit:#7d2343;
+    --orbit-glow:0 0 8px rgba(255,255,255,.95), 0 0 22px rgba(255,246,242,.85), 0 0 46px rgba(255,236,232,.6);
+    --bg:radial-gradient(120% 80% at 50% 34%, #fffaf6 0%, #f8e9e6 48%, #eed5d4 100%);
+    --glow:radial-gradient(46% 34% at 50% 42%, rgba(255,255,255,.75) 0%, rgba(255,236,226,.35) 45%, transparent 72%);
+    --btn-bg:rgba(255,255,255,.45); --btn-hover:rgba(163,58,92,.08); --grain-op:.04;
+  }
+  /* peach — a peach-and-gold rose on cream paper (light, golden hour) */
+  html[data-palette="peach"]{
+    --ink:#3b1f1a; --blush:#3b1f1a; --rose:#b0502a; --rose-deep:#c0804f; --muted:#7d5a4c;
+    --line:rgba(176,80,42,.24); --title:#4a2018; --formula:#4f2e22; --orbit:#8a3a14;
+    --orbit-glow:0 0 8px rgba(255,255,255,.95), 0 0 22px rgba(255,248,236,.85), 0 0 46px rgba(255,236,210,.6);
+    --bg:radial-gradient(120% 80% at 50% 34%, #fffdf6 0%, #fdf3e2 48%, #f5e2c6 100%);
+    --glow:radial-gradient(46% 34% at 50% 42%, rgba(255,240,205,.80) 0%, rgba(255,222,170,.30) 45%, transparent 72%);
+    --btn-bg:rgba(255,255,255,.45); --btn-hover:rgba(176,80,42,.08); --grain-op:.04;
+  }
+  /* plum — a deep plum rose in a lit, violet dusk */
+  html[data-palette="plum"]{
+    --ink:#140716; --blush:#f3e3f2; --rose:#e08ad0; --rose-deep:#a35a98; --muted:#b394b5;
+    --line:rgba(224,138,208,.24); --title:#fbeefa; --formula:#ead2ea; --orbit:#fde9fb;
+    --orbit-glow:0 0 10px rgba(236,140,220,.75), 0 0 30px rgba(190,90,220,.45), 0 0 60px rgba(150,60,200,.25);
+    --bg:radial-gradient(120% 80% at 50% 34%, #3c1840 0%, #24102a 48%, #140716 100%);
+    --glow:radial-gradient(46% 34% at 50% 42%, rgba(230,120,210,.24) 0%, rgba(140,60,170,.10) 42%, transparent 72%);
+    --btn-bg:rgba(255,255,255,.03); --btn-hover:rgba(224,138,208,.08);
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{height:100%;margin:0}
+  body{
+    background:var(--bg);
+    background-color:var(--ink);
+    color:var(--blush);
+    font-family:var(--ui);
+    overflow:hidden;
+    display:flex;flex-direction:column;
+    padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  }
+  html[data-palette="ivory"] body{background-color:#f8e9e6}
+  html[data-palette="peach"] body{background-color:#fdf3e2}
+
+  /* ---------- type ---------- */
+  header{padding:clamp(14px,3.2vh,30px) 18px 4px;text-align:center;flex:0 0 auto;z-index:3}
+  .eyebrow{
+    font-size:clamp(8.5px,2.1vw,10.5px);
+    letter-spacing:.42em;text-transform:uppercase;
+    color:var(--muted);font-weight:500;
+    margin:0 0 .85em;padding-left:.42em;
+  }
+  h1{
+    font-family:var(--display);
+    font-weight:400;font-style:italic;
+    font-size:clamp(30px,7.4vw,58px);
+    line-height:1.05;margin:0;
+    color:var(--title);
+    letter-spacing:.005em;
+    overflow-wrap:anywhere;
+  }
+  h1 .nl,.nl{font-style:normal}
+  h1 .nl{font-family:var(--deva)}
+  h1 .heart{font-style:normal;font-size:.52em;vertical-align:.34em;margin-left:.12em;color:var(--rose)}
+  .sub{
+    margin:.95em 0 0;
+    font-size:clamp(8.5px,2.1vw,10.5px);
+    letter-spacing:.38em;text-transform:uppercase;
+    color:var(--rose);opacity:.85;padding-left:.38em;
+  }
+
+  /* ---------- stage ---------- */
+  .stage{position:relative;flex:1 1 auto;min-height:0}
+  #glow{
+    position:absolute;inset:0;pointer-events:none;
+    background:var(--glow);
+    filter:blur(2px);
+  }
+  canvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab}
+  canvas.dragging{cursor:grabbing}
+  #fallback{
+    position:absolute;inset:0;display:none;place-items:center;text-align:center;
+    padding:24px;font-size:13px;line-height:1.7;color:var(--muted);
+  }
+  #fallback b{color:var(--blush);font-weight:500}
+
+  /* ---------- controls ---------- */
+  .controls{
+    position:absolute;left:0;right:0;bottom:8px;
+    display:flex;gap:8px;justify-content:center;flex-wrap:wrap;z-index:3;
+  }
+  button{
+    font-family:var(--ui);
+    font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--muted);background:var(--btn-bg);
+    border:1px solid var(--line);border-radius:999px;
+    padding:8px 15px;cursor:pointer;
+    transition:color .25s,border-color .25s,background .25s;
+  }
+  button:hover{color:var(--blush);border-color:var(--rose);background:var(--btn-hover)}
+  button:focus-visible{outline:2px solid var(--rose);outline-offset:3px}
+  button.on{color:var(--rose);border-color:var(--rose)}
+  .hint{
+    flex:0 0 100%;text-align:center;margin:0 0 4px;
+    font-family:var(--display);font-style:italic;font-size:15px;color:var(--muted);
+    pointer-events:none;transition:opacity 1.2s;opacity:0;
+  }
+  .hint.show{opacity:.95}
+
+  /* ---------- footer / mathematics ---------- */
+  footer{flex:0 0 auto;padding:10px 16px calc(12px + env(safe-area-inset-bottom));z-index:3}
+  .words{max-width:720px;margin:0 auto 12px;text-align:center}
+  .words:empty{display:none}
+  .message{
+    font-family:var(--display);font-style:italic;
+    font-size:clamp(16px,4vw,19px);line-height:1.3;
+    color:var(--title);margin:0 auto;max-width:34em;
+    text-wrap:balance;overflow-wrap:anywhere;
+  }
+  .verse{margin:.6em auto 0;max-width:30em}
+  .verse .vt{
+    font-family:var(--deva);font-size:16px;line-height:1.45;color:var(--formula);
+    white-space:pre-line;margin:0;
+  }
+  .verse .vt[dir="rtl"]{font-family:"Noto Nastaliq Urdu","Jameel Noori Nastaleeq",var(--deva);line-height:2}
+  .verse .ve{
+    font-family:var(--display);font-style:italic;font-size:16px;line-height:1.3;
+    color:var(--muted);white-space:pre-line;margin:.25em 0 0;
+  }
+  .verse .vb{font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);margin:.55em 0 0;padding-left:.24em}
+  .rule{
+    display:flex;align-items:center;gap:14px;
+    max-width:960px;margin:0 auto 12px;
+  }
+  .rule::before,.rule::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent)}
+  .rule span{
+    font-size:clamp(7.5px,1.9vw,9.5px);letter-spacing:.34em;text-transform:uppercase;
+    color:var(--muted);white-space:nowrap;padding-left:.34em;
+  }
+  .math{
+    max-width:960px;margin:0 auto;
+    display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:5px 26px;
+    max-height:22vh;overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:thin;scrollbar-color:var(--line) transparent;
+  }
+  .math::-webkit-scrollbar{width:3px}
+  .math::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px}
+  .eq{display:flex;gap:9px;align-items:baseline;font-size:clamp(9.5px,2.15vw,12px);line-height:1.65}
+  .eq .n{
+    font-size:8px;letter-spacing:.1em;color:var(--rose-deep);
+    flex:0 0 auto;padding-top:.15em;font-variant-numeric:tabular-nums;
+  }
+  .eq .f{font-family:var(--display);color:var(--formula);font-style:italic;white-space:nowrap}
+  .eq .lbl{
+    font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);
+    margin-left:auto;padding-left:10px;white-space:nowrap;opacity:.85;
+  }
+  sub,sup{font-size:.66em;font-style:normal}
+
+  /* ---------- entrance ---------- */
+  @keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+  .eyebrow{animation:rise 1.3s .25s both cubic-bezier(.22,.7,.3,1)}
+  h1{animation:rise 1.6s .60s both cubic-bezier(.22,.7,.3,1)}
+  .sub{animation:rise 1.3s 1.05s both cubic-bezier(.22,.7,.3,1)}
+  footer{animation:fade 2s 1.7s both}
+  .controls{animation:fade 1.6s 2.3s both}
+  .message{animation:rise 1.6s 4.6s both cubic-bezier(.22,.7,.3,1)}
+  .verse{animation:fade 2.2s 6.4s both}
+
+  /* ---------- the names, in orbit ---------- */
+  .orbit{
+    position:absolute;left:0;top:0;z-index:2;
+    font-family:var(--display);font-style:italic;
+    font-size:clamp(13px,3.2vw,25px);
+    color:var(--orbit);white-space:nowrap;pointer-events:none;
+    letter-spacing:.02em;opacity:0;
+    text-shadow:var(--orbit-glow);
+    will-change:transform,opacity;
+  }
+  .orbit.nl{font-family:var(--deva);font-style:normal}
+
+  /* ---------- signature ---------- */
+  .sign{
+    max-width:960px;margin:13px auto 0;
+    display:flex;align-items:baseline;justify-content:flex-end;gap:.7em;
+  }
+  .sign .from{
+    font-size:8.5px;letter-spacing:.34em;text-transform:uppercase;
+    color:var(--muted);padding-left:.34em;flex:0 0 auto;
+  }
+  .sign .who{
+    font-family:var(--display);font-style:italic;
+    font-size:clamp(19px,4vw,27px);line-height:1.1;
+    color:var(--rose);text-align:right;overflow-wrap:anywhere;min-width:0;
+  }
+  .sign .who.nl{font-family:var(--deva);font-style:normal}
+
+  /* ---------- filmic grain ---------- */
+  #grain{
+    position:fixed;inset:0;pointer-events:none;z-index:6;
+    opacity:var(--grain-op);mix-blend-mode:overlay;background-repeat:repeat;
+  }
+
+  @media (max-width:620px){
+    .math{grid-template-columns:1fr;max-height:17vh;gap:3px}
+    .has-words .math{max-height:13vh}
+    .sign{margin-top:9px}
+    .eq .lbl{display:none}
+    .controls{bottom:4px}
+    .words{margin-bottom:9px}
+  }
+  @media (min-width:760px){
+    .words{display:flex;align-items:center;justify-content:center;gap:34px;max-width:960px;text-align:left}
+    .words .message{flex:0 1 auto;max-width:22em;text-align:right}
+    .words .verse{flex:0 1 auto;margin:0;padding-left:34px;border-left:1px solid var(--line)}
+    .words .message:only-child,.words .verse:only-child{text-align:center;border:0;padding:0}
+  }
+  @media (max-width:380px){
+    .controls{gap:6px}
+    button{padding:8px 10px;letter-spacing:.12em}
+  }
+  @media (prefers-reduced-motion:reduce){
+    #glow{filter:none}
+    .eyebrow,h1,.sub,footer,.controls,.message,.verse{animation:none;opacity:1;transform:none}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <p class="eyebrow" id="eyebrow"></p>
+  <h1 id="title"></h1>
+  <p class="sub" id="sub"></p>
+</header>
+
+<div class="stage">
+  <div id="glow"></div>
+  <canvas id="c"></canvas>
+  <div id="fallback"><div><b id="fbTitle"></b><br><span id="fbBody"></span></div></div>
+  <div class="controls">
+    <p class="hint" id="hint" aria-hidden="true"></p>
+    <button id="btnMusic" type="button" hidden></button>
+    <button id="btnRot" type="button"></button>
+    <button id="btnReset" type="button"></button>
+  </div>
+</div>
+
+<footer>
+  <div class="words" id="words"></div>
+  <div class="rule"><span id="rule"></span></div>
+  <div class="math" id="math"></div>
+  <div class="sign"><span class="from" id="fromLabel"></span><span class="who" id="who"></span></div>
+</footer>
+<div id="grain" aria-hidden="true"></div>
+
+<script id="giftConfig" type="application/json">
+{
+ "to": "Tara",
+ "from": "Arjun",
+ "seed": null,
+ "palette": null,
+ "raga": null,
+ "message": "I couldn't find a rose good enough, so I wrote one for you.",
+ "verse": {
+  "enabled": true,
+  "id": "mir-0002",
+  "text": "नाज़ुकी उस के लब की क्या कहिए\nपंखुड़ी इक गुलाब की सी है",
+  "translation": "How can I describe the softness of her lips?\nLike a single petal of a rose.",
+  "by": "Mir Taqi Mir · 18th c.",
+  "dir": "ltr"
+ },
+ "orbit": {"to": true, "from": true},
+ "copy": {
+  "docTitle": "For {to} — A Rose, Written in Mathematics",
+  "eyebrow": "A little piece of mathematics",
+  "title": "For {to}",
+  "heart": "❤",
+  "sub": "A rose, written in mathematics",
+  "hint": "Drag to turn the rose",
+  "rule": "Somewhere between mathematics & art",
+  "fromLabel": "From",
+  "musicOn": "Play music",
+  "musicOff": "Pause music",
+  "rotPause": "Pause rotation",
+  "rotPlay": "Auto-rotate",
+  "reset": "Reset view",
+  "canvasLabel": "An interactive three-dimensional rose for {to}, generated from mathematics. Drag to rotate.",
+  "fallbackTitle": "This rose needs WebGL.",
+  "fallbackBody": "Try opening the file in Chrome, Firefox or Safari with hardware acceleration enabled."
+ },
+ "equations": [
+  {"f": "t = k / (N−1),\u00a0 θ_{k} = k·Φ,\u00a0 Φ = π(3−√5)", "label": "golden divergence"},
+  {"f": "ρ(t) = ρ_{0} e^{\u2009βt}", "label": "radial growth"},
+  {"f": "ψ(v) = ψ_{0}(t) + [ψ_{1}(t) − ψ_{0}(t)]·v^{q}", "label": "opening angle"},
+  {"f": "C(v) = L ∫_{0}^{v} (sin ψ(s), 0, cos ψ(s)) ds", "label": "midrib"},
+  {"f": "W(v) = W_{0}(1 − e^{−6v})(1 − v^{3.2})^{0.42}(0.62 + 0.38v)", "label": "petal width"},
+  {"f": "H(u,v) = [−κ u^{2} sin(πv^{0.8}) + ε u^{4} σ(v)]·W(v)", "label": "cup & curl"},
+  {"f": "P_{k} = R_{z}(θ_{k})[ R_{x}(γ)(C + uWŷ + Hn̂) + (ρ, 0, z_{0}) ]", "label": "the petal"},
+  {"f": "rose = ⋃_{k=0}^{N−1} P_{k}([−1,1] × [0,1])", "label": "the bloom"}
+ ]
+}
+</script>
+<script>
+"use strict";
+/* ============================================================
+   A ROSE, WRITTEN IN MATHEMATICS
+   Every petal is an independent parametric surface P(u,v).
+   No libraries. No external assets.
+   ============================================================ */
+
+/* ---------- small deterministic prng (mulberry32) ---------- */
+function RNG(seed){
+  let s = seed >>> 0;
+  this.next = function(){
+    s = (s + 0x6D2B79F5) >>> 0;
+    let t = s;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+  this.sym = function(a){ return (this.next()*2 - 1) * a; };
+}
+const clamp = (x,a,b)=> x<a?a:(x>b?b:x);
+function smoothstep(a,b,x){ const t = clamp((x-a)/(b-a),0,1); return t*t*(3-2*t); }
+const RAD = Math.PI/180;
+const lin = c => Math.pow(c, 2.2);            // sRGB -> linear
+
+/* ============================================================
+   CONFIG — every visible string comes from #giftConfig
+   ============================================================ */
+const DEFAULTS = {
+  to:"", from:"", seed:null, palette:null, raga:null, message:"",
+  verse:{enabled:false, id:"", text:"", translation:"", by:"", dir:"ltr"},
+  orbit:{to:true, from:true}, copy:{}, equations:[]
+};
+function isObj(x){ return x && typeof x==='object' && !Array.isArray(x); }
+function merge(a,b){ const o=Object.assign({},a); for(const k in (b||{})){ o[k] = isObj(a[k]) && isObj(b[k]) ? merge(a[k],b[k]) : b[k]; } return o; }
+let CONFIG;
+try{ CONFIG = merge(DEFAULTS, JSON.parse(document.getElementById('giftConfig').textContent)); }
+catch(e){ CONFIG = merge(DEFAULTS,{}); }
+/* a gift made on chitrakissa.github.io/gifts.html arrives as a link: #g=<base64url JSON> with the names and message */
+CONFIG = merge(CONFIG, ((KEYS)=>(()=>{ try{ const m = location.hash.match(/^#g=([A-Za-z0-9_-]+)/); if(!m) return {}; const j = JSON.parse(decodeURIComponent(escape(atob(m[1].replace(/-/g,'+').replace(/_/g,'/'))))); const o = {}; for(const k of KEYS) if(j[k]!=null) o[k] = j[k]; return o; }catch(e){ return {}; } })())(['to','from','message']));
+const QS = new URLSearchParams(location.search);
+const fill = s => String(s==null?'':s).replace(/\{to\}/g, CONFIG.to).replace(/\{from\}/g, CONFIG.from);
+
+/* ---------- seed: config → ?seed= → fresh ---------- */
+let SEED = (QS.has('seed') && isFinite(+QS.get('seed'))) ? (+QS.get('seed'))>>>0
+         : (CONFIG.seed!=null && isFinite(+CONFIG.seed)) ? (+CONFIG.seed)>>>0
+         : (Math.random()*4294967296)>>>0;
+
+/* ---------- palettes: petals (centre → edge, sRGB) + light ---------- */
+const PALETTES = {
+  rose:  { stops:[[0.00,0.22,0.015,0.065],[0.18,0.46,0.030,0.125],[0.38,0.72,0.080,0.255],[0.58,0.89,0.195,0.415],
+                  [0.76,0.95,0.400,0.610],[0.90,0.93,0.520,0.660],[1.00,0.95,0.640,0.735]],
+           core:[0.20,0.012,0.055], rim:[1.0,0.271,0.462], fill:[0.348,0.133,0.400], trans:[3.2,1.5,1.25],
+           edge:[1.0,0.55,0.42], lamp:[1.00,0.86,0.70], halo:[1.00,0.46,0.62], polA:[1.0,0.80,0.48], polB:[1.0,0.58,0.78] },
+  ivory: { stops:[[0.00,0.50,0.22,0.24],[0.18,0.70,0.44,0.42],[0.38,0.84,0.64,0.58],[0.58,0.91,0.78,0.70],
+                  [0.76,0.94,0.85,0.77],[0.90,0.94,0.87,0.80],[1.00,0.95,0.89,0.83]],
+           core:[0.55,0.30,0.26], rim:[1.0,0.86,0.78], fill:[0.36,0.30,0.42], trans:[2.0,1.75,1.45],
+           edge:[1.0,0.86,0.70], lamp:[1.00,0.94,0.84], halo:[1.00,0.84,0.76], polA:[1.0,0.84,0.55], polB:[1.0,0.70,0.72] },
+  peach: { stops:[[0.00,0.48,0.12,0.05],[0.18,0.72,0.24,0.08],[0.38,0.90,0.40,0.16],[0.58,0.96,0.54,0.28],
+                  [0.76,0.98,0.66,0.40],[0.90,0.97,0.72,0.47],[1.00,0.98,0.78,0.55]],
+           core:[0.48,0.14,0.05], rim:[1.0,0.62,0.30], fill:[0.42,0.24,0.30], trans:[2.8,1.8,0.95],
+           edge:[1.0,0.74,0.42], lamp:[1.00,0.88,0.64], halo:[1.00,0.70,0.42], polA:[1.0,0.82,0.42], polB:[1.0,0.62,0.48] },
+  plum:  { stops:[[0.00,0.07,0.006,0.05],[0.18,0.14,0.015,0.11],[0.38,0.24,0.03,0.19],[0.58,0.33,0.06,0.27],
+                  [0.76,0.41,0.13,0.37],[0.90,0.46,0.21,0.44],[1.00,0.51,0.29,0.51]],
+           core:[0.08,0.006,0.06], rim:[0.72,0.38,1.0], fill:[0.26,0.18,0.50], trans:[2.3,1.2,2.5],
+           edge:[1.0,0.56,0.82], lamp:[1.00,0.84,0.92], halo:[0.86,0.46,0.96], polA:[1.0,0.82,0.58], polB:[0.92,0.62,1.0] }
+};
+const PAL_KEYS = ['rose','ivory','peach','plum'];
+const RAGA_KEYS = ['yaman','khamaj','mohanam'];
+const PAL_KEY = PALETTES[QS.get('palette')] ? QS.get('palette')
+              : PALETTES[CONFIG.palette] ? CONFIG.palette
+              : PAL_KEYS[(SEED>>>3) % PAL_KEYS.length];
+const RAGA_KEY = RAGA_KEYS.includes(QS.get('raga')) ? QS.get('raga')
+               : RAGA_KEYS.includes(CONFIG.raga) ? CONFIG.raga
+               : ['yaman','yaman','khamaj','mohanam'][(SEED>>>7) % 4];          // Yaman most often
+const PAL = PALETTES[PAL_KEY];
+document.documentElement.setAttribute('data-palette', PAL_KEY);
+const STOPS = PAL.stops;
+function pal(s){
+  s = clamp(s,0,1);
+  for(let i=0;i<STOPS.length-1;i++){
+    const A=STOPS[i], B=STOPS[i+1];
+    if(s<=B[0]){
+      const f=(s-A[0])/(B[0]-A[0]);
+      return [lin(A[1]+(B[1]-A[1])*f), lin(A[2]+(B[2]-A[2])*f), lin(A[3]+(B[3]-A[3])*f)];
+    }
+  }
+  return [lin(STOPS[6][1]),lin(STOPS[6][2]),lin(STOPS[6][3])];
+}
+const G_DARK = [lin(0.16),lin(0.30),lin(0.15)];
+const G_MID  = [lin(0.30),lin(0.47),lin(0.22)];
+const G_LITE = [lin(0.46),lin(0.62),lin(0.30)];
+const mix3 = (a,b,f)=>[a[0]+(b[0]-a[0])*f, a[1]+(b[1]-a[1])*f, a[2]+(b[2]-a[2])*f];
+
+/* ============================================================
+   MESH BUILDER
+   ============================================================ */
+function Mesh(){
+  this.pos=[]; this.col=[]; this.ao=[]; this.dly=[]; this.idx=[];
+}
+Mesh.prototype.grid = function(P, NV, NU, colFn, aoFn, delay, mat){
+  const base = this.pos.length/3;
+  for(let i=0;i<NV;i++){
+    const a = NV>1 ? i/(NV-1) : 0;
+    for(let j=0;j<NU;j++){
+      const b = NU>1 ? j/(NU-1) : 0;
+      const o = (i*NU+j)*3;
+      this.pos.push(P[o],P[o+1],P[o+2]);
+      const c = colFn(a,b);
+      this.col.push(c[0],c[1],c[2]);
+      const ao=Math.abs(aoFn(a,b));
+      this.ao.push(mat ? -ao : ao);      // a negative AO marks foliage for the shader
+      this.dly.push(delay);
+    }
+  }
+  for(let i=0;i<NV-1;i++){
+    for(let j=0;j<NU-1;j++){
+      const A=base+i*NU+j, B=A+1, C=A+NU, D=C+1;
+      this.idx.push(A,B,D, A,D,C);
+    }
+  }
+};
+
+/* rotate a flat xyz array about z, in place */
+function rotZ(P, th){
+  const c=Math.cos(th), s=Math.sin(th);
+  for(let i=0;i<P.length;i+=3){
+    const x=P[i], y=P[i+1];
+    P[i]=c*x-s*y; P[i+1]=s*x+c*y;
+  }
+  return P;
+}
+
+/* ------------------------------------------------------------
+   THE PETAL  —  P(u,v), u across the width, v base -> tip
+   ------------------------------------------------------------ */
+function petalSurface(o, NU, NV){
+  const P = new Float32Array(NV*NU*3);
+  const psi = new Float32Array(NV), X = new Float32Array(NV), Z = new Float32Array(NV),
+        W = new Float32Array(NV), g = new Float32Array(NV), h = new Float32Array(NV);
+  const dv = 1/(NV-1);
+  for(let i=0;i<NV;i++){
+    const v = i*dv;
+    psi[i] = o.psi0 + (o.psi1-o.psi0)*Math.pow(v,o.expo);
+    W[i]   = o.W0 * (1-Math.exp(-6*v)) * Math.pow(Math.max(1e-6, 1-Math.pow(v,3.2)), 0.42) * (0.62+0.38*v);
+    g[i]   = Math.sin(Math.PI*Math.pow(v,0.8));
+    h[i]   = smoothstep(0.42,1.0,v);
+  }
+  // midrib: integrate the tangent (sin psi, cos psi)
+  X[0]=0; Z[0]=0;
+  for(let i=1;i<NV;i++){
+    X[i] = X[i-1] + o.L*Math.sin(psi[i-1])*dv;
+    Z[i] = Z[i-1] + o.L*Math.cos(psi[i-1])*dv;
+  }
+  const cr=Math.cos(o.roll), sr=Math.sin(o.roll);
+  for(let i=0;i<NV;i++){
+    const nx=Math.cos(psi[i]), nz=-Math.sin(psi[i]);
+    for(let j=0;j<NU;j++){
+      const u = NU>1 ? (j/(NU-1))*2-1 : 0;
+      const u2=u*u;
+      const disp = (-o.cup*u2*g[i] + o.edge*u2*u2*h[i]) * W[i];
+      let px = X[i] + nx*disp;
+      let py = u*W[i];
+      let pz = Z[i] + nz*disp;
+      const ry = cr*py - sr*pz;         // roll about the radial axis
+      const rz = sr*py + cr*pz;
+      const k=(i*NU+j)*3;
+      P[k]   = px + o.rho;
+      P[k+1] = ry;
+      P[k+2] = rz + o.z0;
+    }
+  }
+  return rotZ(P, o.theta);
+}
+
+/* ------------------------------------------------------------
+   surface of revolution  (receptacle, core)
+   ------------------------------------------------------------ */
+function revolve(prof, NA){
+  const NV=prof.length, P=new Float32Array(NV*NA*3);
+  for(let i=0;i<NV;i++){
+    const r=prof[i][0], z=prof[i][1];
+    for(let j=0;j<NA;j++){
+      const a=j/(NA-1)*Math.PI*2, k=(i*NA+j)*3;
+      P[k]=r*Math.cos(a); P[k+1]=r*Math.sin(a); P[k+2]=z;
+    }
+  }
+  return P;
+}
+
+/* ------------------------------------------------------------
+   a simpler blade — sepals & leaves
+   ------------------------------------------------------------ */
+function blade(o, NU, NV){
+  const P=new Float32Array(NV*NU*3);
+  const psi=new Float32Array(NV), X=new Float32Array(NV), Z=new Float32Array(NV), W=new Float32Array(NV);
+  const dv=1/(NV-1);
+  for(let i=0;i<NV;i++){
+    const v=i*dv;
+    psi[i]=o.psi0+(o.psi1-o.psi0)*Math.pow(v,o.expo);
+    W[i]=o.W0*(1-Math.exp(-6*v))*Math.pow(Math.max(1e-6,1-Math.pow(v,o.tip)),0.5)*(0.6+0.4*v)
+         * (1 + (o.serr||0)*Math.sin(9*Math.PI*v));
+  }
+  X[0]=0; Z[0]=0;
+  for(let i=1;i<NV;i++){
+    X[i]=X[i-1]+o.L*Math.sin(psi[i-1])*dv;
+    Z[i]=Z[i-1]+o.L*Math.cos(psi[i-1])*dv;
+  }
+  const cr=Math.cos(o.roll), sr=Math.sin(o.roll);
+  for(let i=0;i<NV;i++){
+    const nx=Math.cos(psi[i]), nz=-Math.sin(psi[i]);
+    for(let j=0;j<NU;j++){
+      const u=(j/(NU-1))*2-1;
+      const disp=-o.cup*u*u*Math.sin(Math.PI*Math.pow(i*dv,0.8))*W[i];
+      let py=u*W[i], pz=Z[i]+nz*disp;
+      const ry=cr*py-sr*pz, rz=sr*py+cr*pz;
+      const k=(i*NU+j)*3;
+      P[k]=X[i]+nx*disp+o.rho; P[k+1]=ry; P[k+2]=rz+o.z0;
+    }
+  }
+  rotZ(P,o.theta);
+  if(o.off){ for(let i=0;i<P.length;i+=3){ P[i]+=o.off[0]; P[i+1]+=o.off[1]; P[i+2]+=o.off[2]; } }
+  return P;
+}
+
+const frac = x => x - Math.floor(x);
+
+/* a tube swept along an arbitrary path */
+function tubeFrom(path, radii, NA){
+  const NW=path.length, P=new Float32Array(NW*NA*3);
+  for(let i=0;i<NW;i++){
+    const c=path[i];
+    const a=path[Math.min(i+1,NW-1)], b=path[Math.max(i-1,0)];
+    let tn=[a[0]-b[0],a[1]-b[1],a[2]-b[2]];
+    let tl=Math.hypot(tn[0],tn[1],tn[2])||1; tn=[tn[0]/tl,tn[1]/tl,tn[2]/tl];
+    const ref = Math.abs(tn[2])>0.9 ? [1,0,0] : [0,0,1];
+    let e1=[tn[1]*ref[2]-tn[2]*ref[1], tn[2]*ref[0]-tn[0]*ref[2], tn[0]*ref[1]-tn[1]*ref[0]];
+    const el=Math.hypot(e1[0],e1[1],e1[2])||1; e1=[e1[0]/el,e1[1]/el,e1[2]/el];
+    const e2=[tn[1]*e1[2]-tn[2]*e1[1], tn[2]*e1[0]-tn[0]*e1[2], tn[0]*e1[1]-tn[1]*e1[0]];
+    for(let j=0;j<NA;j++){
+      const an=j/(NA-1)*Math.PI*2, ca=Math.cos(an)*radii[i], sa=Math.sin(an)*radii[i], k=(i*NA+j)*3;
+      P[k]  =c[0]+ca*e1[0]+sa*e2[0];
+      P[k+1]=c[1]+ca*e1[1]+sa*e2[1];
+      P[k+2]=c[2]+ca*e1[2]+sa*e2[2];
+    }
+  }
+  return P;
+}
+
+/* an arc in the vertical plane, used for petioles and leaflet midribs */
+function arc(L,psi0,psi1,expo,steps){
+  const pts=[]; let x=0,z=0; const dv=1/(steps-1);
+  for(let i=0;i<steps;i++){
+    pts.push([x,z]);
+    const ps=psi0+(psi1-psi0)*Math.pow(i*dv,expo);
+    x+=L*Math.sin(ps)*dv; z+=L*Math.cos(ps)*dv;
+  }
+  return pts;
+}
+
+/* ------------------------------------------------------------
+   A rose leaflet: ovate, pointed, toothed at the margin,
+   creased along the midrib.
+   ------------------------------------------------------------ */
+function leaflet(o,NU,NV){
+  const P=new Float32Array(NV*NU*3), dv=1/(NV-1);
+  const psi=new Float32Array(NV),X=new Float32Array(NV),Z=new Float32Array(NV),W=new Float32Array(NV);
+  for(let i=0;i<NV;i++){
+    const v=i*dv;
+    psi[i]=o.psi0+(o.psi1-o.psi0)*Math.pow(v,1.30);
+    let w=Math.pow(Math.max(v,1e-4),0.42)*Math.pow(Math.max(1-v,0),0.62)/0.50;   // ovate, acuminate
+    const tooth=(frac(v*o.teeth)-0.5)*2;
+    w*=1 + o.serr*tooth*Math.min(1,v*7)*Math.min(1,(1-v)*6);                     // the toothed margin
+    W[i]=o.W0*Math.max(w,0);
+  }
+  X[0]=0; Z[0]=0;
+  for(let i=1;i<NV;i++){
+    X[i]=X[i-1]+o.L*Math.sin(psi[i-1])*dv;
+    Z[i]=Z[i-1]+o.L*Math.cos(psi[i-1])*dv;
+  }
+  const cr=Math.cos(o.roll), sr=Math.sin(o.roll);
+  for(let i=0;i<NV;i++){
+    const v=i*dv, nx=Math.cos(psi[i]), nz=-Math.sin(psi[i]);
+    for(let j=0;j<NU;j++){
+      const u=(j/(NU-1))*2-1;
+      const fold=-(o.fold*Math.abs(u) + o.cup*u*u)*(1-0.35*v)*W[i];   // slight crease, gentle cup
+      let px=X[i]+nx*fold, py=u*W[i]*(1+o.asym*(u<0?-1:1)), pz=Z[i]+nz*fold;
+      const ry=cr*py-sr*pz, rz=sr*py+cr*pz;
+      const k=(i*NU+j)*3;
+      P[k]=px; P[k+1]=ry; P[k+2]=rz;
+    }
+  }
+  rotZ(P,o.theta);
+  for(let i=0;i<P.length;i+=3){ P[i]+=o.off[0]; P[i+1]+=o.off[1]; P[i+2]+=o.off[2]; }
+  return P;
+}
+
+function stemPoint(w){
+  return [ 0.09*w*w + 0.05*Math.sin(2.4*w), -0.04*Math.pow(w,1.6), -0.34 - 1.45*w ];
+}
+
+/* ============================================================
+   BUILD THE WHOLE PLANT
+   ============================================================ */
+function buildRose(quality){
+  const NU = quality.nu, NV = quality.nv, N = quality.petals;
+  const rng = new RNG(quality.seed);
+  const M = new Mesh();
+  const GA = 137.507*RAD;
+
+  /* --- the curled core, so the centre never shows through --- */
+  const core=[];
+  for(let i=0;i<7;i++){
+    const w=i/6;
+    core.push([0.040*Math.sin(Math.PI*(0.12+0.88*w))+0.004, 0.16*w]);
+  }
+  M.grid(revolve(core,14), 7, 14,
+    ()=>[lin(PAL.core[0]),lin(PAL.core[1]),lin(PAL.core[2])], (a)=>0.16+0.10*a, 0.0);
+
+  /* --- the petals: one parametric surface each --- */
+  for(let k=0;k<N;k++){
+    const t = k/(N-1);
+    const ss = smoothstep(0.30,1.00,t);
+    const o = {
+      L    : (0.24 + 0.68*Math.pow(t,0.80)) * (1+rng.sym(0.07)),
+      psi0 : (3 + 62*ss + rng.sym(4))*RAD,
+      psi1 : (-9 + 108*Math.pow(t,1.20) + rng.sym(7))*RAD,
+      expo : 1.70 - 0.50*t,
+      rho  : 0.030*Math.exp(2.25*t)*(1+rng.sym(0.09)),
+      z0   : 0.14 - 0.30*t,
+      roll : (58*Math.pow(1-t,1.5) + rng.sym(6))*RAD,
+      cup  : 1.60 - 0.95*t,
+      edge : 0.10 + 0.40*t*t,
+      theta: GA*k + rng.sym(0.13)
+    };
+    o.W0 = o.L*(0.44 + 0.10*t);
+    const cj = rng.sym(0.05);
+    const tone = 1.02*Math.pow(t,1.55) + cj - 0.02;
+    const aoT  = 0.16 + 0.84*Math.pow(t,0.70);
+    M.grid(petalSurface(o,NU,NV), NV, NU,
+      (a)=>pal(tone + 0.20*Math.pow(a,2.2)),
+      (a)=>(0.07 + 0.93*smoothstep(0,0.62,a))*aoT,
+      t);
+  }
+
+  /* --- receptacle --- */
+  const hip=[];
+  for(let i=0;i<10;i++){
+    const w=i/9;
+    hip.push([0.27*Math.pow(1-w,0.45)*(1-0.45*w)+0.045, -0.40*Math.pow(w,1.05)]);
+  }
+  M.grid(revolve(hip,24), 10, 24,
+    (a)=>mix3(mix3(G_DARK,G_MID,0.35), G_MID, a*0.7),
+    (a)=>0.30+0.35*a, 0.02, 1);
+
+  /* --- sepals --- */
+  for(let k=0;k<5;k++){
+    M.grid(blade({
+      L:0.62+rng.sym(0.08), W0:0.075, psi0:(120+rng.sym(8))*RAD, psi1:(168+rng.sym(10))*RAD,
+      expo:1.2, cup:0.55, rho:0.20, z0:-0.10, roll:rng.sym(0.25),
+      theta:2*Math.PI*k/5+rng.sym(0.18), tip:1.9
+    },7,11), 11,7,
+      (a)=>mix3(G_DARK,G_MID,0.35+0.65*a), (a)=>0.35+0.5*a, 0.05, 1);
+  }
+
+  /* --- stem: tapered, faintly ribbed, browner toward the cut --- */
+  {
+    const NW=20, NA=10, path=[], radii=[];
+    for(let i=0;i<NW;i++){
+      const w=i/(NW-1);
+      path.push(stemPoint(w));
+      radii.push((0.038+0.020*w)*(1+0.05*Math.sin(w*19)));     // never perfectly uniform
+    }
+    M.grid(tubeFrom(path,radii,NA),NW,NA,
+      (a,b)=>{
+        const st=0.86+0.14*Math.sin(b*Math.PI*10);              // longitudinal striation
+        const c=mix3(mix3(G_DARK,G_MID,0.62),[lin(0.40),lin(0.24),lin(0.14)],0.38*smoothstep(0.55,1.0,a));
+        return [c[0]*st,c[1]*st,c[2]*st];
+      },
+      (a,b)=>0.34+0.44*Math.abs(Math.sin(Math.PI*b)), 0.0, 1);
+  }
+
+  /* --- thorns --- */
+  [[0.20,1.1],[0.33,4.0],[0.47,2.2],[0.58,5.4],[0.70,0.6],[0.84,3.3]].forEach(function(t){
+    const c=stemPoint(t[0]), th=t[1]+rng.sym(0.3);
+    const L=0.075+rng.next()*0.045, out=[Math.cos(th),Math.sin(th),0];
+    const path=[], radii=[], NS=5;
+    for(let i=0;i<NS;i++){
+      const f=i/(NS-1);
+      path.push([c[0]+out[0]*(0.030+f*L), c[1]+out[1]*(0.030+f*L), c[2]-f*f*L*0.85]);  // curving down
+      radii.push(0.021*Math.pow(1-f,0.75)+0.0013);
+    }
+    M.grid(tubeFrom(path,radii,6),NS,6,
+      (a)=>mix3(mix3(G_DARK,G_MID,0.55),[lin(0.50),lin(0.26),lin(0.19)],0.10+0.72*a),
+      (a)=>0.32+0.4*a, 0.03, 1);
+  });
+
+  /* --- leaves: compound, as a rose's are — a petiole with three leaflets --- */
+  const LNU = quality.leafU, LNV = quality.leafV;
+  function leafCol(a,b){
+    const u=b*2-1, au=Math.abs(u);
+    const midrib=1-smoothstep(0.0,0.11,au);
+    const lat=Math.abs(frac(a*6.0-au*1.8)-0.5)*2;
+    const vein=1-smoothstep(0.68,1.0,lat);
+    let c=mix3(G_DARK,G_MID,0.16+0.46*a);
+    c=mix3(c,G_LITE,0.34*midrib+0.15*vein);                    // veins catch the light
+    c=mix3(c,[lin(0.44),lin(0.21),lin(0.16)],0.26*smoothstep(0.70,1.0,au));  // bronzed edge
+    return c;
+  }
+  [[0.34,0.95,1.00],[0.55,-1.85,0.86],[0.74,2.70,0.72]].forEach(function(LF){
+    const base=stemPoint(LF[0]), th=LF[1]+rng.sym(0.15), sc=LF[2];
+    const Lp=0.30*sc, ps0=(62+rng.sym(6))*RAD, ps1=(104+rng.sym(8))*RAD;
+    const pa=arc(Lp,ps0,ps1,1.2,6);
+    const ppath=[], prad=[];
+    for(let i=0;i<pa.length;i++){
+      ppath.push([base[0]+Math.cos(th)*pa[i][0], base[1]+Math.sin(th)*pa[i][0], base[2]+pa[i][1]]);
+      prad.push(0.0125*(1-0.45*i/(pa.length-1)));
+    }
+    M.grid(tubeFrom(ppath,prad,6),pa.length,6,
+      (a)=>mix3(G_DARK,G_MID,0.30+0.3*a),(a)=>0.34+0.3*a, 0.10, 1);
+
+    /* one terminal leaflet, two laterals part way along */
+    const tip=ppath[ppath.length-1], mid=ppath[Math.floor(pa.length*0.52)];
+    const set=[
+      {off:tip, th:th+rng.sym(0.10), L:0.46*sc, W:0.150*sc, roll:rng.sym(0.18)},
+      {off:mid, th:th+0.72+rng.sym(0.12), L:0.35*sc, W:0.118*sc, roll:0.30+rng.sym(0.15)},
+      {off:mid, th:th-0.72+rng.sym(0.12), L:0.35*sc, W:0.118*sc, roll:-0.30+rng.sym(0.15)}
+    ];
+    set.forEach(function(o){
+      M.grid(leaflet({
+        L:o.L, W0:o.W, psi0:(84+rng.sym(7))*RAD, psi1:(126+rng.sym(9))*RAD,
+        teeth:8, serr:0.11, fold:0.15, cup:0.38, asym:0.05+rng.next()*0.05,
+        roll:o.roll, theta:o.th, off:o.off
+      },LNU,LNV), LNV, LNU, leafCol, (a)=>0.30+0.55*a, 0.14, 1);
+    });
+  });
+
+  /* --- smooth vertex normals --- */
+  const nv = M.pos.length/3;
+  const nrm = new Float32Array(nv*3);
+  for(let i=0;i<M.idx.length;i+=3){
+    const a=M.idx[i]*3, b=M.idx[i+1]*3, c=M.idx[i+2]*3;
+    const ux=M.pos[b]-M.pos[a],   uy=M.pos[b+1]-M.pos[a+1], uz=M.pos[b+2]-M.pos[a+2];
+    const vx=M.pos[c]-M.pos[a],   vy=M.pos[c+1]-M.pos[a+1], vz=M.pos[c+2]-M.pos[a+2];
+    const fx=uy*vz-uz*vy, fy=uz*vx-ux*vz, fz=ux*vy-uy*vx;
+    nrm[a]+=fx;nrm[a+1]+=fy;nrm[a+2]+=fz;
+    nrm[b]+=fx;nrm[b+1]+=fy;nrm[b+2]+=fz;
+    nrm[c]+=fx;nrm[c+1]+=fy;nrm[c+2]+=fz;
+  }
+  for(let i=0;i<nv*3;i+=3){
+    const l=Math.hypot(nrm[i],nrm[i+1],nrm[i+2])||1;
+    nrm[i]/=l; nrm[i+1]/=l; nrm[i+2]/=l;
+  }
+
+  /* --- interleave: pos(3) nrm(3) col(3) ao(1) delay(1) = 11 --- */
+  const inter = new Float32Array(nv*11);
+  for(let i=0;i<nv;i++){
+    const o=i*11;
+    inter[o]  =M.pos[i*3];   inter[o+1]=M.pos[i*3+1]; inter[o+2]=M.pos[i*3+2];
+    inter[o+3]=nrm[i*3];     inter[o+4]=nrm[i*3+1];   inter[o+5]=nrm[i*3+2];
+    inter[o+6]=M.col[i*3];   inter[o+7]=M.col[i*3+1]; inter[o+8]=M.col[i*3+2];
+    inter[o+9]=M.ao[i];      inter[o+10]=M.dly[i];
+  }
+  return { data:inter, index:M.idx, count:M.idx.length, verts:nv };
+}
+
+/* ============================================================
+   MATRICES
+   ============================================================ */
+function perspective(fovy,asp,n,f){
+  const t=1/Math.tan(fovy/2);
+  return new Float32Array([t/asp,0,0,0, 0,t,0,0, 0,0,(f+n)/(n-f),-1, 0,0,2*f*n/(n-f),0]);
+}
+function lookAt(eye,ctr,up){
+  let fz=[ctr[0]-eye[0],ctr[1]-eye[1],ctr[2]-eye[2]];
+  let l=Math.hypot(fz[0],fz[1],fz[2]); fz=[fz[0]/l,fz[1]/l,fz[2]/l];
+  let sx=[fz[1]*up[2]-fz[2]*up[1], fz[2]*up[0]-fz[0]*up[2], fz[0]*up[1]-fz[1]*up[0]];
+  l=Math.hypot(sx[0],sx[1],sx[2])||1; sx=[sx[0]/l,sx[1]/l,sx[2]/l];
+  const uy=[sx[1]*fz[2]-sx[2]*fz[1], sx[2]*fz[0]-sx[0]*fz[2], sx[0]*fz[1]-sx[1]*fz[0]];
+  return new Float32Array([
+    sx[0],uy[0],-fz[0],0,
+    sx[1],uy[1],-fz[1],0,
+    sx[2],uy[2],-fz[2],0,
+    -(sx[0]*eye[0]+sx[1]*eye[1]+sx[2]*eye[2]),
+    -(uy[0]*eye[0]+uy[1]*eye[1]+uy[2]*eye[2]),
+      fz[0]*eye[0]+fz[1]*eye[1]+fz[2]*eye[2], 1]);
+}
+function mul(a,b){
+  const o=new Float32Array(16);
+  for(let i=0;i<4;i++)for(let j=0;j<4;j++){
+    let s=0; for(let k=0;k<4;k++) s+=a[k*4+j]*b[i*4+k];
+    o[i*4+j]=s;
+  }
+  return o;
+}
+
+/* ============================================================
+   RENDERER
+   ============================================================ */
+const VS = `
+attribute vec3 aPos; attribute vec3 aNrm; attribute vec3 aCol;
+attribute float aAo; attribute float aDly;
+uniform mat4 uVP; uniform float uGrow; uniform float uTime;
+varying vec3 vN; varying vec3 vC; varying vec3 vP; varying float vAo; varying float vMat;
+void main(){
+  float g = clamp((uGrow - aDly*0.75)/0.28, 0.0, 1.0);
+  g = g*g*(3.0-2.0*g);
+  vec3 anchor = vec3(0.0, 0.0, aPos.z*0.88);
+  vec3 p = mix(anchor, aPos, g);
+  float lift = max(p.z + 1.85, 0.0);              // the stem is still, the bloom sways
+  p.x += sin(uTime*0.20 + p.z*0.55)*0.0068*lift;
+  p.y += cos(uTime*0.155 + p.z*0.45)*0.0056*lift;
+  vN=aNrm; vC=aCol; vP=p;
+  vAo = abs(aAo);
+  vMat = step(aAo, 0.0);                 // 1.0 for stem, leaves, sepals
+  gl_Position = uVP*vec4(p,1.0);
+}`;
+
+const FS = `
+precision mediump float;
+varying vec3 vN; varying vec3 vC; varying vec3 vP; varying float vAo; varying float vMat;
+uniform vec3 uEye; uniform vec3 uLight; uniform float uLightI;
+uniform vec3 uRim; uniform vec3 uFill; uniform vec3 uTrans; uniform vec3 uEdge;
+void main(){
+  vec3 N = normalize(vN);
+  vec3 V = normalize(uEye - vP);
+  float back = step(dot(N,V), 0.0);                // leaf undersides are paler
+  if(dot(N,V) < 0.0) N = -N;                       // everything is two-sided
+  vec3 L1 = vec3(0.5178, 0.5477, 0.6572);          // key
+  vec3 L2 = vec3(-0.8733,-0.3743, 0.3119);         // fill
+  vec3 albedo = vC*(1.0 + 0.34*vMat*back);
+  float w = mix(0.45, 0.18, vMat);                 // petals scatter light; leaves don't
+  float d1 = clamp((dot(N,L1)+w)/(1.0+w), 0.0, 1.0);
+  float d2 = clamp((dot(N,L2)+w)/(1.0+w), 0.0, 1.0);
+  float rim = pow(clamp(1.0-abs(dot(N,V)),0.0,1.0), 3.0);
+  vec3 H = normalize(L1+V);
+  float sd = clamp(dot(N,H),0.0,1.0);
+  float sp = mix(pow(sd,22.0)*0.11, pow(sd,54.0)*0.66, vMat);   // leaves are waxy
+  vec3 shade = d1*vec3(1.0,0.93,0.90)*mix(0.92,1.02,vMat)
+             + d2*uFill*0.26
+             + 0.085;
+  vec3 rimC = mix(uRim, vec3(0.42,0.80,0.30), vMat);
+  vec3 col = albedo*shade*vAo + rim*rimC*mix(0.30,0.14,vMat)*vAo + sp;
+
+  /* --- the lamp behind the rose: light carried through the petal --- */
+  vec3 Lw = uLight - vP;
+  float Ld = length(Lw);
+  Lw /= max(Ld,0.001);
+  float atten   = 1.0/(1.0 + 0.16*Ld*Ld);
+  float toward  = pow(clamp(dot(V,-Lw),0.0,1.0), 2.0);   // are we looking into the lamp?
+  float backlit = smoothstep(-0.30,0.75, dot(-N,Lw));    // is the lamp behind this petal?
+  float thin    = mix(1.0,0.40,abs(dot(N,V)));           // grazing petals read as thinner
+  float trans   = backlit*toward*thin*atten*uLightI;
+  float edge    = pow(clamp(1.0-abs(dot(N,V)),0.0,1.0),2.0)*toward*atten*uLightI;
+  col += albedo*mix(uTrans, vec3(1.05,2.30,0.75), vMat)*trans*mix(1.35,0.80,vMat)
+       + mix(uEdge, vec3(0.70,1.00,0.45), vMat)*edge*0.55;
+
+  col *= 1.15;
+  col = clamp((col*(2.51*col+0.03))/(col*(2.43*col+0.59)+0.14), 0.0, 1.0);
+  gl_FragColor = vec4(pow(col, vec3(1.0/2.2)), 1.0);
+}`;
+
+const PVS = `
+attribute vec3 aP; attribute float aS;
+uniform mat4 uVP; uniform float uT; uniform float uPx;
+varying float vA; varying float vH;
+void main(){
+  float life = 16.0 + aS*20.0;                          // each grain lives 16-36 s
+  float ph   = fract(uT/life + aP.z);                   // its own place in that life
+  float ang  = aP.y + ph*4.6 + uT*0.010;                // the spiral
+  float rad  = mix(aP.x*0.34, aP.x, ph);                // drifting outward as it rises
+  float hz   = mix(-1.30, 1.10, ph) + 0.16*sin(uT*0.055 + aP.y*3.1);
+  vec3 p = vec3(rad*cos(ang), rad*sin(ang), hz);
+  vec4 mv = uVP*vec4(p,1.0);
+  gl_Position = mv;
+  float fade = pow(sin(3.14159*ph), 1.25);              // in from nothing, out to nothing
+  float tw   = 0.68 + 0.32*sin(uT*(0.18+0.40*aS) + aP.y*7.0);
+  gl_PointSize = clamp((0.7+2.2*aS)*(0.5+0.7*fade)*uPx/max(mv.w,0.001), 1.0, 8.0);
+  vA = (0.15+0.32*aS)*tw*fade;
+  vH = aS;
+}`;
+const PFS = `
+precision mediump float; varying float vA; varying float vH; uniform vec3 uPA; uniform vec3 uPB;
+void main(){
+  vec2 d = gl_PointCoord - vec2(0.5);
+  float r = dot(d,d);
+  if(r > 0.25) discard;
+  float d0 = 1.0 - r*4.0;
+  float a  = (pow(d0,1.7)*0.75 + pow(d0,7.0)*0.9)*vA;           // soft halo, bright core
+  vec3 c = mix(uPA, uPB, vH);                                    // gold to rose (per palette)
+  gl_FragColor = vec4(c*a, a);
+}`;
+
+/* ---------- the lamp itself: a billboard the petals can hide ---------- */
+const SVS = `
+attribute vec2 aQ;
+uniform mat4 uVP; uniform vec3 uPos; uniform vec3 uR; uniform vec3 uU; uniform float uSize;
+varying vec2 vQ;
+void main(){ vQ=aQ; gl_Position = uVP*vec4(uPos + uR*(aQ.x*uSize) + uU*(aQ.y*uSize), 1.0); }`;
+const SFS = `
+precision mediump float; varying vec2 vQ; uniform float uInt; uniform vec3 uCol;
+void main(){
+  float r = length(vQ);
+  float a = (exp(-r*r*4.0)*0.85 + pow(max(1.0-r,0.0),5.0)*0.5)*uInt;
+  gl_FragColor = vec4(uCol*a, a);
+}`;
+
+(function grain(){
+  try{
+    const el=document.getElementById('grain'); if(!el) return;
+    const c=document.createElement('canvas'); c.width=c.height=140;
+    const x=c.getContext('2d'); const d=x.createImageData(140,140);
+    for(let i=0;i<d.data.length;i+=4){
+      const v=190+Math.random()*65;
+      d.data[i]=d.data[i+1]=d.data[i+2]=v; d.data[i+3]=255;
+    }
+    x.putImageData(d,0,0);
+    el.style.backgroundImage='url('+c.toDataURL()+')';
+  }catch(e){}
+})();
+
+/* ============================================================
+   MUSIC — composed live, note by note. No audio files.
+   A love song in raga Yaman (or Khamaj / Mohanam, seeded):
+   a bansuri-like flute sings a phrase, a santoor-like harp answers
+   it, a soft harp arpeggio keeps a slow 6/8 pulse, a tanpura sits
+   well beneath. Fixed pitches only — no glides, no LFO on any held
+   tone, no detuned unisons. Master → limiter → out.
+   Same variables as the picture: every outer petal you turn past
+   (θk = k·Φ) plucks its own note; when the lamp shines through a
+   gap in the petals, a bell answers.
+   ============================================================ */
+const RAGAS = {
+  yaman:   { st:{S:0,R:2,G:4,M:6,P:7,D:9,N:11},
+             phrases:["N.:1 R:1 G:3 R:1 G:1 M:1 P:4","M:1 D:1 N:2 D:1 P:1 M:2 G:4","G:1 M:1 D:2 N:2 S':4 N:1 D:1",
+                      "P:2 M:1 G:1 R:2 G:2 R:1 S:3","N.:1 R:1 G:2 M:2 P:2 D:1 P:3","S':2 N:1 D:1 P:2 M:1 G:1 R:2 S:2",
+                      "G:2 G:1 M:1 P:2 D:2 N:1 S':3","R':1 S':1 N:2 D:2 P:1 M:1 G:4"] },
+  khamaj:  { st:{S:0,R:2,G:4,M:5,P:7,D:9,n:10,N:11},
+             phrases:["S:1 G:1 M:2 P:2 D:2 N:1 S':3","S':2 n:1 D:1 P:2 M:1 G:1 R:1 S:3","G:1 M:1 P:2 D:2 M:1 G:1 M:1 G:3",
+                      "P:2 D:1 n:1 D:2 P:2 M:1 G:3","N.:1 S:1 G:2 M:1 P:1 D:2 n:1 D:3","G:2 M:1 P:1 n:2 D:1 P:1 M:1 G:3"] },
+  mohanam: { st:{S:0,R:2,G:4,P:7,D:9},
+             phrases:["S:1 R:1 G:2 P:2 D:2 S':4","S':2 D:1 P:1 G:2 R:2 S:4","G:1 P:1 D:2 P:1 G:1 R:2 G:4",
+                      "D.:1 S:1 R:2 G:2 P:2 G:1 R:3","P:2 D:1 S':1 D:2 P:2 G:4","R:1 G:1 P:2 G:1 R:1 S:2 D.:1 S:3"] }
+};
+const BASS = [[0,7,12,16],[-3,4,9,12],[-5,2,7,14],[0,7,12,16]];   // S · D. · P. · S chords, only notes all three ragas share
+
+function Music(opts){
+  const AC = window.AudioContext || window.webkitAudioContext;
+  if(!AC) return null;
+  const R = RAGAS[opts.raga] || RAGAS.yaman;
+  const rnd = new RNG((opts.seed ^ 0x5eed) >>> 0);
+  const ROOT = opts.root || 261.63;                 // Sa = C4; the melody sings an octave above
+  const BEAT = 0.36;                                // one quaver of a slow 6/8 (≈ 56 dotted-crotchets/min)
+  const BAR = 6*BEAT;
+  let ctx=null, master=null, out=null, rev=null, noise=null, timer=null;
+  let playing=false, nextBar=0, bar=0, phraseIdx=0, lastPetal=0, lastBell=0;
+  const ks = new Map();
+  const order = R.phrases.map((_,i)=>i);
+  for(let i=order.length-1;i>0;i--){ const j=Math.floor(rnd.next()*(i+1)); const t=order[i]; order[i]=order[j]; order[j]=t; }
+
+  const f = (semi) => ROOT*Math.pow(2, semi/12);
+  function swara(tok){                              // "G" "S'" "N." → Hz (melody octave)
+    let oct=0; for(const ch of tok.slice(1)) oct += ch==="'" ? 1 : (ch==='.' ? -1 : 0);
+    return f(R.st[tok[0]] + 12*(oct+1));
+  }
+  function parse(p){ return p.split(' ').map(t=>{ const [n,d]=t.split(':'); return {hz:swara(n), d:+d}; }); }
+
+  function build(){
+    ctx = new AC();
+    out = ctx.createGain(); out.gain.value = 0;                     // fade in/out
+    master = ctx.createGain(); master.gain.value = 1.0;
+    const lim = ctx.createDynamicsCompressor();                     // limiter: nothing may ever get harsh
+    lim.threshold.value=-10; lim.knee.value=4; lim.ratio.value=16; lim.attack.value=0.003; lim.release.value=0.25;
+    master.connect(out); out.connect(lim); lim.connect(ctx.destination);
+    // room: convolution with generated, softened, decaying noise
+    const len=Math.floor(ctx.sampleRate*2.8), ir=ctx.createBuffer(2,len,ctx.sampleRate);
+    for(let ch=0;ch<2;ch++){
+      const d=ir.getChannelData(ch); let lp=0;
+      for(let i=0;i<len;i++){ lp += ((rnd.next()*2-1)-lp)*0.5; d[i]=lp*Math.pow(1-i/len,3.0); }
+    }
+    rev=ctx.createConvolver(); rev.buffer=ir;
+    const wet=ctx.createGain(); wet.gain.value=0.5; rev.connect(wet); wet.connect(master);
+    const nb=ctx.createBuffer(1,ctx.sampleRate*2,ctx.sampleRate), nd=nb.getChannelData(0);
+    for(let i=0;i<nd.length;i++) nd[i]=rnd.next()*2-1;
+    noise=nb;
+  }
+  function send(node, w){
+    node.connect(master);
+    if(w){ const g=ctx.createGain(); g.gain.value=w; node.connect(g); g.connect(rev); }
+  }
+
+  /* Karplus–Strong string, rendered once per pitch and cached (fixed pitch, exact tuning) */
+  function ksBuf(hz, dur, bright, decay){
+    const key=hz.toFixed(2)+'|'+bright+'|'+decay+'|'+dur;
+    if(ks.has(key)) return ks.get(key);
+    const sr=ctx.sampleRate, N=Math.max(2,Math.floor(sr/hz-0.5)), n=Math.round(sr*dur);
+    const b=ctx.createBuffer(1,n,sr), d=b.getChannelData(0);
+    let lp=0, mean=0;
+    for(let i=0;i<N;i++){ lp += ((rnd.next()*2-1)-lp)*bright; d[i]=lp; mean+=lp; }
+    mean/=N; for(let i=0;i<N;i++) d[i]-=mean;
+    d[N]=decay*0.5*d[0];
+    for(let i=N+1;i<n;i++) d[i]=decay*0.5*(d[i-N]+d[i-N-1]);
+    let pk=1e-6; for(let i=0;i<n;i++) if(Math.abs(d[i])>pk) pk=Math.abs(d[i]);
+    const rel=Math.floor(sr*0.25);
+    for(let i=0;i<n;i++){ d[i]/=pk; if(i>n-rel) d[i]*=(n-i)/rel; }
+    b.rate = hz/(sr/(N+0.5));                       // fractional-delay correction → exact pitch
+    ks.set(key,b); return b;
+  }
+  function harp(hz, vel, t, bright, dur){           // santoor / harp
+    dur = dur||2.6;
+    const buf=ksBuf(hz,dur,bright==null?0.6:bright,0.996);
+    const s=ctx.createBufferSource(); s.buffer=buf; s.playbackRate.value=buf.rate;
+    const lp=ctx.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value=2200+4200*(bright==null?0.6:bright); lp.Q.value=0.4;
+    const g=ctx.createGain(); g.gain.value=0.62*vel;
+    s.connect(lp); lp.connect(g); send(g,0.4); s.start(t); s.stop(t+dur);
+  }
+  function bell(hz, vel, t){                        // FM bell, ratio 2 → harmonic, no beating
+    const car=ctx.createOscillator(), mod=ctx.createOscillator(), mg=ctx.createGain(), g=ctx.createGain();
+    car.frequency.value=hz; mod.frequency.value=hz*2;
+    mg.gain.setValueAtTime(hz*1.0,t); mg.gain.exponentialRampToValueAtTime(hz*0.06,t+1.3);
+    mod.connect(mg); mg.connect(car.frequency); car.connect(g);
+    g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(0.16*vel,t+0.005); g.gain.exponentialRampToValueAtTime(0.0001,t+2.4);
+    send(g,0.55); car.start(t); mod.start(t); car.stop(t+2.5); mod.stop(t+2.5);
+  }
+  function flute(hz, dur, vel, t){                  // breathy bansuri; vibrato ≤ 5 cents, arriving late
+    const e=t+dur;
+    const o1=ctx.createOscillator(), o2=ctx.createOscillator(), o2g=ctx.createGain();
+    o1.frequency.value=hz; o2.type='triangle'; o2.frequency.value=hz*2; o2g.gain.value=0.12;
+    const lfo=ctx.createOscillator(), lg=ctx.createGain(); lfo.frequency.value=5.0;
+    lg.gain.setValueAtTime(0,t); lg.gain.setValueAtTime(0,t+Math.min(0.35,dur*0.5));
+    lg.gain.linearRampToValueAtTime(hz*0.003,t+Math.min(0.8,dur*0.8));
+    lfo.connect(lg); lg.connect(o1.frequency); lg.connect(o2.frequency);
+    const g=ctx.createGain();
+    g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(0.30*vel,t+0.06);
+    g.gain.setValueAtTime(0.30*vel,Math.max(t+0.07,e-0.14)); g.gain.linearRampToValueAtTime(0,e);
+    const lp=ctx.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value=3600;
+    o1.connect(lp); o2.connect(o2g); o2g.connect(lp); lp.connect(g);
+    const n=ctx.createBufferSource(); n.buffer=noise;
+    const bp=ctx.createBiquadFilter(); bp.type='bandpass'; bp.frequency.value=hz*2; bp.Q.value=1.3;
+    const ng=ctx.createGain();
+    ng.gain.setValueAtTime(0,t); ng.gain.linearRampToValueAtTime(0.06*vel,t+0.04);
+    ng.gain.linearRampToValueAtTime(0.014*vel,t+0.22); ng.gain.linearRampToValueAtTime(0,e);
+    n.connect(bp); bp.connect(ng); ng.connect(g);
+    send(g,0.5);
+    [o1,o2,lfo].forEach(o=>{ o.start(t); o.stop(e+0.05); });
+    n.start(t, rnd.next()); n.stop(e+0.05);
+  }
+  function tanpura(hz, t, vel){
+    const buf=ksBuf(hz,3.4,0.5,0.9985);
+    const s=ctx.createBufferSource(); s.buffer=buf; s.playbackRate.value=buf.rate;
+    const lp=ctx.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value=1100;
+    const g=ctx.createGain(); g.gain.value=0.07*vel;
+    s.connect(lp); lp.connect(g); send(g,0.35); s.start(t); s.stop(t+3.4);
+  }
+
+  /* one bar: tanpura + arpeggio pulse; every third bar of four a melody phrase begins */
+  function scheduleBar(t, b){
+    const ch = BASS[b%4];
+    tanpura(f(b%4===0 ? 7-12 : 0), t, 0.9);                                  // Pa on the cycle's first bar, else Sa
+    [0,2,3,4].forEach((q,i)=>
+      harp(f(ch[i]-12), i===0?0.22:0.15, t+q*BEAT, 0.3, 2.2));              // soft 6/8 arpeggio pulse
+    if(b%3===0){                                                             // a phrase spans ~2 bars, then breathes
+      const k=order[phraseIdx%order.length], notes=parse(R.phrases[k]);
+      const sing = (phraseIdx%2===0);                                        // call (flute) · answer (harp + bell)
+      let tt=t+BEAT*0.02;
+      notes.forEach((n,i)=>{
+        const d=n.d*BEAT*(1+0.05*(rnd.next()-0.5));                          // a little rubato, never a glide
+        if(sing) flute(n.hz, d*0.95, 1.0, tt);
+        else { harp(n.hz, i===0?0.95:0.8, tt, 0.7); if(i===notes.length-1) bell(n.hz*2, 0.5, tt); }
+        tt+=d;
+      });
+      phraseIdx++;
+    }
+  }
+  function schedule(){
+    if(!playing) return;
+    while(nextBar < ctx.currentTime+0.6){ scheduleBar(nextBar, bar++); nextBar+=BAR; }
+  }
+
+  const degs = Object.keys(R.st);
+  return {
+    get playing(){ return playing; },
+    toggle(){
+      if(!ctx){ build(); }
+      if(playing){
+        playing=false;
+        const now=ctx.currentTime;
+        out.gain.cancelScheduledValues(now); out.gain.setValueAtTime(out.gain.value,now);
+        out.gain.linearRampToValueAtTime(0.0001,now+1.2);
+        clearInterval(timer); timer=null;
+        return false;
+      }
+      if(ctx.state==='suspended') ctx.resume();
+      playing=true;
+      const now=ctx.currentTime;
+      out.gain.cancelScheduledValues(now); out.gain.setValueAtTime(Math.max(out.gain.value,0.0001),now);
+      out.gain.linearRampToValueAtTime(opts.level||1.0,now+1.6);
+      nextBar=Math.max(nextBar, now+0.12);
+      schedule(); timer=setInterval(schedule,80);
+      return true;
+    },
+    /* a petal of the phyllotaxis passes the eye: its own note (degree by petal index) */
+    petal(k, vel){
+      if(!playing) return; const t=ctx.currentTime+0.01;
+      if(t-lastPetal<0.14) return; lastPetal=t;
+      const d=degs[k%degs.length];
+      harp(f(R.st[d]+24), 0.45*(vel||1), t, 0.85, 2.0);
+    },
+    /* light through a gap in the petals: a bell on Sa' with its fifth */
+    lamp(){
+      if(!playing) return; const t=ctx.currentTime+0.02;
+      if(t-lastBell<6) return; lastBell=t;
+      bell(f(24),0.55,t); bell(f(31),0.35,t+0.18);
+    },
+    suspend(){ if(ctx && ctx.state==='running') ctx.suspend(); },
+    resume(){ if(ctx && playing && ctx.state==='suspended') ctx.resume(); }
+  };
+}
+
+/* ============================================================
+   TEXT — all copy from config, inserted with textContent
+   ============================================================ */
+const NONLATIN = /[^\u0000-ɏḀ-ỿ -⁯☀-➿\s]/;
+function isNonLatin(s){ return NONLATIN.test(s||''); }
+function setText(id, txt){ const e=document.getElementById(id); if(e) e.textContent = fill(txt); return e; }
+/* tiny formula markup: _{sub} ^{sup} → real <sub>/<sup> elements, text only */
+function formula(el, src){
+  const re=/([_^])\{([^}]*)\}/g; let last=0, m;
+  while((m=re.exec(src))){
+    if(m.index>last) el.appendChild(document.createTextNode(src.slice(last,m.index)));
+    const x=document.createElement(m[1]==='_'?'sub':'sup'); x.textContent=m[2]; el.appendChild(x);
+    last=re.lastIndex;
+  }
+  if(last<src.length) el.appendChild(document.createTextNode(src.slice(last)));
+}
+function fitTitle(h){
+  h.style.fontSize=''; h.style.whiteSpace='nowrap';
+  const max=h.parentElement.clientWidth-8; let fs=parseFloat(getComputedStyle(h).fontSize);
+  while(h.scrollWidth>max && fs>24){ fs-=1; h.style.fontSize=fs+'px'; }
+  if(h.scrollWidth>max) h.style.whiteSpace='normal';               // still too long: wrap, gracefully
+}
+function writeText(){
+  const C=CONFIG.copy;
+  document.title = fill(C.docTitle || C.title || '');
+  setText('eyebrow', C.eyebrow);
+  setText('sub', C.sub);
+  /* title: "For {to}" with the name in its own span (script-aware) and the heart */
+  const h=document.getElementById('title'); h.textContent='';
+  const parts=String(C.title||'').split('{to}');
+  parts.forEach((p,i)=>{
+    if(p) h.appendChild(document.createTextNode(fill(p)));
+    if(i<parts.length-1){
+      const n=document.createElement('span'); n.className='name'; n.textContent=CONFIG.to;
+      if(isNonLatin(CONFIG.to)){ n.classList.add('nl'); if(/[ऀ-ॿ]/.test(CONFIG.to)) n.lang='hi'; }
+      h.appendChild(n);
+    }
+  });
+  if(C.heart){ const hs=document.createElement('span'); hs.className='heart'; hs.setAttribute('aria-hidden','true'); hs.textContent=C.heart; h.appendChild(hs); }
+  setText('rule', C.rule);
+  setText('fromLabel', C.fromLabel);
+  const who=setText('who', CONFIG.from); if(isNonLatin(CONFIG.from)) who.classList.add('nl');
+  setText('fbTitle', C.fallbackTitle); setText('fbBody', C.fallbackBody);
+  document.getElementById('c').setAttribute('aria-label', fill(C.canvasLabel));
+  setText('hint', C.hint);
+  /* the message and the verse, under the rose */
+  const w=document.getElementById('words'); w.textContent='';
+  if(CONFIG.message && String(CONFIG.message).trim()){
+    const m=document.createElement('p'); m.className='message'; m.textContent=fill(CONFIG.message); w.appendChild(m);
+  }
+  const V=CONFIG.verse||{};
+  if(V.enabled && V.text){
+    const box=document.createElement('div'); box.className='verse'; if(V.id) box.dataset.verseId=V.id;
+    const t=document.createElement('p'); t.className='vt'; t.textContent=V.text;
+    if(V.dir==='rtl'){ t.dir='rtl'; t.lang='ur'; } else if(/[ऀ-ॿ]/.test(V.text)) t.lang='hi';
+    box.appendChild(t);
+    if(V.translation){ const e=document.createElement('p'); e.className='ve'; e.textContent=V.translation; box.appendChild(e); }
+    if(V.by){ const b=document.createElement('p'); b.className='vb'; b.textContent=V.by; box.appendChild(b); }
+    w.appendChild(box);
+  }
+  document.body.classList.toggle('has-words', w.childElementCount>0);
+  /* the equations */
+  const M=document.getElementById('math'); M.textContent='';
+  (CONFIG.equations||[]).forEach((q,i)=>{
+    const row=document.createElement('div'); row.className='eq';
+    const n=document.createElement('span'); n.className='n'; n.textContent=String(i+1).padStart(2,'0');
+    const f=document.createElement('span'); f.className='f'; formula(f, String(q.f||''));
+    const l=document.createElement('span'); l.className='lbl'; l.textContent=fill(q.label);
+    row.appendChild(n); row.appendChild(f); row.appendChild(l); M.appendChild(row);
+  });
+  fitTitle(h);
+}
+writeText();
+window.addEventListener('resize',()=>fitTitle(document.getElementById('title')));
+if(document.fonts && document.fonts.ready) document.fonts.ready.then(()=>fitTitle(document.getElementById('title')));
+
+(function main(){
+  const canvas = document.getElementById('c');
+  const fallback = document.getElementById('fallback');
+  let gl = null;
+  try{
+    gl = canvas.getContext('webgl',{antialias:true, alpha:true, premultipliedAlpha:true})
+      || canvas.getContext('experimental-webgl',{antialias:true, alpha:true});
+  }catch(e){ gl = null; }
+  if(!gl){ fallback.style.display='grid'; canvas.style.display='none'; return; }
+
+  function compile(src,type){
+    const s=gl.createShader(type);
+    gl.shaderSource(s,src); gl.compileShader(s);
+    if(!gl.getShaderParameter(s,gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(s));
+    return s;
+  }
+  function program(vs,fs){
+    const p=gl.createProgram();
+    gl.attachShader(p,compile(vs,gl.VERTEX_SHADER));
+    gl.attachShader(p,compile(fs,gl.FRAGMENT_SHADER));
+    gl.linkProgram(p);
+    if(!gl.getProgramParameter(p,gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(p));
+    return p;
+  }
+
+  let prog, pprog, sprog;
+  try{ prog = program(VS,FS); pprog = program(PVS,PFS); sprog = program(SVS,SFS); }
+  catch(err){ fallback.style.display='grid'; canvas.style.display='none'; return; }
+
+  /* ---------- geometry ---------- */
+  const coarse = window.matchMedia('(pointer:coarse)').matches || Math.min(screen.width,screen.height) < 700;
+  const NPET = 40 + (SEED % 9);                       // 40–48 petals: each seed grows its own rose
+  const GSEED = (SEED ^ 0x9e3779b9) >>> 0 || 7;
+  const rose = buildRose(coarse ? {nu:11,nv:17,petals:NPET,leafU:9,leafV:19,seed:GSEED}
+                               : {nu:15,nv:21,petals:NPET,leafU:11,leafV:25,seed:GSEED});
+
+  const vbo=gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER,vbo);
+  gl.bufferData(gl.ARRAY_BUFFER,rose.data,gl.STATIC_DRAW);
+
+  let indexType = gl.UNSIGNED_SHORT, indexArr;
+  if(rose.verts > 65535){
+    if(gl.getExtension('OES_element_index_uint')){ indexType=gl.UNSIGNED_INT; indexArr=new Uint32Array(rose.index); }
+    else { indexArr=new Uint16Array(rose.index); }
+  } else indexArr = new Uint16Array(rose.index);
+  const ibo=gl.createBuffer();
+  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,ibo);
+  gl.bufferData(gl.ELEMENT_ARRAY_BUFFER,indexArr,gl.STATIC_DRAW);
+
+  const A={
+    pos:gl.getAttribLocation(prog,'aPos'), nrm:gl.getAttribLocation(prog,'aNrm'),
+    col:gl.getAttribLocation(prog,'aCol'), ao:gl.getAttribLocation(prog,'aAo'),
+    dly:gl.getAttribLocation(prog,'aDly')
+  };
+  const U={ vp:gl.getUniformLocation(prog,'uVP'), eye:gl.getUniformLocation(prog,'uEye'),
+            grow:gl.getUniformLocation(prog,'uGrow'), time:gl.getUniformLocation(prog,'uTime'),
+            light:gl.getUniformLocation(prog,'uLight'), lightI:gl.getUniformLocation(prog,'uLightI'),
+            rim:gl.getUniformLocation(prog,'uRim'), fill:gl.getUniformLocation(prog,'uFill'),
+            trans:gl.getUniformLocation(prog,'uTrans'), edge:gl.getUniformLocation(prog,'uEdge') };
+
+  /* ---------- pollen ---------- */
+  const NP = coarse ? 340 : 620;
+  const pdata = new Float32Array(NP*4);
+  const prng = new RNG((SEED*31+21)>>>0);
+  for(let i=0;i<NP;i++){
+    pdata[i*4]   = 0.62 + Math.pow(prng.next(),0.70)*2.15;   // how far out it ends up
+    pdata[i*4+1] = prng.next()*Math.PI*2;                    // where it starts around
+    pdata[i*4+2] = prng.next();                              // where it is in its life
+    pdata[i*4+3] = prng.next();                              // size / hue / twinkle seed
+  }
+  const pvbo=gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER,pvbo);
+  gl.bufferData(gl.ARRAY_BUFFER,pdata,gl.STATIC_DRAW);
+  const PA={p:gl.getAttribLocation(pprog,'aP'), s:gl.getAttribLocation(pprog,'aS')};
+  const PU={vp:gl.getUniformLocation(pprog,'uVP'), t:gl.getUniformLocation(pprog,'uT'),
+            px:gl.getUniformLocation(pprog,'uPx'), pa:gl.getUniformLocation(pprog,'uPA'), pb:gl.getUniformLocation(pprog,'uPB')};
+
+  /* ---------- the lamp ---------- */
+  const squad=gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER,squad);
+  gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1, 1,-1, -1,1, 1,1]),gl.STATIC_DRAW);
+  const SA_={q:gl.getAttribLocation(sprog,'aQ')};
+  const SU={vp:gl.getUniformLocation(sprog,'uVP'), pos:gl.getUniformLocation(sprog,'uPos'),
+            r:gl.getUniformLocation(sprog,'uR'), u:gl.getUniformLocation(sprog,'uU'),
+            size:gl.getUniformLocation(sprog,'uSize'), int:gl.getUniformLocation(sprog,'uInt'),
+            col:gl.getUniformLocation(sprog,'uCol')};
+  function sprite(VP,pos,right,up,size,inten,col,depth){
+    if(inten<=0.004) return;
+    if(depth) gl.enable(gl.DEPTH_TEST); else gl.disable(gl.DEPTH_TEST);
+    gl.useProgram(sprog);
+    gl.uniformMatrix4fv(SU.vp,false,VP);
+    gl.uniform3fv(SU.pos,pos); gl.uniform3fv(SU.r,right); gl.uniform3fv(SU.u,up);
+    gl.uniform1f(SU.size,size); gl.uniform1f(SU.int,inten); gl.uniform3fv(SU.col,col);
+    gl.bindBuffer(gl.ARRAY_BUFFER,squad);
+    gl.enableVertexAttribArray(SA_.q);
+    gl.vertexAttribPointer(SA_.q,2,gl.FLOAT,false,8,0);
+    gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
+    gl.disableVertexAttribArray(SA_.q);
+    gl.enable(gl.DEPTH_TEST);
+  }
+
+  /* ---------- the two names, in orbit ---------- */
+  const stage=document.querySelector('.stage');
+  /* Latin names fly letter by letter, exactly as before. Scripts whose letters join
+     (Devanagari, Urdu, Tamil…) or very long names fly word by word, so nothing is broken apart. */
+  function graphemes(t){
+    try{ if(window.Intl && Intl.Segmenter) return [...new Intl.Segmenter(undefined,{granularity:'grapheme'}).segment(t)].map(x=>x.segment); }catch(e){}
+    return Array.from(t);
+  }
+  function chars(txt){
+    txt=String(txt||'').trim().replace(/\s+/g,' ');
+    if(!txt) return [];
+    const g=graphemes(txt), nl=isNonLatin(txt);
+    const words = nl || g.length>14;
+    const units = words ? txt.split(' ') : g;
+    const list = units.map(function(ch){
+      const e=document.createElement('span');
+      e.className='orbit'+(nl?' nl':''); e.setAttribute('aria-hidden','true');
+      e.textContent=ch; e._w=18; stage.appendChild(e); return e;
+    });
+    list._words = words;
+    return list;
+  }
+  const charsA = CONFIG.orbit.to===false ? [] : chars(CONFIG.to);
+  const charsB = CONFIG.orbit.from===false ? [] : chars(CONFIG.from);
+  let labW=22;
+  function measureLabels(){
+    labW=22;
+    charsA.concat(charsB).forEach(function(e){ e._w=Math.max(e.offsetWidth,8); labW=Math.max(labW,e._w); });
+    [charsA,charsB].forEach(function(list){                 // angular slot per unit
+      const em=list.length ? parseFloat(getComputedStyle(list[0]).fontSize)||18 : 18;
+      let tot=0;
+      list.forEach(function(e){ e._a = list._words ? 0.30*(e._w/(0.55*em)) + 0.26 : 1; tot+=e._a; });
+      list._tot=tot;
+    });
+  }
+  /* two rings, tilted against each other like the shells of an atom */
+  function ring(th0,tilt){
+    const c=Math.cos(th0), s=Math.sin(th0), ct=Math.cos(tilt), st=Math.sin(tilt);
+    return {u1:[c,s,0], u2:[-s*ct, c*ct, st]};
+  }
+  const ringA=ring(0.00, 0.62), ringB=ring(1.95,-0.70);
+  function place(el,P,VP,rw,rh,centreW){
+    const x=VP[0]*P[0]+VP[4]*P[1]+VP[8]*P[2]+VP[12];
+    const y=VP[1]*P[0]+VP[5]*P[1]+VP[9]*P[2]+VP[13];
+    const w=VP[3]*P[0]+VP[7]*P[1]+VP[11]*P[2]+VP[15];
+    if(w<=0.06){ el.style.opacity='0'; return; }
+    const sc=clamp(3.4/w,0.42,1.45);
+    const hw=el._w*0.5*sc+6;                       // never let a name leave the frame
+    const sx=clamp((x/w*0.5+0.5)*rw, hw, Math.max(hw,rw-hw));
+    const sy=clamp((1-(y/w*0.5+0.5))*rh, 15, Math.max(15,rh-15));
+    const behind = w > centreW;                       // passing behind the bloom
+    el.style.transform='translate(-50%,-50%) translate('+sx.toFixed(1)+'px,'+sy.toFixed(1)+'px) scale('+sc.toFixed(3)+')';
+    el.style.opacity = (behind?0.34:0.96).toString();
+    el.style.filter  = behind?'blur(1.1px)':'none';
+  }
+
+  /* ---------- camera ---------- */
+  const HOME={az:0.45, el:0.40, zoom:1};
+  let az=HOME.az, el=HOME.el, zoom=HOME.zoom;
+  let taz=az, tel=el, tzoom=zoom;
+  const TARGET=[0,0,-0.42];
+  let dpr=1, W=1, H=1;
+
+  function resize(){
+    dpr = Math.min(window.devicePixelRatio||1, 2);
+    const r = canvas.getBoundingClientRect();
+    W = Math.max(1, Math.round(r.width*dpr));
+    H = Math.max(1, Math.round(r.height*dpr));
+    if(canvas.width!==W || canvas.height!==H){ canvas.width=W; canvas.height=H; measureLabels(); }
+  }
+  function frameDistance(asp,fovy){
+    // keep the whole bloom inside the frame on any aspect ratio
+    const hfov = 2*Math.atan(Math.tan(fovy/2)*asp);
+    const R = 1.42;
+    const margin = (hfov < fovy) ? 0.96 : 0.88;   // portrait is width-limited
+    return R/Math.sin(Math.min(fovy,hfov)/2)*margin;
+  }
+
+  /* ---------- interaction ---------- */
+  let auto = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const pointers=new Map();
+  let lastX=0,lastY=0,pinch=0;
+
+  canvas.addEventListener('pointerdown',e=>{
+    canvas.setPointerCapture(e.pointerId);
+    pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+    lastX=e.clientX; lastY=e.clientY;
+    canvas.classList.add('dragging');
+    if(pointers.size===2) pinch=pinchDist();
+  });
+  function pinchDist(){
+    const p=[...pointers.values()];
+    return Math.hypot(p[0].x-p[1].x, p[0].y-p[1].y);
+  }
+  canvas.addEventListener('pointermove',e=>{
+    if(!pointers.has(e.pointerId)) return;
+    pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+    if(pointers.size===1){
+      taz -= (e.clientX-lastX)*0.0075;
+      tel = clamp(tel + (e.clientY-lastY)*0.0060, -0.30, 1.32);
+      lastX=e.clientX; lastY=e.clientY;
+    } else if(pointers.size===2 && pinch>0){
+      const d=pinchDist();
+      tzoom = clamp(tzoom*(pinch/d), 0.55, 2.4);
+      pinch=d;
+    }
+  });
+  function up(e){
+    pointers.delete(e.pointerId);
+    if(pointers.size<2) pinch=0;
+    if(pointers.size===0) canvas.classList.remove('dragging');
+  }
+  canvas.addEventListener('pointerup',up);
+  canvas.addEventListener('pointercancel',up);
+  canvas.addEventListener('wheel',e=>{
+    e.preventDefault();
+    tzoom = clamp(tzoom*Math.exp(e.deltaY*0.0011), 0.55, 2.4);
+  },{passive:false});
+
+  const btnRot=document.getElementById('btnRot');
+  const btnReset=document.getElementById('btnReset');
+  const C=CONFIG.copy;
+  btnRot.textContent = fill(auto ? C.rotPause : C.rotPlay);
+  btnRot.addEventListener('click',()=>{
+    auto=!auto;
+    btnRot.textContent = fill(auto ? C.rotPause : C.rotPlay);
+  });
+  btnReset.textContent = fill(C.reset);
+  btnReset.addEventListener('click',()=>{ taz=HOME.az; tel=HOME.el; tzoom=HOME.zoom; });
+
+  /* one short cue, until the first touch */
+  const hint=document.getElementById('hint');
+  let hintT = C.hint ? setTimeout(()=>hint.classList.add('show'), 5200) : 0;
+  function dropHint(){ clearTimeout(hintT); hint.classList.remove('show'); }
+  canvas.addEventListener('pointerdown', dropHint, {once:true});
+  setTimeout(dropHint, 16000);
+
+  const btnMusic=document.getElementById('btnMusic');
+  const music=Music({seed:SEED, raga:RAGA_KEY, root:[261.63,293.66][(SEED>>>11)%2], level:0.7});
+  if(music){
+    btnMusic.hidden=false;
+    btnMusic.textContent = fill(C.musicOn);
+    btnMusic.addEventListener('click',()=>{
+      let on=false;
+      try{ on=music.toggle(); }catch(e){ btnMusic.hidden=true; return; }
+      btnMusic.textContent = fill(on ? C.musicOff : C.musicOn);
+      btnMusic.classList.toggle('on', on);
+      btnMusic.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    document.addEventListener('visibilitychange',()=>{ if(document.hidden) music.suspend(); else music.resume(); });
+  }
+  /* the outer petals' azimuths (θk = k·Φ): turning the rose past one plucks its note */
+  const PET_AZ=[]; { const GA=137.507*RAD; for(let k=NPET-8;k<NPET;k++) PET_AZ.push({k:k, a:((GA*k)%(2*Math.PI))}); }
+  let prevAz=null, prevLightI=0;
+  function crossings(a0,a1){
+    if(a0===null || a0===a1) return;
+    const lo=Math.min(a0,a1), hi=Math.max(a0,a1);
+    if(hi-lo>Math.PI) return;
+    PET_AZ.forEach(p=>{
+      const base = p.a + 2*Math.PI*Math.ceil((lo-p.a)/(2*Math.PI));
+      if(base<=hi && music) music.petal(p.k, pointers.size ? 1 : 0.7);
+    });
+  }
+
+  /* ---------- draw ---------- */
+  gl.clearColor(0,0,0,0);
+  gl.enable(gl.DEPTH_TEST);
+  gl.disable(gl.CULL_FACE);
+
+  const t0=performance.now();
+  const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let prevT=0;
+
+  function draw(now){
+    const T=(now-t0)/1000;
+    resize();
+    gl.viewport(0,0,W,H);
+    gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
+
+    const dt = Math.min(0.05, Math.max(0, T-prevT)); prevT = T;
+    /* a full turn takes about two minutes, and only begins once the rose has opened */
+    if(auto) taz += 0.052*dt*smoothstep(2.5,8.0,T);
+    const k = 1-Math.exp(-5.0*dt);                     // languid, frame-rate independent
+    az += (taz-az)*k; el += (tel-el)*k; zoom += (tzoom-zoom)*k;
+    if(music && music.playing){ crossings(prevAz, az); }
+    prevAz = az;
+
+    const asp=W/H;
+    const fovy=(asp<0.85?46:34)*RAD;
+    const dist=frameDistance(asp,fovy)*zoom;
+    const ce=Math.cos(el), eye=[
+      TARGET[0]+dist*ce*Math.cos(az),
+      TARGET[1]+dist*ce*Math.sin(az),
+      TARGET[2]+dist*Math.sin(el)
+    ];
+    const VP=mul(perspective(fovy,asp,0.1,60), lookAt(eye,TARGET,[0,0,1]));
+
+    /* The lamp keeps station behind the bloom and swings slowly across it.
+       The rose is fixed in the world, so as the view turns, different gaps
+       between the petals line up with the light and catch fire. */
+    const la = az + Math.PI + 1.15*Math.sin(T*0.040);
+    const LIGHT=[2.6*Math.cos(la), 2.6*Math.sin(la), -0.05+0.38*Math.sin(T*0.055)];
+    let dv=[TARGET[0]-eye[0],TARGET[1]-eye[1],TARGET[2]-eye[2]];
+    let dl=Math.hypot(dv[0],dv[1],dv[2]); dv=[dv[0]/dl,dv[1]/dl,dv[2]/dl];
+    let tl=[LIGHT[0]-TARGET[0],LIGHT[1]-TARGET[1],LIGHT[2]-TARGET[2]];
+    const tll=Math.hypot(tl[0],tl[1],tl[2]); tl=[tl[0]/tll,tl[1]/tll,tl[2]/tll];
+    const lightI = smoothstep(-0.05,0.90, dv[0]*tl[0]+dv[1]*tl[1]+dv[2]*tl[2]);
+    const right=[-dv[1],dv[0],0];
+    const rl=Math.hypot(right[0],right[1])||1; right[0]/=rl; right[1]/=rl;
+    const upv=[right[1]*dv[2]-right[2]*dv[1], right[2]*dv[0]-right[0]*dv[2], right[0]*dv[1]-right[1]*dv[0]];
+    const grow = reduced ? 1.05 : Math.min(1.05, T/5.0*1.05);
+
+    gl.useProgram(prog);
+    gl.uniformMatrix4fv(U.vp,false,VP);
+    gl.uniform3fv(U.eye,eye);
+    gl.uniform1f(U.grow,grow);
+    gl.uniform1f(U.time, reduced ? 0.0 : T);
+    gl.uniform3fv(U.light,LIGHT);
+    gl.uniform1f(U.lightI,lightI);
+    gl.uniform3fv(U.rim,PAL.rim); gl.uniform3fv(U.fill,PAL.fill);
+    gl.uniform3fv(U.trans,PAL.trans); gl.uniform3fv(U.edge,PAL.edge);
+    if(music && lightI>0.8 && prevLightI<=0.8) music.lamp();
+    prevLightI = lightI; LAST.lightI = lightI;
+    gl.bindBuffer(gl.ARRAY_BUFFER,vbo);
+    const S=44;
+    gl.enableVertexAttribArray(A.pos); gl.vertexAttribPointer(A.pos,3,gl.FLOAT,false,S,0);
+    gl.enableVertexAttribArray(A.nrm); gl.vertexAttribPointer(A.nrm,3,gl.FLOAT,false,S,12);
+    gl.enableVertexAttribArray(A.col); gl.vertexAttribPointer(A.col,3,gl.FLOAT,false,S,24);
+    gl.enableVertexAttribArray(A.ao);  gl.vertexAttribPointer(A.ao ,1,gl.FLOAT,false,S,36);
+    gl.enableVertexAttribArray(A.dly); gl.vertexAttribPointer(A.dly,1,gl.FLOAT,false,S,40);
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,ibo);
+    gl.drawElements(gl.TRIANGLES,rose.count,indexType,0);
+
+    gl.disableVertexAttribArray(A.pos); gl.disableVertexAttribArray(A.nrm);
+    gl.disableVertexAttribArray(A.col); gl.disableVertexAttribArray(A.ao);
+    gl.disableVertexAttribArray(A.dly);
+
+    gl.enable(gl.BLEND); gl.blendFunc(gl.ONE,gl.ONE_MINUS_SRC_ALPHA); gl.depthMask(false);
+
+    /* the lamp: depth-tested, so it only shows where a gap lets it through */
+    sprite(VP,LIGHT,right,upv,0.80,lightI*1.00,PAL.lamp,true);
+
+    /* glowing sand */
+    gl.useProgram(pprog);
+    gl.uniformMatrix4fv(PU.vp,false,VP);
+    gl.uniform1f(PU.t,T); gl.uniform1f(PU.px, H*0.5);
+    gl.uniform3fv(PU.pa,PAL.polA); gl.uniform3fv(PU.pb,PAL.polB);
+    gl.bindBuffer(gl.ARRAY_BUFFER,pvbo);
+    gl.enableVertexAttribArray(PA.p); gl.vertexAttribPointer(PA.p,3,gl.FLOAT,false,16,0);
+    gl.enableVertexAttribArray(PA.s); gl.vertexAttribPointer(PA.s,1,gl.FLOAT,false,16,12);
+    gl.drawArrays(gl.POINTS,0,NP);
+    gl.disableVertexAttribArray(PA.p); gl.disableVertexAttribArray(PA.s);
+
+    /* halation — the air around the bloom catching the light */
+    sprite(VP,LIGHT,right,upv,3.30,lightI*0.15,PAL.halo,false);
+
+    gl.depthMask(true); gl.disable(gl.BLEND);
+
+    /* the names ride their orbits */
+    const rect=canvas.getBoundingClientRect();
+    const cW=VP[3]*TARGET[0]+VP[7]*TARGET[1]+VP[11]*TARGET[2]+VP[15];
+    const tt = reduced ? 6.0 : T;
+    const marg = labW*0.5*1.45 + 8;                       // half the text, at its largest, plus air
+    const mX   = Math.max(0.05,(1 - 2*marg/Math.max(rect.width,1))) * asp * Math.tan(fovy/2);
+    const kc   = Math.cos(el);
+    const rOrb = clamp(0.88*mX*dist/Math.sqrt(1 + mX*mX*kc*kc), 1.02, 1.80);
+    const zt   = 0.20*rOrb;
+    function fly(list,rg,a0,r,sp,zc){
+      const n=list.length;
+      if(list._words){                                        // word units: spaced by their width, arc ≤ ~150°
+        const k = Math.min(1, 2.6/Math.max(list._tot||1,0.01));
+        let acc=-(list._tot||0)/2*k;
+        for(let i=0;i<n;i++){
+          const half=list[i]._a/2*k; acc+=half;
+          const a=a0+acc*(sp/0.30), c=Math.cos(a)*r, s2=Math.sin(a)*r; acc+=half;
+          place(list[i],[c*rg.u1[0]+s2*rg.u2[0], c*rg.u1[1]+s2*rg.u2[1], zc+c*rg.u1[2]+s2*rg.u2[2]],
+                VP, rect.width, rect.height, cW);
+        }
+        return;
+      }
+      if(n>9) sp*=9/n;                                        // long Latin names tighten a little
+      for(let i=0;i<n;i++){
+        const a=a0+(i-(n-1)/2)*sp, c=Math.cos(a)*r, s2=Math.sin(a)*r;
+        place(list[i],[c*rg.u1[0]+s2*rg.u2[0], c*rg.u1[1]+s2*rg.u2[1], zc+c*rg.u1[2]+s2*rg.u2[2]],
+              VP, rect.width, rect.height, cW);
+      }
+    }
+    fly(charsA, ringA,  tt*0.062,       rOrb*(1.00+0.05*Math.sin(tt*0.045)), 0.30,  0.12);
+    fly(charsB, ringB, -tt*0.048+2.1,   rOrb*(0.86+0.05*Math.cos(tt*0.038)), 0.34, -0.06);
+
+    requestAnimationFrame(draw);
+  }
+  requestAnimationFrame(draw);
+
+  canvas.addEventListener('webglcontextlost',e=>{ e.preventDefault(); },false);
+
+  /* ---------- QA ---------- */
+  const LAST={lightI:0};
+  window.__debug = {
+    seed:SEED, palette:PAL_KEY, raga:RAGA_KEY, petals:NPET, config:CONFIG,
+    music:()=>music, toggleMusic:()=>music && music.toggle(),
+    turn:(rad)=>{ taz += rad; },
+    state:()=>({ seed:SEED, palette:PAL_KEY, raga:RAGA_KEY, petals:NPET, az:+az.toFixed(3), lightI:+LAST.lightI.toFixed(3),
+                 music: !!(music && music.playing), toUnits:charsA.map(e=>e.textContent), fromUnits:charsB.map(e=>e.textContent),
+                 verseId:(CONFIG.verse&&CONFIG.verse.enabled)?CONFIG.verse.id:null, equations:document.querySelectorAll('#math .eq').length })
+  };
+})();
+</script>
+</body>
+</html>

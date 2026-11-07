@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Your story, as a comic · Chitrakissa</title>
+<meta name="description" content="Your love story, your parents' story, the day the two families met, painted page by page as a comic you can hold, frame or share. Coming soon from Chitrakissa. Read a sample and tell us what you'd want.">
+<meta property="og:title" content="Your story, as a painted comic · Chitrakissa">
+<meta property="og:description" content="Painted page by page. Read a sample and tell us what you'd want.">
+<meta property="og:image" content="media/comic/p1.jpg">
+<meta name="theme-color" content="#f5ecdd">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Mukta:wght@300;400;500;700&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="ck.css">
+<style>
+/* Comics: what we make, why it matters, where it lives, a sample to read, and the questions that tell us how to build it. */
+.cover-stack { position: relative; aspect-ratio: 1 / 1.1; }
+.cover-stack .frame { position: absolute; width: 64%; }
+.cover-stack .frame:nth-child(1) { left: 0; top: 8%; transform: rotate(-6deg); }
+.cover-stack .frame:nth-child(2) { right: 0; top: 0; transform: rotate(5deg); }
+.cover-stack .frame:nth-child(3) { left: 18%; top: 20%; transform: rotate(-1deg); z-index: 3; }
+.impact { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(26px, 4vw, 60px); margin-top: 60px; }
+.impact div { border-top: 1px solid var(--line-2); padding-top: 26px; }
+.impact .n { font: italic 400 64px/1 var(--display); color: var(--kumkum); }
+.impact b { display: block; font: 500 26px/1.15 var(--display); margin: 14px 0 10px; }
+.impact span { color: var(--ink-2); font-size: 16.5px; }
+@media (max-width: 860px) { .impact { grid-template-columns: 1fr; } }
+
+/* the sample comic, live in a device; and the era slider */
+.device { width: min(390px, 100%); margin: 0 auto; aspect-ratio: 9 / 18.5; border-radius: 38px; padding: 10px; background: #0b0910; box-shadow: 0 60px 100px -40px #000, 0 0 0 1px rgba(255, 255, 255, .07); }
+.device iframe { width: 100%; height: 100%; border: 0; border-radius: 29px; background: #120f18; display: block; }
+.pick { display: grid; gap: 10px; margin-top: 28px; }
+.story { all: unset; box-sizing: border-box; cursor: pointer; display: grid; grid-template-columns: 74px 1fr; gap: 14px; align-items: center; padding: 10px; border-radius: 6px; border: 1px solid rgba(251, 242, 226, .14); transition: background .25s, border-color .25s; }
+.story img { width: 74px; height: 92px; object-fit: cover; border-radius: 3px; }
+.story b { display: block; font: 500 22px/1.15 var(--display); color: var(--cream); margin-bottom: 4px; }
+.story span { color: #cbbca3; font-size: 15px; line-height: 1.45; }
+.story:hover { border-color: rgba(251, 242, 226, .4); }
+.story.on { background: rgba(251, 242, 226, .08); border-color: #f3b94d; }
+.story:focus-visible { outline: 2px solid #f3b94d; outline-offset: 2px; }
+.era { position: relative; aspect-ratio: 4 / 5; overflow: hidden; border-radius: 2px; box-shadow: 0 40px 70px -40px rgba(60, 35, 20, .7); user-select: none; }
+.era img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.era .now { position: absolute; inset: 0; clip-path: inset(0 calc(100% - var(--x)) 0 0); }
+.era input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: ew-resize; margin: 0; }
+.era .handle { position: absolute; top: 0; bottom: 0; left: var(--x); width: 2px; background: var(--cream); box-shadow: 0 0 12px rgba(0, 0, 0, .4); pointer-events: none; }
+.era .handle::after { content: '‹ ›'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 46px; height: 46px; border-radius: 50%; background: var(--cream); color: var(--ink); display: grid; place-items: center; font: 600 18px var(--body); box-shadow: 0 6px 20px rgba(0, 0, 0, .35); }
+.era .lbl { position: absolute; bottom: 14px; font: 500 12px/1 var(--body); letter-spacing: .16em; text-transform: uppercase; color: var(--cream); background: rgba(20, 14, 26, .72); padding: 8px 11px; border-radius: 999px; pointer-events: none; }
+.era .lbl.l { left: 14px; } .era .lbl.r { right: 14px; }
+.uses { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0 60px; }
+.uses div { display: grid; grid-template-columns: 54px 1fr; gap: 6px 10px; padding: 24px 0; border-top: 1px solid var(--line); }
+.uses i { font-style: normal; font-size: 30px; grid-row: span 2; }
+.uses b { font: 500 25px/1.15 var(--display); }
+.uses span { color: var(--ink-2); font-size: 16.5px; }
+@media (max-width: 760px) { .uses { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<header class="nav"><div class="wrap">
+  <a class="mark" href="./"><i>चि</i>Chitrakissa</a>
+  <button class="menu" aria-label="Menu" aria-expanded="false"><span></span><span></span></button>
+  <nav><a href="diwali.html">Diwali</a><a href="comics.html" aria-current="page">Comics</a><a href="gifts.html">Gifts</a><a href="films.html">Films</a><a class="pill" href="diwali.html#roshni">Make a free Diwali film</a></nav>
+</div></header>
+
+<section class="page-hero"><div class="wrap grid">
+  <div>
+    <span class="kicker c rv">Painted comics · coming soon</span>
+    <h1 class="display-xl lines"><span><span>Your story,</span></span><span><span>page by page,</span></span><span><span><em>painted.</em></span></span></h1>
+    <p class="lede rv d1">The rainy evening you met. The afternoon the two families sat down over filter coffee. The wedding, the chaos, the first home. We turn the story you tell at every gathering into a painted comic: something to hold, frame, and pass down.</p>
+    <div class="meta rv d2"><span class="tag soon">Coming soon</span><a class="link" href="#read">Read a sample ↓</a><a class="link" href="#tell">Tell us what you'd want ↓</a></div>
+  </div>
+  <div class="cover-stack rv d1">
+    <figure class="frame" data-px=".10" data-rot="-6"><img src="media/comic/b_1750.jpg" alt="A comic page with speech bubbles: the same couple in Rajputana, 1750" loading="lazy"></figure>
+    <figure class="frame" data-px="-.06" data-rot="5"><img src="media/comic/b_mysuru.jpg" alt="A comic page with speech bubbles: two families meeting in Mysuru" loading="lazy"></figure>
+    <figure class="frame" data-px=".03" data-rot="-1"><img src="media/comic/b_mumbai.jpg" alt="A comic page with speech bubbles: a first date in the Mumbai rain" loading="lazy"></figure>
+  </div>
+</div></section>
+
+<section class="pad band"><div class="wrap">
+  <div class="two">
+    <div><span class="kicker c">Why a comic</span><h2 class="display-l" style="margin-top:20px">Photos show a moment. A comic <em>tells the story.</em></h2></div>
+    <div>
+      <p class="body-l dropcap rv">Every family has the story that gets told at every wedding: how they met, who said what, the auntie who knew first. It lives in a few people's memories and a hundred scattered photos, and a little of it is lost each time it's retold.</p>
+      <p class="body-l rv">A comic keeps it whole. Panels let a story breathe: the glance across the platform, the umbrella that wouldn't open, the moment everyone at the table went quiet. Painted in warm watercolour, it becomes the thing people pick up at a party and pass around.</p>
+    </div>
+  </div>
+  <div class="impact">
+    <div class="rv"><span class="n">i.</span><b>Your story, in your details</b><span>The station, the umbrella, the auntie who knew first: the details only you two know, drawn into your own story.</span></div>
+    <div class="rv d1"><span class="n">ii.</span><b>Made to outlast the occasion</b><span>Flowers fade in a week. A comic can be printed, framed, and picked up again years from now.</span></div>
+    <div class="rv d2"><span class="n">iii.</span><b>It belongs only to you</b><span>No template couple and no stock faces: your city, your words, your story told the way you tell it.</span></div>
+  </div>
+</div></section>
+
+<section class="night pad" id="read"><div class="wrap">
+  <div class="two mid">
+    <div>
+      <span class="kicker">A sample to read</span>
+      <h2 class="display-l" style="margin:20px 0 22px">Three stories. <em>One could be yours.</em></h2>
+      <p class="lede" style="max-width:46ch">A keepsake you open like a book: painted pages, speech bubbles, scenes that move as you read. Three made-up couples, to show what yours could feel like. Pick one.</p>
+      <div class="pick" role="tablist" aria-label="Choose a comic">
+        <button class="story on" role="tab" aria-selected="true" data-src="comics/umbrella.html"><img src="media/comic/b_mumbai.jpg" alt="" loading="lazy"><span><b>Umbrella Toh Bahana Tha</b>A first date in the Mumbai rain, and an umbrella that gives up at exactly the right moment.</span></button>
+        <button class="story" role="tab" aria-selected="false" data-src="comics/hennu-nodo.html"><img src="media/comic/b_mysuru.jpg" alt="" loading="lazy"><span><b>Hennu Nodo</b>Two families, one Sunday, one filter coffee in Mysuru, and one shy "haan".</span></button>
+        <button class="story" role="tab" aria-selected="false" data-src="comics/chhatri.html"><img src="media/comic/b_1750.jpg" alt="" loading="lazy"><span><b>Chhatri Toh Bahana Thi</b>The same couple from Mumbai, the same rain, in Rajputana in 1750.</span></button>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:14px;margin-top:28px;align-items:center"><a class="btn light" id="full" href="comics/umbrella.html" target="_blank" rel="noopener">Read it full screen ↗</a><span class="small" style="color:#a9997f">Tap the comic to read on. Best with sound.</span></div>
+    </div>
+    <div class="device rv"><iframe id="reader" src="comics/umbrella.html" title="A sample comic" loading="lazy"></iframe></div>
+  </div>
+</div></section>
+
+<section class="pad"><div class="wrap">
+  <div class="two mid">
+    <div class="sticky"><span class="kicker c">Your story, in another era</span><h2 class="display-l" style="margin:20px 0 24px">What if you had met <em>in 1750?</em></h2>
+      <p class="body-l">Same two people, same rain, two and a half centuries apart. Your story can be painted where it really happened, or in an era you have always dreamed of: a Rajput palace, a Mughal court, the Bombay of old films.</p>
+      <p class="small" style="margin-top:18px">Drag the line across the page to travel in time.</p></div>
+    <div class="era rv" id="era" style="--x:50%">
+      <img src="media/comic/b_1750.jpg" alt="The same couple in Rajputana, 1750, on a palace terrace in the monsoon" loading="lazy">
+      <div class="now"><img src="media/comic/b_mumbai.jpg" alt="A couple on a first date in the Mumbai rain, today" loading="lazy"></div>
+      <span class="lbl l">Mumbai · today</span><span class="lbl r">Rajputana · 1750</span>
+      <input type="range" min="0" max="100" value="50" aria-label="Travel between today and 1750">
+      <i class="handle" aria-hidden="true"></i>
+    </div>
+  </div>
+</div></section>
+
+<section class="pad"><div class="wrap">
+  <div class="two">
+    <div class="sticky"><span class="kicker c">Where it lives</span><h2 class="display-l" style="margin:20px 0 24px">One story, <em>many places.</em></h2>
+      <p class="body-l">A painted comic is delivered as high-resolution pages, ready to post, print or project.</p></div>
+    <div class="uses">
+      <div class="rv"><i>💞</i><b>An anniversary gift</b><span>Your story so far, given back to the person who lived it with you.</span></div>
+      <div class="rv"><i>💌</i><b>The wedding invitation</b><span>"How it began" as the first page of your card, or a save-the-date carousel.</span></div>
+      <div class="rv"><i>🎉</i><b>Sangeet &amp; reception screens</b><span>Pages on the big screen while the families fill the room.</span></div>
+      <div class="rv"><i>📖</i><b>A printed book</b><span>For the coffee table, the parents, and the grandchildren later.</span></div>
+      <div class="rv"><i>🖼️</i><b>A framed page</b><span>The one panel that is the whole story, on the wall.</span></div>
+      <div class="rv"><i>📱</i><b>The announcement</b><span>Your engagement, told as a carousel instead of a ring photo.</span></div>
+      <div class="rv"><i>👵</i><b>Your parents' story</b><span>For their 25th or 50th: how they met, painted by their children.</span></div>
+      <div class="rv"><i>🧸</i><b>A bedtime story</b><span>Your child as the hero of a story of their own.</span></div>
+    </div>
+  </div>
+</div></section>
+
+<section class="pad band" id="tell"><div class="wrap two">
+  <div class="sticky"><span class="kicker c">Shape it with us</span><h2 class="display-l" style="margin:20px 0 24px">Tell us the comic <em>you'd want.</em></h2>
+    <p class="body-l">We are building this now, and your answers decide how: which stories, which formats, how it should look, and what it should cost. Leave your Instagram handle and you'll be among the first we make one for.</p></div>
+  <form class="ask" data-voice="comic" data-thanks="Thank you. Your answers shape the first comics we make, and if you left your handle, we'll write to you first.">
+    <div class="q"><p>Which story would you want painted?</p><div class="chips" data-q="story">
+      <button type="button" class="chip" aria-pressed="false" data-v="our_love_story">How we met</button><button type="button" class="chip" aria-pressed="false" data-v="how_parents_met">How my parents met</button><button type="button" class="chip" aria-pressed="false" data-v="our_wedding">Our wedding</button><button type="button" class="chip" aria-pressed="false" data-v="friendship">A friendship</button><button type="button" class="chip" aria-pressed="false" data-v="a_trip">A trip we took</button><button type="button" class="chip" aria-pressed="false" data-v="family_history">Our family's history</button><button type="button" class="chip" aria-pressed="false" data-v="for_my_kids">A story for my kids</button></div></div>
+    <div class="q"><p>Where, or when, should it be set?</p><div class="chips" data-q="era">
+      <button type="button" class="chip" aria-pressed="false" data-v="where_it_happened">Where it really happened</button><button type="button" class="chip" aria-pressed="false" data-v="rajput_1750">Rajputana, 1750</button><button type="button" class="chip" aria-pressed="false" data-v="mughal">A Mughal court</button><button type="button" class="chip" aria-pressed="false" data-v="bombay_old_films">Old Bombay films</button><button type="button" class="chip" aria-pressed="false" data-v="calcutta_1920s">Calcutta, 1920s</button><button type="button" class="chip" aria-pressed="false" data-v="surprise_me">Surprise us</button></div></div>
+    <div class="q"><p>Should the characters look like you?</p><div class="chips" data-q="likeness" data-one>
+      <button type="button" class="chip" aria-pressed="false" data-v="like_us">Yes, painted from our photos</button><button type="button" class="chip" aria-pressed="false" data-v="feel_like_us">No photos, just characters that feel like us</button></div></div>
+    <div class="q"><p>How would you want it?</p><div class="chips" data-q="format">
+      <button type="button" class="chip" aria-pressed="false" data-v="carousel">Instagram carousel</button><button type="button" class="chip" aria-pressed="false" data-v="printed_book">A printed book</button><button type="button" class="chip" aria-pressed="false" data-v="framed_print">A framed print</button><button type="button" class="chip" aria-pressed="false" data-v="wedding_invite">Part of our wedding invite</button><button type="button" class="chip" aria-pressed="false" data-v="animated_film">As a painted film</button></div></div>
+    <div class="q"><p>For which occasion?</p><div class="chips" data-q="occasion">
+      <button type="button" class="chip" aria-pressed="false" data-v="anniversary">Anniversary</button><button type="button" class="chip" aria-pressed="false" data-v="wedding">Wedding</button><button type="button" class="chip" aria-pressed="false" data-v="proposal">Proposal</button><button type="button" class="chip" aria-pressed="false" data-v="birthday">Birthday</button><button type="button" class="chip" aria-pressed="false" data-v="valentines">Valentine's</button><button type="button" class="chip" aria-pressed="false" data-v="parents">My parents' anniversary</button><button type="button" class="chip" aria-pressed="false" data-v="just_because">Just because</button></div></div>
+    <div class="q"><p>What would it be worth to you? <small>one answer</small></p><div class="chips" data-q="price" data-one>
+      <button type="button" class="chip" aria-pressed="false" data-v="free_only">Only if free</button><button type="button" class="chip" aria-pressed="false" data-v="299">₹299</button><button type="button" class="chip" aria-pressed="false" data-v="799">₹799</button><button type="button" class="chip" aria-pressed="false" data-v="1999">₹1,999</button><button type="button" class="chip" aria-pressed="false" data-v="4999+">₹4,999 or more, printed</button></div></div>
+    <div class="q" style="border-bottom:0"><p>Your story in one line?</p><textarea class="field" name="note" maxlength="400" placeholder="We met at a friend's wedding in Pune, and he spilled chai on me… (optional)"></textarea>
+      <input class="field" name="ig" maxlength="40" placeholder="@your Instagram, to be among the first (optional)" style="margin-top:10px" autocapitalize="off"></div>
+    <div class="send"><button class="btn red" type="submit">Send <span class="ar">→</span></button><span class="ok" role="status"></span></div>
+  </form>
+</div></section>
+
+<section class="pad-s"><div class="wrap">
+  <span class="kicker c">More from Chitrakissa</span>
+  <div class="more" style="margin-top:30px">
+    <a href="diwali.html"><div class="im"><img src="media/f_east.jpg" alt="A family together at their painted doorway on Diwali" loading="lazy"></div><b>Roshni</b><span>A free Diwali greeting film</span></a>
+    <a href="gifts.html"><div class="im"><img src="media/gift_rose.jpg" alt="A glowing rose with a name drifting around it" loading="lazy"></div><b>Gifts that move</b><span>A rose, two stars · make one today</span></a>
+    <a href="films.html"><div class="im"><img src="media/moods/centre.jpg" alt="A painted girl among her moods" loading="lazy"></div><b>Kitne rang</b><span>Every mood of the one you love</span></a>
+  </div>
+</div></section>
+
+<footer class="foot"><div class="wrap">
+  <div class="sig">चित्रकिस्सा<span>a picture, a story</span></div>
+  <div class="cols">
+    <a href="./">Home</a><a href="diwali.html">Diwali films</a><a href="comics.html">Comics</a><a href="gifts.html">Gifts</a><a href="films.html">Films</a>
+    <a href="privacy.html">Privacy promise</a><a href="https://instagram.com/chitrakissa">Instagram @chitrakissa</a>
+    <span class="r">© <span data-year>2026</span> Chitrakissa</span>
+  </div>
+</div></footer>
+<script src="ck.js"></script>
+<script>
+// the era slider: drag between today and 1750
+// pick a comic: it opens in the phone (and full screen in a new window)
+const reader = document.getElementById('reader'), full = document.getElementById('full');
+document.querySelectorAll('.story').forEach(b => b.onclick = () => {
+  document.querySelectorAll('.story').forEach(x => { x.classList.toggle('on', x === b); x.setAttribute('aria-selected', x === b); });
+  reader.src = b.dataset.src; full.href = b.dataset.src;
+  if (innerWidth < 900) reader.scrollIntoView({ behavior: 'smooth', block: 'center' });
+});
+const era = document.getElementById('era'), rng = era.querySelector('input');
+rng.addEventListener('input', () => era.style.setProperty('--x', rng.value + '%'));
+</script>
+</body>
+</html>

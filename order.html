@@ -115,13 +115,13 @@ details.why p, details.why ul { margin: 10px 0 0; } details.why ul { padding-lef
 </style>
 </head>
 <body>
-<div class="top"><div class="wrap"><a class="mark" href="./"><i>चि</i>Chitrakissa</a><a class="back" href="./">← Back</a></div></div>
+<div class="top"><div class="wrap"><a class="mark" href="./"><i>चि</i>Chitrakissa</a><a class="back" href="diwali.html">← Back</a></div></div>
 
 <main class="wrap" id="form-view">
   <header class="intro">
     <div class="eyebrow">Free this Diwali · one per family</div>
     <h1>Your family's Diwali, as a painted film</h1>
-    <p>A 36-second watercolour story of Diwali, told the way your region celebrates it. Each of you lights up in a window of a painted home, and the film ends with all of you at your own door. Made to share with everyone you love.</p>
+    <p>A 36-second watercolour story of Diwali, told the way your region celebrates it. Each of you is painted to life, one by one, saying "Happy Diwali" yourselves, and it ends with all of you together at your own door. Made to share with everyone you love.</p>
   </header>
   <figure class="sample">
     <video id="sample" src="media/s_north_ayodhya.mp4" poster="media/s_north_ayodhya.jpg" autoplay muted loop playsinline controls preload="metadata"></video>
@@ -133,14 +133,13 @@ details.why p, details.why ul { margin: 10px 0 0; } details.why ul { padding-lef
     <div class="badge"><i>🗑️</i>Photos deleted once it's delivered</div>
     <div class="badge"><i>🚫</i>We never ask for OTP or bank details</div>
   </div>
-  <section class="who">
-    <h2>Who is making this?</h2>
-    <p>I'm an engineer, and Chitrakissa is an idea I'm trying out: painting families' stories as films. There is no big company or server farm behind it. Every film is painted on my own personal computer, one at a time, about 12 an hour. So sometimes there's a queue, or you'll be asked to come back a little later. Thank you for being patient with it.</p>
+  <details class="why"><summary>Who is making this?</summary>
+    <p>I'm an engineer, and Chitrakissa is an idea I'm trying out: painting families' stories as films. Every film is made one at a time, about 12 an hour. So sometimes there's a queue, or you'll be asked to come back a little later. Thank you for being patient with it.</p>
     <p><b>Your photos:</b> upload them only if you're comfortable, and only of people who agree. I use them for one thing, making your film. I don't need them and I don't keep them: they're deleted the moment your film is delivered, and they never go to any AI company.</p>
     <p>It's free. If you love your film, share it. If something isn't right, tell me. Your honest feedback is the real help.</p>
-  </section>
+  </details>
   <details class="why"><summary>What happens to your photos?</summary>
-    <ul><li>They are used only to make your film, on our own computer. They never go to any AI company.</li>
+    <ul><li>They are used only to make your film. They never go to any AI company.</li>
       <li>They are deleted from our cloud and our computer the moment your film is delivered.</li>
       <li>Your film and your order page delete themselves after 45 days. Your order page has a "Delete my photos now" button if you want it gone sooner.</li>
       <li>Never used to train AI, never shared, never sold.</li>
@@ -164,12 +163,12 @@ details.why p, details.why ul { margin: 10px 0 0; } details.why ul { padding-lef
     <fieldset>
       <legend>2 · Pick your story</legend>
       <div class="choices tpl" id="stories"></div>
-      <p class="hint" style="margin-top:12px">Both stories end with your family together at your door. Verses are quoted exactly, and we never show a deity, only the lamps and the traditions around them.</p>
+      <p class="hint" style="margin-top:12px">Both stories end with your family together at your door. We never show a deity, only the lamps and the traditions around them.</p>
     </fieldset>
 
     <fieldset>
       <legend>3 · Your family</legend>
-      <label class="f" for="family">Family name</label>
+      <label class="f" for="family">Family name <span style="color:var(--cream-3)">(or your own name)</span></label>
       <input type="text" id="family" maxlength="20" placeholder="Sharma" autocomplete="family-name">
       <label class="f" for="city">Your city</label>
       <input type="text" id="city" maxlength="24" placeholder="Lucknow">
@@ -177,7 +176,7 @@ details.why p, details.why ul { margin: 10px 0 0; } details.why ul { padding-lef
       <p class="hint" style="margin-top:-4px">We send your film to you there as a message. No sign-up, no login, no password.</p>
       <input type="text" id="ig" maxlength="40" placeholder="@yourname" autocapitalize="off" autocomplete="off">
       <label class="f">Who is wishing Diwali? (1 to 4 people)</label>
-      <p class="hint">We send the wishes on their behalf, and each one lights up a window in the film. One photo per person, with the name you call them: Dadi, Papa, Riya. A clear face looking at the camera, just one person in the photo; the original is better than a screenshot.</p>
+      <p class="hint">Each of them gets their own painted moment in the film. One clear photo of each person (just them, looking at the camera) and the name you call them: Dadi, Papa, Riya.</p>
       <div id="people"></div>
       <button type="button" class="add" id="add">+ Add a person</button>
       <label class="f">A photo of you all together <span style="color:var(--cream-3)">(optional)</span></label>
@@ -206,11 +205,6 @@ details.why p, details.why ul { margin: 10px 0 0; } details.why ul { padding-lef
       </div>
     </fieldset>
 
-    <fieldset>
-      <legend>Make it yours <span style="font:15px var(--body);color:var(--cream-3)">(optional)</span></legend>
-      <label class="f">What should we make for you next?</label>
-      <div class="chips" data-next></div>
-    </fieldset>
 
     <fieldset>
       <legend>One last thing <span style="font:15px var(--body);color:var(--cream-3)">(optional)</span></legend>
@@ -226,7 +220,7 @@ details.why p, details.why ul { margin: 10px 0 0; } details.why ul { padding-lef
     <label class="consent"><input type="checkbox" id="consent"><span>Everyone in these photos is happy for Chitrakissa to use them to make this film (a parent agrees for any child). We delete the photos once it is delivered. <a href="privacy.html">Privacy promise</a></span></label>
     <div class="err" id="err" role="alert"></div>
     <button class="btn" id="send" type="submit">Send my order</button>
-    <p class="promise">Usually ready in under 3 hours · free this Diwali · one per family</p>
+    <p class="promise">Ready in about an hour, depending on orders · free this Diwali · one per family</p>
   </form>
 
   <section class="side" id="next">
@@ -251,10 +245,17 @@ details.why p, details.why ul { margin: 10px 0 0; } details.why ul { padding-lef
   <h1>Your film is being painted</h1>
   <div class="num" id="num"></div>
   <p id="paid-note" hidden>This is your second film, so it is <b>₹<span id="price">50</span></b>. Your order page will show a preview with a watermark and a button to pay by UPI; the full film comes right after.</p>
-  <p>We will message you on Instagram when it is ready, usually within 3 hours. Your order page shows its progress.</p>
+  <p>We will message you on Instagram when it is ready, usually in about an hour, depending on orders. Your order page shows its progress.</p>
   <a class="btn" id="track" href="#">Open my order page</a>
   <button class="btn ghost" type="button" id="copy">Copy my order link</button>
   <p class="tip">Opened this inside Instagram? Copy the link before you close it. You can always find your order again with your order number and Instagram handle.</p>
+  <section class="side" style="margin-top:34px">
+    <h2>While it's being painted: what should we make next?</h2>
+    <p class="hint">Tap anything you'd love. It decides what Chitrakissa makes after Diwali.</p>
+    <div class="chips" data-next id="next-done"></div>
+    <div class="row"><button class="btn" type="button" id="vote-done">Tell us</button></div>
+    <div class="ok" id="vote-done-ok" role="status"></div>
+  </section>
 </main>
 
 <script>
@@ -287,9 +288,9 @@ function addPerson(name = '') {
   row.querySelector('.x').onclick = () => { if (people.children.length > 1) row.remove(); sync(); };
   people.appendChild(row); sync();
 }
-function sync() { $('add').hidden = people.children.length >= 4; }
+function sync() { $('add').hidden = people.children.length >= 4; if (window.showEnding && document.querySelector('input[name=greeting]:checked')) showEnding(); }
 $('add').onclick = () => addPerson();
-['', '', ''].forEach(n => addPerson(n));
+['', ''].forEach(n => addPerson(n));
 picker($('group-pick'), $('group'));
 // each region: its signature story + Lakshmi ka aagman, told in the region's own houses, floor art and words (SCRIPTS_REGIONS.md)
 const REGIONS = {
@@ -327,13 +328,15 @@ function showGreetings() {
 function showEnding() {
   const g = document.querySelector('input[name=greeting]:checked').value, fam = $('family').value.trim() || 'Sharma', city = $('city').value.trim() || 'Lucknow';
   const hing = ['north', 'west'].includes(region()) && story() !== 'naraka' && story() !== 'prodip';
-  const auto = hing ? `${fam} parivar, ${city}` : `the ${fam} family, ${city}`;
+  const named = [...people.children].filter(r => r.querySelector('input[type=text]').value.trim()).length;
+  const auto = named === 1 ? `${fam}, ${city}` : hing ? `${fam} parivar, ${city}` : `the ${fam} family, ${city}`;   // one person on their own: "— Micky, Pune"
   $('from').placeholder = auto;
   $('e-greet').textContent = g === 'region' ? sampleGreet() : GREETINGS.find(x => x[0] === g)[1];
   $('e-from').textContent = '— ' + ($('from').value.trim() || auto);
   $('e-line').textContent = $('line').value.trim();
 }
 ['family', 'city', 'from', 'line'].forEach(id => $(id).addEventListener('input', showEnding));
+people.addEventListener('input', () => { if (document.querySelector('input[name=greeting]:checked')) showEnding(); });   // one person or a family changes the 'from' line
 document.querySelectorAll('input[name=world]').forEach(r => r.addEventListener('change', showGreetings));
 document.addEventListener('change', e => { if (e.target.name === 'template') showGreetings(); });
 showGreetings();
@@ -357,7 +360,7 @@ async function shrink(file, max = 2200) {   // phones send huge photos: resize t
   } catch (e) { return file; }   // a format this browser can't draw: send it as it is
 }
 
-// the order limiter: one personal computer paints every film, so when the queue is long the page says when to come back
+// the order limiter: films are made one at a time, so when the queue is long the page says when to come back
 let full = false, tick = null;
 function showQueue(c) {
   const q = $('queue'); q.hidden = false; clearInterval(tick); full = !c.open; q.classList.toggle('full', full); $('send').disabled = full;
@@ -378,10 +381,12 @@ checkQueue(); setInterval(() => { if (!full) checkQueue(); }, 120e3);
 $('f').addEventListener('submit', async e => {
   e.preventDefault(); const err = $('err'); err.textContent = '';
   if (!CONFIG.orders_api) { err.textContent = 'Online orders open in a few days. Please DM us on Instagram for now.'; return; }
-  const rows = [...people.children].map(r => ({ name: r.querySelector('input[type=text]').value.trim(), file: r.querySelector('input[type=file]').files[0] }));
+  const rows = [...people.children].map(r => ({ name: r.querySelector('input[type=text]').value.trim(), file: r.querySelector('input[type=file]').files[0] }))
+    .filter(r => r.name || r.file);   // an untouched row is simply not a person (one person on their own is fine)
   const fam = $('family').value.trim(), group = $('group').files[0], ig = $('ig').value.trim();
   const problem = !fam ? 'Please tell us your family name.'
     : !ig ? 'Please add your Instagram handle, so we can send you your film.'
+    : !rows.length ? 'Please add at least one person: their photo and the name you call them.'
     : rows.some(r => !r.name) ? 'Please give each person a name.'
     : rows.some(r => !r.file) ? 'Please add a photo for each person.'
     : !$('consent').checked ? 'Please tick the box to confirm everyone is happy for us to use the photos.' : '';
@@ -398,7 +403,7 @@ $('f').addEventListener('submit', async e => {
       language: REGIONS[region()].lang, family: fam, city: $('city').value.trim(), line: $('line').value.trim(),
       contact: { instagram: ig }, consent: true, members, group_photo: group ? 'group.jpg' : '',
       greeting: (document.querySelector('input[name=greeting]:checked') || {}).value || 'region', from_line: $('from').value.trim(),
-      music: (document.querySelector('input[name=music]:checked') || {}).value || 'festive', next: picked(document.querySelector('#f [data-next]')) }));
+      music: (document.querySelector('input[name=music]:checked') || {}).value || 'festive', next: [] }));   // "what next" is asked after they send (the done view), not before
     const res = await fetch(API + '/api/order', { method: 'POST', body: fd });
     const out = await res.json().catch(() => ({}));
     if (res.status === 503 && out.full) { showQueue({ open: false, ahead: out.ahead || 0, retry_min: out.retry_min, reason: out.reason }); throw new Error(out.error); }
@@ -420,6 +425,14 @@ $('vote').onclick = async () => {
   if (!wants.length) { out.textContent = 'Pick at least one.'; return; }
   try {
     const r = await fetch(API + '/api/interest', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ wants, note: $('vote-note').value.trim() }) });
+    out.textContent = r.ok ? 'Thank you! We read every one.' : 'Could not send. Please try again.';
+  } catch (e) { out.textContent = 'Could not send. Please check your internet.'; }
+};
+$('vote-done').onclick = async () => {   // the same vote, after they've sent their order (with their handle, so we can tell them first)
+  const wants = picked($('next-done')), out = $('vote-done-ok');
+  if (!wants.length) { out.textContent = 'Tap at least one.'; return; }
+  try {
+    const r = await fetch(API + '/api/interest', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ wants, ig: $('ig').value.trim() }) });
     out.textContent = r.ok ? 'Thank you! We read every one.' : 'Could not send. Please try again.';
   } catch (e) { out.textContent = 'Could not send. Please check your internet.'; }
 };
