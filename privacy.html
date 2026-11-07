@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy Promise · Chitrakissa</title>
+<meta name="description" content="What happens to your photos at Chitrakissa, in plain words: used only for your film, never sent to any AI company, deleted once it is delivered.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;700&family=Rozha+One&family=Tiro+Devanagari+Hindi&display=swap" rel="stylesheet">
+<style>
+:root {
+  --raat: #1a1226; --raat-2: #231833; --line: rgba(251, 242, 226, .12);
+  --diya: #f3b94d; --marigold: #ee8a1c; --rani: #d63a6e; --cream: #fbf2e2; --cream-2: #cfc1aa; --cream-3: #9a8c7a;
+  --display: "Rozha One", Georgia, serif; --body: "Mukta", system-ui, sans-serif; --deva: "Tiro Devanagari Hindi", serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--raat); color: var(--cream); font: 18px/1.65 var(--body); -webkit-font-smoothing: antialiased; }
+a { color: var(--diya); }
+.wrap { max-width: 680px; margin: 0 auto; padding: 0 16px; }
+.top { border-bottom: 1px solid var(--line); }
+.top .wrap { display: flex; align-items: center; height: 62px; }
+.mark { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--cream); font: 400 23px var(--display); }
+.mark i { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; font: normal 17px var(--deva); color: var(--cream);
+  background: radial-gradient(circle, var(--raat) 58%, transparent 60%), conic-gradient(from 200deg, var(--diya), var(--marigold), var(--rani), var(--marigold), var(--diya)); }
+.top .back { margin-left: auto; font-size: 16px; color: var(--cream-2); text-decoration: none; }
+h1, h2 { font-family: var(--display); font-weight: 400; line-height: 1.1; margin: 0; }
+h1 { font-size: clamp(38px, 8vw, 54px); margin: 40px 0 10px; }
+h2 { font-size: 26px; margin: 34px 0 8px; color: var(--cream); }
+p, li { color: var(--cream-2); }
+ul { padding-left: 20px; }
+.lede { font-size: 20px; }
+.card { margin-top: 22px; padding: 18px; border-radius: 18px; background: var(--raat-2); border: 1px solid var(--line); }
+.card li { margin: 6px 0; }
+.small { font-size: 15px; color: var(--cream-3); margin: 40px 0 60px; }
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap"><a class="mark" href="./"><i>चि</i>Chitrakissa</a><a class="back" href="order.html">← Back</a></div></div>
+<main class="wrap">
+  <h1>Our privacy promise</h1>
+  <p class="lede">You are trusting us with photos of your family. Here is exactly what happens to them, in plain words.</p>
+
+  <div class="card"><ul>
+    <li><b>Used only to make your film.</b> Nothing else.</li>
+    <li><b>Never sent to any AI company.</b> Your film is painted on my own personal computer.</li>
+    <li><b>Deleted once your film is delivered</b>, from our cloud and from our computer.</li>
+    <li><b>Your film deletes itself after 45 days</b>, together with your order page.</li>
+    <li><b>Delete it any time.</b> Your order page has a "Delete my photos now" button. Press it and everything is gone at once; you see a note with the time it was deleted.</li>
+    <li><b>Never used to train AI, never shared, never sold.</b></li>
+    <li><b>We never ask for OTP or bank details</b> Your first film is free; an extra film is ₹50, paid by UPI on your own order page. If someone asks for money in our name anywhere else, it is not us.</li>
+  </ul></div>
+
+  <h2>What we ask for, and why</h2>
+  <ul>
+    <li><b>Photos</b> of each person, and one of you together if you like: to paint them into your film.</li>
+    <li><b>Names, family name, city, a line from you</b>: to write them in your film.</li>
+    <li><b>Your Instagram handle</b>: to send you your film, and to keep the free film to one per family.</li>
+    <li><b>Optional answers</b> (what you'd like next, how you heard of us): to decide what we make next. These are kept without your photos.</li>
+  </ul>
+
+  <h2>Where your photos are, step by step</h2>
+  <ol>
+    <li>You upload them. They are stored in our private cloud storage (Cloudflare, encrypted at rest), reachable only by us.</li>
+    <li>Our computer downloads them, makes your film, and it passes our quality checks before it is sent.</li>
+    <li>When your film is delivered, the photos are deleted from the cloud and from our computer.</li>
+    <li>Your film video stays on your private order page (a link only you have) for 45 days, then it is deleted automatically.</li>
+  </ol>
+
+  <h2>Children</h2>
+  <p>Please only send photos of children with a parent's OK. When you tick the consent box, you confirm everyone in the photos is happy for us to use them.</p>
+
+  <h2>Your rights</h2>
+  <p>We follow the principles of India's Digital Personal Data Protection Act, 2023: we ask for your consent, use your data only for the purpose you gave it, keep it only as long as needed, and delete it when you ask. To ask anything or to have anything deleted, press the button on your order page or DM us on Instagram <b>@chitrakissa</b> with your order number.</p>
+
+  <p class="small">Chitrakissa · last updated 6 November 2026</p>
+</main>
+</body>
+</html>

@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Chitrakissa · Your Family, Painted</title>
+<meta name="description" content="Your family's Diwali as a painted film, told the way your region celebrates it: North, East, West or South. Your first film is free. Photos never go to any AI company and are deleted once it is delivered.">
+<meta property="og:title" content="Chitrakissa · your family, painted into Diwali">
+<meta property="og:description" content="Your family's Diwali, as a painted film. Your first one is free.">
+<meta property="og:image" content="media/s_north_ayodhya.jpg">
+<meta name="theme-color" content="#1a1226">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;700&family=Rozha+One&family=Tiro+Devanagari+Hindi&display=swap" rel="stylesheet">
+<style>
+/* Chitrakissa, Diwali free launch: one action (make your free film → order.html), trust before the ask, and a vote for what comes next.
+   The previous paid shop is in _archive/index_v2.html. */
+:root {
+  --raat: #1a1226; --raat-2: #231833; --raat-3: #2e2142; --line: rgba(251, 242, 226, .12);
+  --diya: #f3b94d; --marigold: #ee8a1c; --rani: #d63a6e; --cream: #fbf2e2; --cream-2: #cfc1aa; --cream-3: #9a8c7a;
+  --display: "Rozha One", Georgia, serif; --body: "Mukta", system-ui, sans-serif; --deva: "Tiro Devanagari Hindi", serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+html, body { overflow-x: clip; }
+body { margin: 0; background: var(--raat); color: var(--cream); font: 18px/1.6 var(--body); -webkit-font-smoothing: antialiased; }
+img, video { display: block; max-width: 100%; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--diya); outline-offset: 3px; border-radius: 6px; }
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 16px; }
+h1, h2, h3 { font-family: var(--display); font-weight: 400; margin: 0; line-height: 1.08; }
+h2 { font-size: clamp(32px, 5.4vw, 50px); }
+p { margin: 0; }
+.eyebrow { font: 700 13px/1 var(--body); letter-spacing: .22em; text-transform: uppercase; color: var(--diya); }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; background: var(--diya); color: #2a1a05; text-decoration: none; border: 0; cursor: pointer;
+  font: 700 19px/1 var(--body); padding: 18px 28px; border-radius: 999px; box-shadow: 0 10px 34px -12px rgba(243, 185, 77, .7); transition: background .15s, transform .15s; }
+.btn:hover { background: #ffc960; transform: translateY(-1px); }
+.btn.ghost { background: transparent; color: var(--cream); box-shadow: inset 0 0 0 1.5px rgba(251, 242, 226, .35); }
+
+.top { position: sticky; top: 0; z-index: 30; background: rgba(26, 18, 38, .85); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+.top .wrap { display: flex; align-items: center; height: 62px; gap: 18px; }
+.mark { display: flex; align-items: center; gap: 10px; text-decoration: none; font: 400 23px var(--display); }
+.mark i { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; font: normal 17px var(--deva); color: var(--cream);
+  background: radial-gradient(circle, var(--raat) 58%, transparent 60%), conic-gradient(from 200deg, var(--diya), var(--marigold), var(--rani), var(--marigold), var(--diya)); }
+.top nav { margin-left: auto; display: flex; gap: 20px; align-items: center; font-size: 16px; }
+.top nav a { text-decoration: none; color: var(--cream-2); }
+.top nav .go { color: #2a1a05; background: var(--diya); padding: 7px 14px; border-radius: 999px; font-weight: 700; font-size: 15px; }
+@media (max-width: 640px) { .top nav .opt { display: none; } }
+
+.hero { padding: 48px 0 30px; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; inset: -30% -10% auto; height: 560px; pointer-events: none; background: radial-gradient(50% 60% at 50% 30%, rgba(243, 185, 77, .16), transparent 70%); }
+.hero .grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 48px; align-items: center; position: relative; }
+.hero h1 { font-size: clamp(46px, 7.4vw, 84px); }
+.hero .lede { color: var(--cream-2); font-size: 20px; margin: 18px 0 0; max-width: 32ch; }
+.value { margin: 22px 0 0; font-size: 18px; color: var(--cream-2); } .value s { color: var(--cream-3); } .value b { color: var(--diya); }
+.cta { margin-top: 22px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.cta small { color: var(--cream-3); font-size: 15px; }
+.phone { justify-self: center; width: min(320px, 78vw); margin: 0; }
+.phone video { width: 100%; aspect-ratio: 9 / 16; border-radius: 22px; background: #000; box-shadow: 0 30px 70px -24px #000, 0 0 0 1px var(--line); }
+.phone figcaption { text-align: center; font-size: 14px; color: var(--cream-3); margin-top: 8px; }
+.badges { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 26px; max-width: 560px; }
+.badge { padding: 12px 10px; border-radius: 14px; background: var(--raat-2); border: 1px solid var(--line); font-size: 14px; line-height: 1.35; color: var(--cream-2); }
+.badge i { display: block; font-style: normal; font-size: 20px; margin-bottom: 4px; }
+@media (max-width: 860px) { .hero .grid { grid-template-columns: 1fr; gap: 30px; } .hero { padding-top: 34px; } .phone { order: -1; } }
+
+section { padding: 70px 0; }
+.head { max-width: 640px; margin-bottom: 28px; } .head p { color: var(--cream-2); margin-top: 12px; }
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; counter-reset: s; }
+.step { padding: 22px; border-radius: 20px; background: var(--raat-2); border: 1px solid var(--line); }
+.step::before { counter-increment: s; content: counter(s); display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--diya); color: #2a1a05; font-weight: 700; margin-bottom: 12px; }
+.step h3 { font-size: 24px; } .step p { color: var(--cream-2); font-size: 16px; margin-top: 6px; }
+.tpls { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.tpl { border-radius: 20px; overflow: hidden; background: var(--raat-2); border: 1px solid var(--line); }
+.tpl img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 40%; }
+.regions .tpl img { object-fit: contain; background: radial-gradient(circle at 50% 60%, #4a2a1a, #1c1020 70%); padding: 18px; }
+.tpl div { padding: 16px 18px 20px; } .tpl h3 { font-size: 26px; } .tpl p { color: var(--cream-2); font-size: 16px; margin-top: 4px; }
+.cities { margin-top: 16px; color: var(--cream-3); font-size: 15px; }
+.trust { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; align-items: start; }
+.trust ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 12px; }
+.trust li { padding: 14px 16px; border-radius: 14px; background: var(--raat-2); border: 1px solid var(--line); color: var(--cream-2); font-size: 16px; }
+.trust li b { color: var(--cream); }
+.trust a { color: var(--diya); }
+.next { padding: 26px; border-radius: 24px; background: linear-gradient(160deg, var(--raat-3), var(--raat-2)); border: 1px solid var(--line); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 22px; }
+.chips span { padding: 9px 14px; border-radius: 999px; border: 1.5px solid rgba(251, 242, 226, .22); font-size: 15.5px; color: var(--cream-2); }
+.faq details { border-bottom: 1px solid var(--line); padding: 16px 0; }
+.faq summary { cursor: pointer; font-size: 19px; }
+.faq details p { color: var(--cream-2); margin-top: 8px; font-size: 16.5px; }
+.faq a { color: var(--diya); }
+footer { padding: 40px 0 120px; border-top: 1px solid var(--line); color: var(--cream-3); font-size: 15px; }
+footer .wrap { display: flex; flex-wrap: wrap; gap: 18px; } footer a { color: var(--cream-2); }
+.dock { position: fixed; left: 0; right: 0; bottom: 0; padding: 12px 16px calc(12px + env(safe-area-inset-bottom)); background: linear-gradient(transparent, rgba(26, 18, 38, .95) 35%); display: none; z-index: 40; }
+.dock .btn { width: 100%; }
+@media (max-width: 860px) { .steps, .tpls, .trust { grid-template-columns: 1fr; } .dock { display: block; } section { padding: 54px 0; } }
+@media (max-width: 860px) { .tpls.regions { grid-template-columns: 1fr 1fr; gap: 10px; } .regions .tpl img { aspect-ratio: 3 / 4; padding: 10px; } .regions .tpl h3 { font-size: 19px; } .regions .tpl p { font-size: 13px; line-height: 1.45; } }
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap">
+  <a class="mark" href="./"><i>चि</i>Chitrakissa</a>
+  <nav><a class="opt" href="#how">How it works</a><a class="opt" href="#privacy">Your photos</a><a class="go" href="order.html">Make yours free</a></nav>
+</div></div>
+
+<section class="hero"><div class="wrap grid">
+  <div>
+    <span class="eyebrow">Diwali 2026 · your first film is free</span>
+    <h1>Your family's Diwali, as a painted film.</h1>
+    <p class="lede">A 36-second watercolour story of Diwali, told the way your region celebrates it. Each of you lights up in the window of a painted home, and it ends with all of you at your own door. A greeting your whole family will want to share.</p>
+    <p class="value"><b>Free this Diwali</b> · one film per family</p>
+    <div class="cta"><a class="btn" href="order.html">🪔 Make your free Diwali film</a><small>Usually ready in under 3 hours</small></div>
+    <div class="badges">
+      <div class="badge"><i>🔒</i>Never sent to any AI company</div>
+      <div class="badge"><i>🗑️</i>Photos deleted once it's delivered</div>
+      <div class="badge"><i>🚫</i>We never ask for OTP or bank details</div>
+    </div>
+  </div>
+  <figure class="phone">
+    <video src="media/s_north_ayodhya.mp4" poster="media/s_north_ayodhya.jpg" autoplay muted loop playsinline controls preload="metadata"></video>
+      <figcaption>Ram aaye Ayodhya · a sample film made from stock photos · tap for sound</figcaption>
+  </figure>
+</div></section>
+
+<section id="how"><div class="wrap">
+  <div class="head"><span class="eyebrow">How it works</span><h2>Three steps, two minutes of yours.</h2></div>
+  <div class="steps">
+    <div class="step"><h3>Pick your Diwali</h3><p>North, East, West or South, and one of its two stories.</p></div>
+        <div class="step"><h3>Send your photos</h3><p>One of each person (up to four) with the name you call them, and a photo of you all together if you have one. We paint the film, and every film passes our quality checks before it goes out.</p></div>
+    <div class="step"><h3>Share it</h3><p>We message you on Instagram when it's ready. Download it and send it to everyone you love.</p></div>
+  </div>
+</div></section>
+
+<section style="padding-top:0"><div class="wrap">
+  <div class="head"><span class="eyebrow">Diwali, the way your region celebrates it</span><h2>Four Diwalis, painted with respect.</h2></div>
+  <div class="tpls regions">
+        <div class="tpl"><img src="media/win_north.png" alt="A carved sandstone jharokha with a diya on its sill"><div><h3>North</h3><p><b>Ram aaye Ayodhya:</b> fourteen years of waiting end and the whole city lights its lamps, with Tulsidas's verse. Or <b>Lakshmi ka aagman</b> on haveli lamps and rangoli.</p></div></div>
+        <div class="tpl"><img src="media/win_east.png" alt="A Calcutta window with green shutters and a prodip"><div><h3>East</h3><p><b>Akash Prodip:</b> a lamp raised to the sky and fourteen lamps for the ancestors, the Hooghly ghats lit, with Tagore's "Aalo amar aalo". Or Lakshmi's footsteps on alpana.</p></div></div>
+        <div class="tpl"><img src="media/win_west.png" alt="A carved teak wada window with an akash kandil"><div><h3>West</h3><p><b>Diwali Pahat:</b> akash kandils before sunrise, the children's killa, aaji's faral, with Sant Dnyaneshwar's Pasaydan. Or Lakshmi's footsteps on rangoli.</p></div></div>
+        <div class="tpl"><img src="media/win_south.png" alt="A carved wooden window with a brass lamp and kolam"><div><h3>South</h3><p><b>The Deepavali Dawn:</b> the dawn Narakasura's darkness ended, lamps and kolam, the oil bath before sunrise, with the Gita. Or Lakshmi's footsteps on kolam.</p></div></div>
+      </div>
+      <p class="cities">Verses are quoted exactly from their sources. We never show a deity, only the lamps and the traditions around them.</p>
+</div></section>
+
+<section id="privacy" style="padding-top:0"><div class="wrap trust">
+  <div class="head"><span class="eyebrow">Your photos</span><h2>Your family's photos stay yours.</h2>
+    <p>Free can feel too good to be true, so here is exactly what happens. The small "made with Chitrakissa" card at the end of your film is our only ask: when you share it, others find us.</p>
+    <p style="margin-top:16px"><a href="privacy.html">Read our full privacy promise →</a></p></div>
+  <ul>
+    <li><b>Used only for your film</b>, on my own computer. Never sent to any AI company.</li>
+    <li><b>Deleted once it's delivered</b>, from our cloud and our computer.</li>
+    <li><b>Your film deletes itself after 45 days.</b> Or press "Delete my photos now" on your order page any time.</li>
+    <li><b>Never used to train AI, never shared, never sold.</b></li>
+    <li><b>No OTP, no bank details, ever.</b> Your first film is free; the only payment we take is ₹50 for an extra film, by UPI on your own order page. If anyone asks for money in our name anywhere else, it isn't us.</li>
+  </ul>
+</div></section>
+
+<section style="padding-top:0"><div class="wrap">
+  <div class="next">
+    <span class="eyebrow">Coming next</span>
+    <h2 style="margin-top:10px">What should we paint for you next?</h2>
+    <div class="chips"><span>🎂 Birthday invitations</span><span>💍 Wedding invitations</span><span>💞 Anniversary gifts</span><span>🎁 Gifts for your partner</span>
+      <span>👶 Baby announcements</span><span>🏠 Griha pravesh</span><span>🪢 Raksha Bandhan</span><span>📖 Your love story, as a comic</span><span>💼 Greetings for your business</span></div>
+    <a class="btn ghost" href="order.html#next">Tell us what you'd love</a>
+  </div>
+</div></section>
+
+<section class="faq" style="padding-top:0"><div class="wrap">
+  <div class="head"><h2>Questions</h2></div>
+  <details open><summary>Who is making this?</summary><p>I'm an engineer trying out an idea: painting families' stories as films. There's no big company behind it. Every film is painted on my own personal computer, about 12 an hour, so when many orders come in at once the order page shows a short queue or asks you to come back a little later. Please upload photos only if you're comfortable; I use them only to make your film and delete them once it's delivered. If you love it, share it, and tell me honestly what to improve.</p></details>
+  <details><summary>Is it really free?</summary><p>Yes, your first film is free, with a small "made with Chitrakissa" card at the end. If you want another one, it is ₹50, paid by UPI on your order page after you see a preview. We never ask for OTP or bank details.</p></details>
+  <details><summary>What do you do with our photos?</summary><p>We use them only to make your film, on my own computer. They never go to any AI company and are deleted once your film is delivered. <a href="privacy.html">Full privacy promise</a>.</p></details>
+  <details><summary>How long does it take?</summary><p>Usually under 3 hours. The order page shows how many films are ahead of yours. Every film passes automatic checks and is looked at before it is sent, so on busy days it can take a little longer.</p></details>
+  <details><summary>Which photos work best?</summary><p>Clear faces looking at the camera, in good light. Original photos work better than screenshots or forwarded ones. If a photo doesn't work, we'll tell you which one.</p></details>
+  <details><summary>Can I make one for my parents or friends too?</summary><p>Each family's first film is free, so they can make their own in two minutes. Or make another one yourself for ₹50.</p></details>
+</div></section>
+
+<footer><div class="wrap">
+  <span>© 2026 Chitrakissa</span><a href="privacy.html">Privacy promise</a><a href="https://instagram.com/chitrakissa">Instagram @chitrakissa</a><a href="order.html#find">Find my order</a>
+</div></footer>
+<div class="dock"><a class="btn" href="order.html">🪔 Make your free Diwali film</a></div>
+</body>
+</html>
