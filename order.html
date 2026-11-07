@@ -361,6 +361,7 @@ async function shrink(file, max = 2200) {   // phones send huge photos: resize t
 let full = false, tick = null;
 function showQueue(c) {
   const q = $('queue'); q.hidden = false; clearInterval(tick); full = !c.open; q.classList.toggle('full', full); $('send').disabled = full;
+  if (c.reason === 'paused') { q.innerHTML = 'Our Diwali family films are paused for now. Thank you for your interest! Follow <b>@chitrakissa</b> on Instagram for what is next.'; return; }
   if (c.open) { q.innerHTML = c.ahead ? `<b>${c.ahead} film${c.ahead > 1 ? 's' : ''}</b> ahead of yours · yours ready in about <b>${c.wait_min < 90 ? c.wait_min + ' min' : Math.round(c.wait_min / 60) + ' hours'}</b>` : 'No queue right now · yours starts as soon as you send it'; return; }
   const end = Date.now() + c.retry_min * 60e3;
   const draw = () => { const s = Math.max(0, Math.round((end - Date.now()) / 1000)), h = Math.floor(s / 3600), m = Math.floor(s % 3600 / 60), ss = s % 60;
