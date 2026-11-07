@@ -54,9 +54,10 @@ video { width: 100%; aspect-ratio: 9 / 16; border-radius: 18px; background: #000
     let j; try { const r = await fetch(`${API}/api/r/${id}?k=${encodeURIComponent(key)}`); if (r.status === 404) { $('wait').hidden = true; $('err').hidden = false; return; } j = await r.json(); } catch (e) { setTimeout(check, 10000); return; }
     $('greet').textContent = j.greet; $('from').textContent = 'from ' + j.from; document.title = `${j.greet} · from ${j.from}`;
     if (j.status === 'done' && !shown) {
-      shown = true; $('wait').hidden = true; $('done').hidden = false; $('v').src = j.film; $('v').poster = j.poster; $('dl').href = j.film;
+      shown = true; $('wait').hidden = true; $('done').hidden = false; $('v').src = j.film; $('v').poster = j.poster; $('dl').href = j.film; $('dl').onclick = () => window.ckTrack && ckTrack('download'); $('wa').onclick = () => window.ckTrack && ckTrack('share', 'whatsapp');
       $('dl').setAttribute('download', 'Diwali-' + j.from.replace(/[^\w]+/g, '-') + '.mp4');
       $('wa').href = 'https://wa.me/?text=' + encodeURIComponent('🪔 ' + j.greet + ' · ' + location.href);
+      if (window.ckTrack) ckTrack('made', 'ready');
       return;
     }
     if (j.status === 'failed') { $('wait').hidden = true; $('err').hidden = false; $('err').firstChild.textContent = 'Something went wrong while making your film. We are sorry. '; return; }
@@ -64,9 +65,10 @@ video { width: 100%; aspect-ratio: 9 / 16; border-radius: 18px; background: #000
     setTimeout(check, 8000);
   }
   check();
-  document.querySelectorAll('#pulse button').forEach(b => b.onclick = () => { fetch(API + '/api/voice', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ page: 'roshni', answers: { reaction: [b.dataset.r] } }) }).catch(() => {});
+  document.querySelectorAll('#pulse button').forEach(b => b.onclick = () => { if (window.ckTrack) ckTrack('react', b.dataset.r); fetch(API + '/api/voice', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ page: 'roshni', answers: { reaction: [b.dataset.r] } }) }).catch(() => {});
     $('pulse').innerHTML = b.dataset.r === 'meh' ? '<p>Thank you for telling us. We will make it better.</p>' : '<p>Thank you! Share it, and tag <b>@chitrakissa</b> 🪔</p>'; });
 })();
 </script>
+<script src="t.js" defer></script>
 </body>
 </html>
