@@ -62,7 +62,7 @@ p { margin: 0; }
 .badges { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 26px; max-width: 560px; }
 .badge { padding: 12px 10px; border-radius: 14px; background: var(--raat-2); border: 1px solid var(--line); font-size: 14px; line-height: 1.35; color: var(--cream-2); }
 .badge i { display: block; font-style: normal; font-size: 20px; margin-bottom: 4px; }
-@media (max-width: 860px) { .hero .grid { grid-template-columns: 1fr; gap: 30px; } .hero { padding-top: 34px; } .phone { order: -1; } }
+@media (max-width: 860px) { .hero .grid { grid-template-columns: 1fr; gap: 30px; } .hero { padding-top: 34px; } .phone { width: min(260px, 70vw); } }
 
 section { padding: 70px 0; }
 .head { max-width: 640px; margin-bottom: 28px; } .head p { color: var(--cream-2); margin-top: 12px; }
@@ -116,6 +116,8 @@ section { padding: 70px 0; }
 .gchips button.on { background: var(--diya); border-color: var(--diya); color: #2a1a05; }
 .maker .btn { margin-top: 16px; } .err { color: #ff9b8a; min-height: 1.2em; font-size: 15px; }
 .small-note { font-size: 14px; color: var(--cream-3); }
+.lastfilm { display: block; margin-bottom: 16px; padding: 12px 16px; border-radius: 14px; background: var(--raat-3); border: 1px solid var(--diya); color: var(--cream); text-decoration: none; font-size: 16px; }
+.lastfilm b { color: var(--diya); }
 .faq details { border-bottom: 1px solid var(--line); padding: 16px 0; }
 .faq summary { cursor: pointer; font-size: 19px; }
 .faq details p { color: var(--cream-2); margin-top: 8px; font-size: 16.5px; }
@@ -136,6 +138,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 18px; } footer a { color: va
 
 <section class="hero" id="roshni"><div class="wrap grid">
   <div>
+    <a class="lastfilm" id="lastfilm" hidden>🪔 Your film is ready · <b>open it</b></a>
     <span class="eyebrow">Diwali 2026 · free · no photos needed</span>
     <h1>Roshni: your Diwali greeting, as a film.</h1>
     <p class="lede">On the darkest night of the year, one diya is lit. Its flame passes from lamp to lamp, across the water, until a whole city glows, and your greeting appears in light, from you. Ready in about two minutes, free, to send to everyone you love.</p>
@@ -159,7 +162,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 18px; } footer a { color: va
     </form>
   </div>
   <figure class="phone">
-    <video id="r-sample" src="media/roshni_north.mp4" poster="media/roshni_north.jpg" autoplay muted loop playsinline controls preload="metadata"></video>
+    <video id="r-sample" src="media/roshni_north.mp4#t=4" poster="media/roshni_north.jpg" autoplay muted loop playsinline controls preload="metadata"></video>
     <figcaption>A sample: "Happy Diwali, from Micky" · tap for sound</figcaption>
   </figure>
 </div></section>
@@ -194,7 +197,6 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 18px; } footer a { color: va
 <footer><div class="wrap">
   <span>© 2026 Chitrakissa</span><a href="./">Chitrakissa home</a><a href="comics.html">Comics</a><a href="gifts.html">Gifts</a><a href="films.html">Films</a><a href="privacy.html">Privacy promise</a><a href="https://instagram.com/chitrakissa">Instagram @chitrakissa</a><a href="order.html#find">Find my order</a>
 </div></footer>
-<div class="dock"><a class="btn" href="#roshni">🪔 Make your free Diwali film</a></div>
 <div class="lb" id="lb" hidden><button type="button" aria-label="Close">×</button><video controls playsinline></video></div>
 <script>
 // the region stills open their sample film; the "what next" picks are sent to our inbox
@@ -219,9 +221,10 @@ document.getElementById('next-send').onclick = async () => {
 (() => {
   const API = 'https://chitrakissa-orders.mickydroch.workers.dev', $ = id => document.getElementById(id);
   const chips = $('gchips'), greet = $('r-greet'), sample = $('r-sample');
+  try { const last = localStorage.getItem('ck_roshni'); if (last) { $('lastfilm').href = last; $('lastfilm').hidden = false; } } catch (x) {}   // their last film, if they come back
   chips.onclick = e => { const b = e.target.closest('button'); if (!b) return; chips.querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); greet.value = b.dataset.g; };
   greet.oninput = () => chips.querySelectorAll('button').forEach(x => x.classList.toggle('on', x.dataset.g === greet.value.trim()));
-  document.querySelectorAll('input[name=bg]').forEach(r => r.onchange = () => { const v = r.value; sample.src = 'media/roshni_' + v + '.mp4'; sample.poster = 'media/roshni_' + v + '.jpg'; sample.play().catch(() => {}); });
+  document.querySelectorAll('input[name=bg]').forEach(r => r.onchange = () => { const v = r.value; sample.src = 'media/roshni_' + v + '.mp4#t=4'; sample.poster = 'media/roshni_' + v + '.jpg'; sample.play().catch(() => {}); });
   fetch(API + '/api/roshni-bgs').then(r => r.ok ? r.json() : null).then(b => { if (b && b.includes('west')) $('place-west').hidden = false; }).catch(() => {});
   $('rf').addEventListener('submit', async e => {
     e.preventDefault(); const err = $('r-err'), btn = $('r-send'); err.textContent = '';

@@ -244,7 +244,7 @@ details.why p, details.why ul { margin: 10px 0 0; } details.why ul { padding-lef
   <div class="eyebrow">Order received</div>
   <h1>Your film is being painted</h1>
   <div class="num" id="num"></div>
-  <p id="paid-note" hidden>This is your second film, so it is <b>₹<span id="price">50</span></b>. Your order page will show a preview with a watermark and a button to pay by UPI; the full film comes right after.</p>
+  <p id="paid-note" hidden></p>
   <p>We will message you on Instagram when it is ready, usually in about an hour, depending on orders. Your order page shows its progress.</p>
   <a class="btn" id="track" href="#">Open my order page</a>
   <button class="btn ghost" type="button" id="copy">Copy my order link</button>
@@ -375,7 +375,7 @@ function showQueue(c) {
 }
 async function checkQueue() { if (!CONFIG.orders_api) return; try { const r = await fetch(API + '/api/capacity'); if (r.ok) showQueue(await r.json()); } catch (e) {} }
 try { if (localStorage.getItem('ck_made')) { const n = document.createElement('p'); n.className = 'hint'; n.style.textAlign = 'center';
-  n.textContent = 'You have made a film with us before: the first one per family is free, another one is ₹50 (pay after you see the preview).'; $('f').prepend(n); } } catch (e) {}
+  } } catch (e) {}
 checkQueue(); setInterval(() => { if (!full) checkQueue(); }, 120e3);
 
 $('f').addEventListener('submit', async e => {
