@@ -167,15 +167,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 18px; } footer a { color: va
   </figure>
 </div></section>
 
-<section style="padding-top:0"><div class="wrap">
-  <div class="next">
-    <span class="eyebrow">Coming next</span>
-    <h2 style="margin-top:10px">What should we paint for you next?</h2>
-    <p style="color:var(--cream-2);margin-top:10px">Tap everything you'd love. What you pick decides what we make next.</p>
-    <div class="chips" id="next-chips"><button type="button" aria-pressed="false" data-v="birthday_invite">🎂 Birthday invitations</button><button type="button" aria-pressed="false" data-v="wedding_card">💍 Wedding invitations</button><button type="button" aria-pressed="false" data-v="anniversary_gift">💞 Anniversary gifts</button><button type="button" aria-pressed="false" data-v="partner_gift">🎁 Gifts for your partner</button><button type="button" aria-pressed="false" data-v="baby_announcement">👶 Baby announcements</button><button type="button" aria-pressed="false" data-v="griha_pravesh">🏠 Griha pravesh</button><button type="button" aria-pressed="false" data-v="rakhi">🪢 Raksha Bandhan</button><button type="button" aria-pressed="false" data-v="love_comic">📖 Your love story, as a comic</button><button type="button" aria-pressed="false" data-v="business_greetings">💼 Greetings for your business</button></div>
-    <button class="btn ghost" type="button" id="next-send">Send my picks</button> <span id="next-ok" role="status" style="margin-left:12px;color:var(--diya)"></span>
-  </div>
-</div></section>
+
 
 <section style="padding-top:0"><div class="wrap">
   <div class="head"><span class="eyebrow">More from Chitrakissa</span><h2>Diwali is just one of our stories.</h2></div>
@@ -204,17 +196,6 @@ const lb = document.getElementById('lb'), lv = lb.querySelector('video');
 document.querySelectorAll('.film').forEach(b => b.onclick = () => { lv.src = 'media/' + b.dataset.film + '.mp4'; lv.poster = 'media/' + b.dataset.film + '.jpg'; lb.hidden = false; lv.play().catch(() => {}); });
 const shut = () => { lv.pause(); lv.removeAttribute('src'); lv.load(); lb.hidden = true; };
 lb.querySelector('button').onclick = shut; lb.onclick = e => { if (e.target === lb) shut(); }; addEventListener('keydown', e => { if (e.key === 'Escape' && !lb.hidden) shut(); });
-const chips = document.getElementById('next-chips'), ok = document.getElementById('next-ok');
-chips.onclick = e => { const b = e.target.closest('button'); if (b) b.setAttribute('aria-pressed', b.getAttribute('aria-pressed') !== 'true'); };
-document.getElementById('next-send').onclick = async () => {
-  const wants = [...chips.querySelectorAll('[aria-pressed="true"]')].map(b => b.dataset.v);
-  if (!wants.length) { ok.textContent = 'Tap at least one first.'; return; }
-  ok.textContent = 'Sending…';
-  try { const r = await fetch('https://chitrakissa-orders.mickydroch.workers.dev/api/interest', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ wants }) });
-    ok.textContent = r.ok ? 'Thank you! We read every one.' : 'That did not go through. Please try again.';
-    if (r.ok) chips.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', 'false'));
-  } catch (x) { ok.textContent = 'Could not reach us. Please check your internet.'; }
-};
 </script>
 <script>
 // Roshni: send the greeting to our inbox; the laptop makes the film; go to its page

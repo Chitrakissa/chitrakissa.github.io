@@ -75,7 +75,7 @@
 @media (max-width: 900px) { .chapter { grid-template-columns: 1fr; } .chapter:nth-of-type(even) .art { order: 0; } .chapter .num { font-size: 90px; } }
 
 /* promises */
-.promises { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-top: 1px solid rgba(251, 242, 226, .14); }
+.promises { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-top: 1px solid rgba(251, 242, 226, .14); }
 .promises div { padding: 34px 28px 10px 0; }
 .promises div + div { border-left: 1px solid rgba(251, 242, 226, .14); padding-left: 28px; }
 .promises b { display: block; font: 500 26px/1.15 var(--display); color: var(--cream); margin-bottom: 10px; }
@@ -117,7 +117,7 @@
 <section class="pad manifesto"><div class="narrow">
   <div class="orn rv">✦</div>
   <p class="big rv">Every family has a story told at every wedding, every Diwali, every late night. <em>We paint those stories,</em> so they can be kept.</p>
-  <p class="sub rv d1">The day you met. The Diwali when everyone came home. The many moods of the one you love. We would rather make a few things beautifully than many things quickly, and every piece below has its own story.</p>
+  
 </div></section>
 
 <div id="chapters" class="wrap">
@@ -179,10 +179,9 @@
   <span class="kicker">How we work</span>
   <h2 class="display-m" style="margin:20px 0 50px;max-width:18ch">Made with care, and <em>honest about it.</em></h2>
   <div class="promises">
-    <div class="rv"><b>Your photos stay yours</b><span>Used only for your piece, never sent to any AI company, deleted once it's delivered.</span></div>
-    <div class="rv d1"><b>Every one is unique</b><span>Your names, your words, your music, customised to your region.</span></div>
-    <div class="rv d2"><b>Real verses only</b><span>Every verse is quoted exactly from its source, checked twice. We never show a deity.</span></div>
-    <div class="rv d3"><b>One idea, made slowly</b><span>Chitrakissa is an engineer trying out an idea. We'd rather it be good than big.</span></div>
+    <div class="rv"><b>Every one is unique</b><span>Your names and your words, in a place from your part of India.</span></div>
+    <div class="rv d1"><b>Free, right now</b><span>No money, no OTP, no sign-up. If anyone asks you to pay in our name, it isn't us.</span></div>
+    <div class="rv d2"><b>One idea, made slowly</b><span>Chitrakissa is an engineer trying out an idea. We'd rather it be good than big.</span></div>
   </div>
 </div></section>
 
@@ -190,25 +189,19 @@
   <div>
     <span class="kicker c">Tell us</span>
     <h2 class="display-l" style="margin:20px 0 24px">What should we <em>paint next?</em></h2>
-    <p class="body-l">The next thing Chitrakissa makes is decided by what you pick here. Tap everything you would love, and add anything we missed.</p>
+    <p class="body-l">What you pick here decides what Chitrakissa makes next.</p>
   </div>
   <form class="ask" data-interest>
-    <div class="q"><p>I'd love… <small>pick as many as you like</small></p>
+    <div class="q"><p>I'd love… <small>tap any</small></p>
       <div class="chips">
-        <button type="button" class="chip" aria-pressed="false" data-v="love_comic">📖 Our love story as a comic</button>
+        <button type="button" class="chip" aria-pressed="false" data-v="love_comic">📖 Our story as a comic</button>
         <button type="button" class="chip" aria-pressed="false" data-v="wedding_card">💍 A wedding invitation</button>
         <button type="button" class="chip" aria-pressed="false" data-v="birthday_invite">🎂 A birthday invitation</button>
-        <button type="button" class="chip" aria-pressed="false" data-v="anniversary_gift">💞 An anniversary gift</button>
         <button type="button" class="chip" aria-pressed="false" data-v="partner_gift">🎁 A gift for my partner</button>
-        <button type="button" class="chip" aria-pressed="false" data-v="memory_film">🎞️ A film of our memories</button>
-        <button type="button" class="chip" aria-pressed="false" data-v="baby_announcement">👶 A baby announcement</button>
-        <button type="button" class="chip" aria-pressed="false" data-v="griha_pravesh">🏠 Griha pravesh</button>
         <button type="button" class="chip" aria-pressed="false" data-v="rakhi">🪢 Raksha Bandhan</button>
-        <button type="button" class="chip" aria-pressed="false" data-v="other_festivals">🪔 Other festivals</button>
         <button type="button" class="chip" aria-pressed="false" data-v="business_greetings">💼 Greetings for my business</button>
       </div></div>
-    <div class="q" style="border-bottom:0"><p>Anything else?</p><textarea class="field" name="note" maxlength="200" placeholder="An idea, an occasion, a story you want painted (optional)"></textarea>
-      <input class="field" name="ig" maxlength="40" placeholder="@your Instagram, if you'd like us to tell you when it's ready (optional)" style="margin-top:10px" autocapitalize="off"></div>
+    <div class="q" style="border-bottom:0"><p>Anything else? <small>optional</small></p><input class="field" name="note" maxlength="200" placeholder="An idea or an occasion"></div>
     <div class="send"><button class="btn red" type="submit">Send <span class="ar">→</span></button><span class="ok" role="status"></span></div>
   </form>
 </div></section>
