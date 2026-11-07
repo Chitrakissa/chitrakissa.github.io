@@ -1,7 +1,7 @@
 /* Chitrakissa — the studio pages' small engine: the nav, things settling in on scroll, drifting petals, the painting that paints
    itself (sketch → colour, and your cursor paints too), and the feedback forms (chips are real buttons; answers go to our inbox). */
 (() => {
-  const API = 'https://chitrakissa-orders.mickydroch.workers.dev';
+  const API = 'https://chitrakissa-orders.chitrakissa.workers.dev';
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
 

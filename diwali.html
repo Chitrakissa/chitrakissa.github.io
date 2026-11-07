@@ -201,7 +201,7 @@ lb.querySelector('button').onclick = shut; lb.onclick = e => { if (e.target === 
 <script>
 // Roshni: send the greeting to our inbox; the laptop makes the film; go to its page
 (() => {
-  const API = 'https://chitrakissa-orders.mickydroch.workers.dev', $ = id => document.getElementById(id);
+  const API = 'https://chitrakissa-orders.chitrakissa.workers.dev', $ = id => document.getElementById(id);
   const chips = $('gchips'), greet = $('r-greet'), sample = $('r-sample');
   (async () => {   // their last film, if they come back: say what it really is (ready, or still being made); hide it if it's gone
     let last = ''; try { last = localStorage.getItem('ck_roshni') || ''; } catch (x) {}

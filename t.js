@@ -2,7 +2,7 @@
    sections are actually seen, what is tapped (buttons and links, by their words), how far the page is scrolled, and which samples are played.
    Pages can add their own moments with window.ckTrack(event, label). Everything goes to our own inbox (/api/t) with sendBeacon. */
 (() => {
-  const API = 'https://chitrakissa-orders.mickydroch.workers.dev/api/t';
+  const API = 'https://chitrakissa-orders.chitrakissa.workers.dev/api/t';
   const page = (location.pathname.split('/').pop() || 'index.html').replace('.html', '') || 'index';
   let ref = '-'; try { const r = document.referrer && new URL(document.referrer); if (r && r.host !== location.host) ref = r.host.replace(/^www\.|^l\.|^lm\./, ''); } catch (e) {}
   const q = new URLSearchParams(location.search); if (q.get('utm_source')) ref = q.get('utm_source');

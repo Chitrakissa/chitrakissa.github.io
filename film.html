@@ -45,7 +45,7 @@ video { width: 100%; aspect-ratio: 9 / 16; border-radius: 18px; background: #000
 </main>
 <script>
 (() => {
-  const API = 'https://chitrakissa-orders.mickydroch.workers.dev', $ = id => document.getElementById(id);
+  const API = 'https://chitrakissa-orders.chitrakissa.workers.dev', $ = id => document.getElementById(id);
   const [id, key] = location.hash.slice(1).split('.');
   if (!id || !key) { $('wait').hidden = true; $('err').hidden = false; return; }
   try { localStorage.setItem('ck_roshni', location.href); } catch (e) {}
