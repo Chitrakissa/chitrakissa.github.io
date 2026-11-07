@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Your Roshni film · Chitrakissa</title>
+<meta property="og:title" content="A Diwali film, made for you 🪔">
+<meta property="og:description" content="One diya, a whole city of light, and a greeting written for you.">
+<meta property="og:image" content="https://chitrakissa.github.io/media/roshni_north.jpg">
+<meta name="theme-color" content="#0b0912">
+<style>
+/* A Roshni film's own page: chitrakissa.github.io/film.html#<id>.<key>. While it is being made it waits and refreshes; then the film,
+   Download, WhatsApp, one tap of feedback. The film's words and video come from the order inbox; nothing is stored here. */
+body { margin: 0; background: #0b0912; color: #fbf2e2; font: 17px/1.5 Georgia, serif; text-align: center; }
+main { max-width: 460px; margin: 0 auto; padding: 28px 16px 40px; }
+h1 { font: italic 500 30px/1.2 Georgia, serif; margin: 0 0 4px; color: #fff3d6; } .from { color: #e9d7b6; margin: 0 0 18px; }
+video { width: 100%; aspect-ratio: 9 / 16; border-radius: 18px; background: #000; margin-bottom: 16px; }
+.btn { display: block; padding: 15px 18px; border-radius: 999px; background: #f3c26b; color: #2a1a05; text-decoration: none; font: 600 16px system-ui; margin: 10px 0; border: 0; width: 100%; cursor: pointer; }
+.btn.ghost { background: none; color: #fbf2e2; border: 1px solid rgba(251, 242, 226, .35); }
+.small { color: #b9a98f; font-size: 14px; } .made { margin-top: 26px; font-size: 14px; color: #9d8e78; } .made a { color: #f3c26b; }
+.big { font-size: 22px; color: #fff3d6; margin: 22px 0 6px; }
+.lamp { width: 70px; height: 110px; margin: 40px auto 0; background: radial-gradient(ellipse 22% 38% at 50% 40%, #fff6dc, #ffc35a 45%, rgba(255, 120, 30, 0) 70%); animation: f 1.2s ease-in-out infinite alternate; }
+@keyframes f { to { transform: scale(1.06, 1.12); opacity: .85; } }
+.pulse { margin: 20px 0 6px; padding: 14px; border: 1px solid rgba(251, 242, 226, .18); border-radius: 16px; } .pulse p { margin: 0 0 10px; color: #fff3d6; }
+.pulse button { font: 15px system-ui; margin: 3px; padding: 9px 13px; border-radius: 999px; border: 1px solid rgba(251, 242, 226, .3); background: none; color: #fbf2e2; cursor: pointer; }
+[hidden] { display: none !important; }
+</style>
+</head>
+<body><main>
+  <h1 id="greet">🪔</h1><p class="from" id="from"></p>
+  <div id="wait"><div class="lamp"></div><p class="big">Your film is being made…</p><p class="small" id="eta">About 2 minutes. This page refreshes by itself.</p>
+    <button class="btn ghost" type="button" id="copy">Copy my film's link</button><p class="small">You can close this page and open the link later: your film will be waiting.</p></div>
+  <div id="done" hidden>
+    <video id="v" controls playsinline autoplay muted loop></video>
+    <a class="btn" id="dl" download>Download the film</a>
+    <a class="btn ghost" id="wa">Send this page on WhatsApp</a>
+    <div class="pulse" id="pulse"><p>Did you like it?</p><button type="button" data-r="loved">❤️ Loved it</button><button type="button" data-r="liked">🙂 Nice</button><button type="button" data-r="meh">😐 Meh</button></div>
+    <p class="small" id="iab" hidden>On Instagram? To save the film, tap <b>•••</b> at the top right, choose <b>Open in browser</b>, then tap Download.</p>
+    <p class="small">Tip: download the film, then send it as a video in your groups and status. This page stays for 30 days.</p>
+  </div>
+  <p id="err" hidden>We couldn't find this film. <a href="diwali.html#roshni" style="color:#f3c26b">Make a new one</a>.</p>
+  <p class="made">Made with <a href="./">Chitrakissa</a> · <a href="diwali.html#roshni">make one for someone else</a></p>
+</main>
+<script>
+(() => {
+  const API = 'https://chitrakissa-orders.mickydroch.workers.dev', $ = id => document.getElementById(id);
+  const [id, key] = location.hash.slice(1).split('.');
+  if (!id || !key) { $('wait').hidden = true; $('err').hidden = false; return; }
+  try { localStorage.setItem('ck_roshni', location.href); } catch (e) {}
+  $('copy').onclick = () => navigator.clipboard.writeText(location.href).then(() => $('copy').textContent = 'Copied ✓').catch(() => prompt('Copy this link:', location.href));
+  if (/Instagram|FBAN|FBAV/.test(navigator.userAgent)) $('iab').hidden = false;
+  let shown = false;
+  async function check() {
+    let j; try { const r = await fetch(`${API}/api/r/${id}?k=${encodeURIComponent(key)}`); if (r.status === 404) { $('wait').hidden = true; $('err').hidden = false; return; } j = await r.json(); } catch (e) { setTimeout(check, 10000); return; }
+    $('greet').textContent = j.greet; $('from').textContent = 'from ' + j.from; document.title = `${j.greet} · from ${j.from}`;
+    if (j.status === 'done' && !shown) {
+      shown = true; $('wait').hidden = true; $('done').hidden = false; $('v').src = j.film; $('v').poster = j.poster; $('dl').href = j.film;
+      $('dl').setAttribute('download', 'Diwali-' + j.from.replace(/[^\w]+/g, '-') + '.mp4');
+      $('wa').href = 'https://wa.me/?text=' + encodeURIComponent('🪔 ' + j.greet + ' · ' + location.href);
+      return;
+    }
+    if (j.status === 'failed') { $('wait').hidden = true; $('err').hidden = false; $('err').firstChild.textContent = 'Something went wrong while making your film. We are sorry. '; return; }
+    $('eta').textContent = (j.status === 'making' ? 'The diyas are being lit right now: about 2 minutes.' : `About ${j.wait_min} minutes.`) + ' This page refreshes by itself.';
+    setTimeout(check, 8000);
+  }
+  check();
+  document.querySelectorAll('#pulse button').forEach(b => b.onclick = () => { fetch(API + '/api/voice', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ page: 'roshni', answers: { reaction: [b.dataset.r] } }) }).catch(() => {});
+    $('pulse').innerHTML = b.dataset.r === 'meh' ? '<p>Thank you for telling us. We will make it better.</p>' : '<p>Thank you! Share it, and tag <b>@chitrakissa</b> 🪔</p>'; });
+})();
+</script>
+</body>
+</html>
