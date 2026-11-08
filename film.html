@@ -78,7 +78,7 @@ video { width: 100%; aspect-ratio: 9 / 16; border-radius: 18px; background: #000
       $('dl').setAttribute('download', 'Diwali-' + j.from.replace(/[^\w]+/g, '-') + '.mp4');
       $('dl').href = j.film + '&dl=1';   // the server says "save this", so one tap downloads (a link's download attribute is ignored across addresses)
       // Save to my phone: the phone's own share sheet (Save Video → Photos/Gallery, or WhatsApp), where it can take a video file
-      const small = j.film.replace('film_hd.mp4', 'film_whatsapp.mp4'), name = 'Diwali-' + (j.from.replace(/[^\w]+/g, '-').replace(/^-+|-+$/g, '') || 'Roshni') + '.mp4';
+      const small = j.film,   /* one file now (≈11 MB): the HD film is small enough for the share sheet and WhatsApp */ name = 'Diwali-' + (j.from.replace(/[^\w]+/g, '-').replace(/^-+|-+$/g, '') || 'Roshni') + '.mp4';
       let canFiles = false; try { canFiles = !inApp && !!navigator.canShare && navigator.canShare({ files: [new File([new Blob()], name, { type: 'video/mp4' })] }); } catch (e) {}
       if (canFiles) { $('save').hidden = false; $('dl').hidden = true; }
       if (inApp) { $('save').hidden = true; $('dl').hidden = true; }   // inside Instagram/Facebook downloads don't work: the only action is the way out (Open in Chrome / Open in browser)   // one button: the share sheet (Save Video → Photos/Gallery) where the phone has it, else the plain download
