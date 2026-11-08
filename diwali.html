@@ -131,6 +131,7 @@ section { padding: 70px 0; }
 .gchips { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 6px; }
 .gchips button { font: 15px var(--body); padding: 8px 13px; border-radius: 999px; border: 1.5px solid rgba(251, 242, 226, .22); background: none; color: var(--cream-2); cursor: pointer; }
 .gchips button.on { background: var(--diya); border-color: var(--diya); color: #2a1a05; }
+.count { font-size: 13px; color: var(--cream-3); margin-top: -2px; } .count.full { color: var(--diya); }
 .maker .btn { margin-top: 16px; } .err { color: #ff9b8a; min-height: 1.2em; font-size: 15px; }
 .small-note { font-size: 14px; color: var(--cream-3); }
 .lastfilm[hidden] { display: none; }
@@ -182,6 +183,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 18px; } footer a { color: va
       <input type="text" id="r-from" maxlength="30" placeholder="your name, or Riya &amp; Kabir, or the Sharmas">
       <label class="f" for="r-line">A line from you <span style="color:var(--cream-3)">(optional)</span></label>
       <input type="text" id="r-line" maxlength="60" placeholder="Wishing your home light, laughter and love">
+      <span class="count" id="r-count">0 / 60 · it appears in the sky, under your greeting</span>
       <div class="err" id="r-err" role="alert"></div>
       <button class="btn" id="r-send" type="submit">🪔 Make my film, free</button>
       <p class="small-note">No photos, no sign-up. We keep your film for 30 days so you can download it.</p>
@@ -240,6 +242,7 @@ lb.querySelector('button').onclick = shut; lb.onclick = e => { if (e.target === 
     } catch (x) {}
   })();
   chips.onclick = e => { const b = e.target.closest('button'); if (!b) return; chips.querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); greet.value = b.dataset.g; };
+  const line = $('r-line'), cnt = $('r-count'); line.oninput = () => { const n = line.value.length; cnt.textContent = `${n} / 60` + (n ? '' : ' · it appears in the sky, under your greeting'); cnt.classList.toggle('full', n >= 55); };
   greet.oninput = () => chips.querySelectorAll('button').forEach(x => x.classList.toggle('on', x.dataset.g === greet.value.trim()));
   // the place: the chosen card plays its own preview, the line under the cards and the button say what was picked
   const send = $('r-send');
