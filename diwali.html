@@ -109,6 +109,7 @@ section { padding: 70px 0; }
 .place input { position: absolute; opacity: 0; }
 .place img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; object-position: 50% 45%; }
 .place span { display: block; padding: 7px 8px 9px; font-size: 12.5px; line-height: 1.3; color: var(--cream-3); }
+.place[hidden] { display: none; }
 .place b { display: block; color: var(--cream); font-size: 14px; font-weight: 600; }
 .place:has(input:checked) { border-color: var(--diya); }
 .gchips { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 6px; }
@@ -148,7 +149,11 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 18px; } footer a { color: va
       <div class="places" id="places">
         <label class="place"><input type="radio" name="bg" value="north" checked><img src="media/roshni_north.jpg" alt="" loading="lazy"><span><b>River ghats</b>temples across the river</span></label>
         <label class="place"><input type="radio" name="bg" value="south"><img src="media/roshni_south.jpg" alt="" loading="lazy"><span><b>Temple tank</b>a gopuram and a lamp pillar</span></label>
-        <label class="place" id="place-west" hidden><input type="radio" name="bg" value="west"><img src="media/roshni_west.jpg" alt="" loading="lazy"><span><b>Marine Drive</b>the Queen's Necklace</span></label>
+        <label class="place"><input type="radio" name="bg" value="west"><img src="media/roshni_west.jpg" alt="" loading="lazy"><span><b>Marine Drive</b>the Queen's Necklace</span></label>
+        <label class="place"><input type="radio" name="bg" value="jaipur"><img src="media/roshni_jaipur.jpg" alt="" loading="lazy"><span><b>Jaipur</b>the Hawa Mahal and the fort</span></label>
+        <label class="place"><input type="radio" name="bg" value="udaipur"><img src="media/roshni_udaipur.jpg" alt="" loading="lazy"><span><b>Udaipur</b>a palace on the lake</span></label>
+        <label class="place"><input type="radio" name="bg" value="kolkata"><img src="media/roshni_kolkata.jpg" alt="" loading="lazy"><span><b>Kolkata</b>the Howrah Bridge</span></label>
+        <label class="place"><input type="radio" name="bg" value="london"><img src="media/roshni_london.jpg" alt="" loading="lazy"><span><b>London</b>Tower Bridge on the Thames</span></label>
       </div>
       <label class="f" for="r-greet">Your greeting</label>
       <div class="gchips" id="gchips"><button type="button" data-g="Happy Diwali" class="on">Happy Diwali</button><button type="button" data-g="Shubh Deepawali">Shubh Deepawali</button><button type="button" data-g="शुभ दीपावली">शुभ दीपावली</button><button type="button" data-g="Happy Deepavali">Happy Deepavali</button></div>
@@ -217,7 +222,7 @@ lb.querySelector('button').onclick = shut; lb.onclick = e => { if (e.target === 
   chips.onclick = e => { const b = e.target.closest('button'); if (!b) return; chips.querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); greet.value = b.dataset.g; };
   greet.oninput = () => chips.querySelectorAll('button').forEach(x => x.classList.toggle('on', x.dataset.g === greet.value.trim()));
   document.querySelectorAll('input[name=bg]').forEach(r => r.onchange = () => { const v = r.value; sample.src = 'media/roshni_' + v + '.mp4#t=4'; sample.poster = 'media/roshni_' + v + '.jpg'; sample.play().catch(() => {}); });
-  fetch(API + '/api/roshni-bgs').then(r => r.ok ? r.json() : null).then(b => { if (b && b.includes('west')) $('place-west').hidden = false; }).catch(() => {});
+  fetch(API + '/api/roshni-bgs').then(r => r.ok ? r.json() : null).then(b => { if (b) document.querySelectorAll('input[name=bg]').forEach(i => { if (!b.includes(i.value)) i.closest('label').hidden = true; }); }).catch(() => {});   // show only the places the laptop can make
   $('rf').addEventListener('submit', async e => {
     e.preventDefault(); const err = $('r-err'), btn = $('r-send'); err.textContent = '';
     const body = { greet: greet.value.trim(), from: $('r-from').value.trim(), line: $('r-line').value.trim(), bg: (document.querySelector('input[name=bg]:checked') || {}).value };
