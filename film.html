@@ -80,7 +80,7 @@ video { width: 100%; aspect-ratio: 9 / 16; border-radius: 18px; background: #000
       // Save to my phone: the phone's own share sheet (Save Video → Photos/Gallery, or WhatsApp), where it can take a video file
       const small = j.film.replace('film_hd.mp4', 'film_whatsapp.mp4'), name = 'Diwali-' + (j.from.replace(/[^\w]+/g, '-').replace(/^-+|-+$/g, '') || 'Roshni') + '.mp4';
       let canFiles = false; try { canFiles = !inApp && !!navigator.canShare && navigator.canShare({ files: [new File([new Blob()], name, { type: 'video/mp4' })] }); } catch (e) {}
-      if (canFiles) { $('save').hidden = false; $('dl').className = 'btn ghost'; $('dl').textContent = 'Or download the file'; }
+      if (canFiles) { $('save').hidden = false; $('dl').hidden = true; }   // one button: the share sheet (Save Video → Photos/Gallery) where the phone has it, else the plain download
       let file = null;
       $('save').onclick = async () => {
         const b = $('save'); window.ckTrack && ckTrack('download', 'share-sheet');
