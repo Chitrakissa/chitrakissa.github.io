@@ -25,6 +25,8 @@ video { width: 100%; aspect-ratio: 9 / 16; border-radius: 18px; background: #000
 .bar i { display: block; height: 100%; width: 3%; background: linear-gradient(90deg, #f3c26b, #ffdf9a); transition: width 1s linear; }
 .pulse { margin: 20px 0 6px; padding: 14px; border: 1px solid rgba(251, 242, 226, .18); border-radius: 16px; } .pulse p { margin: 0 0 10px; color: #fff3d6; }
 .pulse button { font: 15px system-ui; margin: 3px; padding: 9px 13px; border-radius: 999px; border: 1px solid rgba(251, 242, 226, .3); background: none; color: #fbf2e2; cursor: pointer; }
+.tipbox { background: rgba(243, 194, 107, .12); border: 1px solid rgba(243, 194, 107, .4); border-radius: 14px; padding: 12px 14px; font: 15px/1.45 system-ui; color: #fff3d6; margin: 0 0 10px; }
+.tipbox .btn { margin: 10px 0 0; }
 [hidden] { display: none !important; }
 </style>
 </head>
@@ -34,10 +36,11 @@ video { width: 100%; aspect-ratio: 9 / 16; border-radius: 18px; background: #000
     <button class="btn ghost" type="button" id="copy">Copy my film's link</button><p class="small">You can close this page and open the link later: your film will be waiting.</p></div>
   <div id="done" hidden>
     <video id="v" controls playsinline autoplay muted loop></video>
+    <p class="tipbox" id="iab" hidden></p>
+    <button class="btn" type="button" id="save" hidden>Save to my phone</button>
     <a class="btn" id="dl" download>Download the film</a>
     <a class="btn ghost" id="wa">Send this page on WhatsApp</a>
     <div class="pulse" id="pulse"><p>Did you like it?</p><button type="button" data-r="loved">❤️ Loved it</button><button type="button" data-r="liked">🙂 Nice</button><button type="button" data-r="meh">😐 Meh</button></div>
-    <p class="small" id="iab" hidden>On Instagram? To save the film, tap <b>•••</b> at the top right, choose <b>Open in browser</b>, then tap Download.</p>
     <p class="small">Tip: download the film, then send it as a video in your groups and status. This page stays for 30 days.</p>
   </div>
   <p id="err" hidden>We couldn't find this film. <a href="diwali.html#roshni" style="color:#f3c26b">Make a new one</a>.</p>
@@ -50,7 +53,13 @@ video { width: 100%; aspect-ratio: 9 / 16; border-radius: 18px; background: #000
   if (!id || !key) { $('wait').hidden = true; $('err').hidden = false; return; }
   try { localStorage.setItem('ck_roshni', location.href); } catch (e) {}
   $('copy').onclick = () => navigator.clipboard.writeText(location.href).then(() => $('copy').textContent = 'Copied ✓').catch(() => prompt('Copy this link:', location.href));
-  if (/Instagram|FBAN|FBAV/.test(navigator.userAgent)) $('iab').hidden = false;
+  const UA = navigator.userAgent, inApp = /Instagram|FBAN|FBAV|FB_IAB/.test(UA), android = /Android/i.test(UA);
+  if (inApp) {   // Instagram/Facebook's own browser blocks downloads: send them to the real browser
+    $('iab').hidden = false;
+    $('iab').innerHTML = android
+      ? `To save your film, open this page in Chrome:<a class="btn" href="intent://${location.host}${location.pathname}${location.hash}#Intent;scheme=https;package=com.android.chrome;end">Open in Chrome</a>`
+      : 'To save your film: tap <b>•••</b> at the top right, then <b>Open in browser</b> (or Open in Safari). Then tap <b>Save to my phone</b>.';
+  }
   let shown = false, state = {};
   function tick() {   // every second: how far along, how long left (never a fixed promise)
     if (shown || !state.status) return; const FILM = 130, now = Date.now(); let left, pct, msg;
@@ -67,6 +76,20 @@ video { width: 100%; aspect-ratio: 9 / 16; border-radius: 18px; background: #000
     if (j.status === 'done' && !shown) {
       shown = true; $('wait').hidden = true; $('done').hidden = false; $('v').src = j.film; $('v').poster = j.poster; $('dl').href = j.film; $('dl').onclick = () => window.ckTrack && ckTrack('download'); $('wa').onclick = () => window.ckTrack && ckTrack('share', 'whatsapp');
       $('dl').setAttribute('download', 'Diwali-' + j.from.replace(/[^\w]+/g, '-') + '.mp4');
+      $('dl').href = j.film + '&dl=1';   // the server says "save this", so one tap downloads (a link's download attribute is ignored across addresses)
+      // Save to my phone: the phone's own share sheet (Save Video → Photos/Gallery, or WhatsApp), where it can take a video file
+      const small = j.film.replace('film_hd.mp4', 'film_whatsapp.mp4'), name = 'Diwali-' + (j.from.replace(/[^\w]+/g, '-').replace(/^-+|-+$/g, '') || 'Roshni') + '.mp4';
+      let canFiles = false; try { canFiles = !inApp && !!navigator.canShare && navigator.canShare({ files: [new File([new Blob()], name, { type: 'video/mp4' })] }); } catch (e) {}
+      if (canFiles) { $('save').hidden = false; $('dl').className = 'btn ghost'; $('dl').textContent = 'Or download the file'; }
+      let file = null;
+      $('save').onclick = async () => {
+        const b = $('save'); window.ckTrack && ckTrack('download', 'share-sheet');
+        try {
+          if (!file) { b.textContent = 'Getting your film ready…'; b.disabled = true; file = new File([await (await fetch(small)).blob()], name, { type: 'video/mp4' }); }
+          b.textContent = 'Save to my phone'; b.disabled = false;
+          await navigator.share({ files: [file], title: j.greet });
+        } catch (e) { b.textContent = 'Save to my phone'; b.disabled = false; if (e && e.name !== 'AbortError') location.href = $('dl').href; }
+      };
       $('wa').href = 'https://wa.me/?text=' + encodeURIComponent('🪔 ' + j.greet + ' · ' + location.href);
       if (window.ckTrack) ckTrack('made', 'ready');
       return;
