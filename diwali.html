@@ -3,18 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Roshni · a free Diwali greeting film · Chitrakissa</title>
-<meta name="description" content="Your family's Diwali as a painted film, told the way your region celebrates it: North, East, West or South. Your first film is free. Photos never go to any AI company and are deleted once it is delivered.">
-<meta property="og:title" content="Chitrakissa · your family, painted into Diwali">
-<meta property="og:description" content="One diya lit, a whole city glowing, and your greeting in light. Free, no photos.">
+<title>Roshni · Diwali 2026 · Chitrakissa</title>
+<meta name="description" content="Roshni was Chitrakissa's free Diwali greeting film for 2026: one diya, a whole city of light, and your greeting written in it. Seven places. Back for Diwali 2027.">
+<meta property="og:title" content="Roshni · Diwali 2026 · Chitrakissa">
+<meta property="og:description" content="One diya, a whole city of light. Our Diwali 2026 greeting films, back for Diwali 2027.">
 <meta property="og:image" content="media/roshni_north.jpg">
 <link rel="canonical" href="https://chitrakissa.github.io/diwali.html">
 <meta name="theme-color" content="#1a1226">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;700&family=Rozha+One&family=Tiro+Devanagari+Hindi&display=swap" rel="stylesheet">
 <style>
-/* Chitrakissa, Diwali free launch: one action (make your free film → order.html), trust before the ask, and a vote for what comes next.
-   The previous paid shop is in _archive/index_v2.html. */
+/* Roshni after Diwali 2026: a gallery of the seven places, resting until Diwali 2027.
+   The live maker (form + script) is in _archive/diwali_roshni_2026_live.html: copy it back to reopen. */
 :root {
   --raat: #1a1226; --raat-2: #231833; --raat-3: #2e2142; --line: rgba(251, 242, 226, .12);
   --diya: #f3b94d; --marigold: #ee8a1c; --rani: #d63a6e; --cream: #fbf2e2; --cream-2: #cfc1aa; --cream-3: #9a8c7a;
@@ -134,6 +134,13 @@ section { padding: 70px 0; }
 .count { font-size: 13px; color: var(--cream-3); margin-top: -2px; } .count.full { color: var(--diya); }
 .maker .btn { margin-top: 16px; } .err { color: #ff9b8a; min-height: 1.2em; font-size: 15px; }
 .small-note { font-size: 14px; color: var(--cream-3); }
+.gal { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 26px; }
+.gal .film { border-radius: 16px; overflow: hidden; background: var(--raat-2); border: 1px solid var(--line); }
+.gal .film img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; }
+.gal .film span { left: 8px; bottom: 8px; font-size: 13px; padding: 5px 10px; }
+.rest { margin-top: 22px; padding: 16px 18px; border-radius: 16px; background: var(--raat-2); border: 1px solid var(--line); color: var(--cream-2); font-size: 16px; max-width: 520px; }
+.rest b { color: var(--diya); }
+@media (max-width: 860px) { .gal { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .lastfilm[hidden] { display: none; }
 .lastfilm { display: block; margin-bottom: 16px; padding: 12px 16px; border-radius: 14px; background: var(--raat-3); border: 1px solid var(--diya); color: var(--cream); text-decoration: none; font-size: 16px; }
 .lastfilm b { color: var(--diya); }
@@ -152,42 +159,16 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 18px; } footer a { color: va
 <body>
 <div class="top"><div class="wrap">
   <a class="mark" href="./"><i>चि</i>Chitrakissa</a>
-  <nav><a class="opt" href="./">Chitrakissa</a><a class="go" href="#roshni">Make yours free</a></nav>
+  <nav><a class="opt" href="./">Chitrakissa</a><a class="go" href="gifts.html">Make a gift</a></nav>
 </div></div>
 
 <section class="hero" id="roshni"><div class="wrap grid">
   <div>
-    <a class="lastfilm" id="lastfilm" hidden>🪔 Your film is ready · <b>open it</b></a>
-    <span class="eyebrow">Diwali 2026 · free · no photos needed</span>
-    <h1>Roshni: your Diwali greeting, as a film.</h1>
-    <p class="lede">One diya, a whole city of light, and your greeting written in it. Free, ready in about two minutes.</p>
-    <form class="maker" id="rf" novalidate>
-      <div class="fstep"><span class="num">1</span><span>Pick your place <em id="pcount">· 7 to choose from</em></span></div>
-      <div class="pwrap">
-      <div class="places" id="places">
-        <label class="place" data-name="River ghats"><input type="radio" name="bg" value="north" checked><span class="pic"><img src="media/place/north.jpg" alt="River ghats" loading="lazy"></span><span class="cap"><b>River ghats</b>temples across the river</span></label>
-        <label class="place" data-name="Temple tank"><input type="radio" name="bg" value="south"><span class="pic"><img src="media/place/south.jpg" alt="Temple tank" loading="lazy"></span><span class="cap"><b>Temple tank</b>a gopuram and a lamp pillar</span></label>
-        <label class="place" data-name="Marine Drive"><input type="radio" name="bg" value="west"><span class="pic"><img src="media/place/west.jpg" alt="Marine Drive" loading="lazy"></span><span class="cap"><b>Marine Drive</b>the Queen's Necklace</span></label>
-        <label class="place" data-name="Jaipur"><input type="radio" name="bg" value="jaipur"><span class="pic"><img src="media/place/jaipur.jpg" alt="Jaipur" loading="lazy"></span><span class="cap"><b>Jaipur</b>the Hawa Mahal and the fort</span></label>
-        <label class="place" data-name="Udaipur"><input type="radio" name="bg" value="udaipur"><span class="pic"><img src="media/place/udaipur.jpg" alt="Udaipur" loading="lazy"></span><span class="cap"><b>Udaipur</b>a palace on the lake</span></label>
-        <label class="place" data-name="Kolkata"><input type="radio" name="bg" value="kolkata"><span class="pic"><img src="media/place/kolkata.jpg" alt="Kolkata" loading="lazy"></span><span class="cap"><b>Kolkata</b>the Howrah Bridge</span></label>
-        <label class="place" data-name="London"><input type="radio" name="bg" value="london"><span class="pic"><img src="media/place/london.jpg" alt="London" loading="lazy"></span><span class="cap"><b>London</b>Tower Bridge on the Thames</span></label>
-      </div>
-      <button type="button" class="pnav prev" aria-label="Previous places">‹</button><button type="button" class="pnav next" aria-label="More places">›</button>
-      </div>
-      <p class="picked" id="picked">You picked <b>River ghats</b> · <span class="swipe">swipe for more →</span></p>
-      <div class="fstep"><span class="num">2</span><label for="r-greet">Your greeting</label></div>
-      <div class="gchips" id="gchips"><button type="button" data-g="Happy Diwali" class="on">Happy Diwali</button><button type="button" data-g="Shubh Deepawali">Shubh Deepawali</button><button type="button" data-g="शुभ दीपावली">शुभ दीपावली</button><button type="button" data-g="Happy Deepavali">Happy Deepavali</button></div>
-      <input type="text" id="r-greet" maxlength="28" value="Happy Diwali" aria-label="Your greeting (write your own)">
-      <div class="fstep"><span class="num">3</span><label for="r-from">Who is it from?</label></div>
-      <input type="text" id="r-from" maxlength="30" placeholder="your name, or Riya &amp; Kabir, or the Sharmas">
-      <label class="f" for="r-line">A line from you <span style="color:var(--cream-3)">(optional)</span></label>
-      <input type="text" id="r-line" maxlength="60" placeholder="Wishing your home light, laughter and love">
-      <span class="count" id="r-count">0 / 60 · it appears in the sky, under your greeting</span>
-      <div class="err" id="r-err" role="alert"></div>
-      <button class="btn" id="r-send" type="submit">🪔 Make my film, free</button>
-      <p class="small-note">No photos, no sign-up. Your film stays for 1 hour after it's made: save it to your phone.</p>
-    </form>
+    <span class="eyebrow">Diwali 2026 · resting until next Diwali</span>
+    <h1>Roshni: Diwali greetings, written in light.</h1>
+    <p class="lede">One diya, a whole city of light, and a greeting written in it. This Diwali, people typed their words and their name, picked a place, and got their own painted film in about a minute.</p>
+    <p class="rest">🪔 <b>Roshni is resting now.</b> It comes back for Diwali 2027. Follow <a href="https://instagram.com/chitrakissa" style="color:var(--diya)">@chitrakissa</a> to hear when it does.</p>
+    <div class="cta"><a class="btn" href="gifts.html">See what you can make today <span>→</span></a></div>
   </div>
   <figure class="phone">
     <video id="r-sample" src="media/roshni_north.mp4#t=4" poster="media/roshni_north.jpg" autoplay muted loop playsinline controls preload="metadata"></video>
@@ -196,6 +177,19 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 18px; } footer a { color: va
 </div></section>
 
 
+
+<section style="padding-top:20px"><div class="wrap">
+  <div class="head"><span class="eyebrow">The seven places</span><h2>Lit, one lamp at a time.</h2><p>Tap a place to watch its film.</p></div>
+  <div class="gal">
+    <button class="film" type="button" data-film="roshni_north"><img src="media/place/north.jpg" alt="River ghats" loading="lazy"><span>▶ River ghats</span></button>
+    <button class="film" type="button" data-film="roshni_south"><img src="media/place/south.jpg" alt="Temple tank" loading="lazy"><span>▶ Temple tank</span></button>
+    <button class="film" type="button" data-film="roshni_west"><img src="media/place/west.jpg" alt="Marine Drive" loading="lazy"><span>▶ Marine Drive</span></button>
+    <button class="film" type="button" data-film="roshni_jaipur"><img src="media/place/jaipur.jpg" alt="Jaipur" loading="lazy"><span>▶ Jaipur</span></button>
+    <button class="film" type="button" data-film="roshni_udaipur"><img src="media/place/udaipur.jpg" alt="Udaipur" loading="lazy"><span>▶ Udaipur</span></button>
+    <button class="film" type="button" data-film="roshni_kolkata"><img src="media/place/kolkata.jpg" alt="Kolkata" loading="lazy"><span>▶ Kolkata</span></button>
+    <button class="film" type="button" data-film="roshni_london"><img src="media/place/london.jpg" alt="London" loading="lazy"><span>▶ London</span></button>
+  </div>
+</div></section>
 
 <section style="padding-top:0"><div class="wrap">
   <div class="head"><span class="eyebrow">More from Chitrakissa</span><h2>Diwali is just one of our stories.</h2></div>
@@ -208,73 +202,20 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 18px; } footer a { color: va
 
 <section class="faq" style="padding-top:0"><div class="wrap">
   <div class="head"><h2>Questions</h2></div>
-  <details open><summary>Is it really free?</summary><p>Yes. Roshni is free: make one for your family group, your friends, your colleagues. A tiny "chitrakissa.github.io" at the very end is our only ask.</p></details>
-  <details><summary>Do you need my photos?</summary><p>No. Roshni needs only your greeting and your name. Nothing else is asked, and your film and words are deleted 1 hour after it's made, so save it to your phone.</p></details>
-  <details><summary>How long does it take?</summary><p>About two minutes. Your film's page shows when it is ready, and you can download it to send on WhatsApp.</p></details>
-  <details><summary>Can I make more than one?</summary><p>Yes, a few a day: one for each group you want to wish.</p></details>
+  <details open><summary>Can I still make a Roshni film?</summary><p>Not right now. Roshni was made for Diwali, and it comes back for Diwali 2027. Follow <a href="https://instagram.com/chitrakissa">@chitrakissa</a> to hear when it opens.</p></details>
+  <details><summary>Where is the film I made?</summary><p>As promised, every film and its words were deleted 1 hour after it was made. If you saved it to your phone, it is yours to keep and share.</p></details>
 </div></section>
 
 <footer><div class="wrap">
-  <span>© 2026 Chitrakissa</span><a href="./">Chitrakissa home</a><a href="comics.html">Comics</a><a href="gifts.html">Gifts</a><a href="films.html">Films</a><a href="privacy.html">Privacy promise</a><a href="https://instagram.com/chitrakissa">Instagram @chitrakissa</a><a href="order.html#find">Find my order</a>
+  <span>© 2026 Chitrakissa</span><a href="./">Chitrakissa home</a><a href="comics.html">Comics</a><a href="gifts.html">Gifts</a><a href="films.html">Films</a><a href="privacy.html">Privacy promise</a><a href="https://instagram.com/chitrakissa">Instagram @chitrakissa</a>
 </div></footer>
 <div class="lb" id="lb" hidden><button type="button" aria-label="Close">×</button><video controls playsinline></video></div>
 <script>
-// the region stills open their sample film; the "what next" picks are sent to our inbox
+// each place opens its sample film
 const lb = document.getElementById('lb'), lv = lb.querySelector('video');
 document.querySelectorAll('.film').forEach(b => b.onclick = () => { lv.src = 'media/' + b.dataset.film + '.mp4'; lv.poster = 'media/' + b.dataset.film + '.jpg'; lb.hidden = false; lv.play().catch(() => {}); });
 const shut = () => { lv.pause(); lv.removeAttribute('src'); lv.load(); lb.hidden = true; };
 lb.querySelector('button').onclick = shut; lb.onclick = e => { if (e.target === lb) shut(); }; addEventListener('keydown', e => { if (e.key === 'Escape' && !lb.hidden) shut(); });
-</script>
-<script>
-// Roshni: send the greeting to our inbox; the laptop makes the film; go to its page
-(() => {
-  const API = 'https://chitrakissa-orders.chitrakissa.workers.dev', $ = id => document.getElementById(id);
-  const chips = $('gchips'), greet = $('r-greet'), sample = $('r-sample');
-  (async () => {   // their last film, if they come back: say what it really is (ready, or still being made); hide it if it's gone
-    let last = ''; try { last = localStorage.getItem('ck_roshni') || ''; } catch (x) {}
-    const m = last.match(/film\.html#([A-Za-z0-9-]+)\.([a-f0-9]+)/); if (!m) return;
-    try { const r = await fetch(`${API}/api/r/${m[1]}?k=${m[2]}`); if (!r.ok) { localStorage.removeItem('ck_roshni'); return; } const j = await r.json();
-      const el = $('lastfilm'); el.href = last;
-      if (j.status === 'done') el.innerHTML = '🪔 Your film is ready · <b>open it</b>';
-      else if (j.status === 'waiting' || j.status === 'making') el.innerHTML = '🪔 Your film is being made · <b>see it</b>';
-      else return;
-      el.hidden = false;
-    } catch (x) {}
-  })();
-  chips.onclick = e => { const b = e.target.closest('button'); if (!b) return; chips.querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); greet.value = b.dataset.g; };
-  const line = $('r-line'), cnt = $('r-count'); line.oninput = () => { const n = line.value.length; cnt.textContent = `${n} / 60` + (n ? '' : ' · it appears in the sky, under your greeting'); cnt.classList.toggle('full', n >= 55); };
-  greet.oninput = () => chips.querySelectorAll('button').forEach(x => x.classList.toggle('on', x.dataset.g === greet.value.trim()));
-  // the place: the chosen card plays its own preview, the line under the cards and the button say what was picked
-  const send = $('r-send');
-  function pick(r, user) {
-    const lab = r.closest('label'), v = r.value, name = lab.dataset.name;
-    document.querySelectorAll('.place .pic video').forEach(x => { x.pause(); x.remove(); });
-    const vid = document.createElement('video'); Object.assign(vid, { src: 'media/roshni_' + v + '.mp4#t=9', muted: true, loop: true, playsInline: true, autoplay: true, poster: 'media/place/' + v + '.jpg' });
-    vid.setAttribute('playsinline', ''); vid.setAttribute('muted', ''); lab.querySelector('.pic').appendChild(vid); vid.play().catch(() => {});
-    $('picked').innerHTML = `You picked <b>${name}</b> · <span class="swipe">swipe for more →</span>`;
-    send.textContent = `🪔 Make my ${name} film, free`;
-    sample.src = 'media/roshni_' + v + '.mp4#t=4'; sample.poster = 'media/roshni_' + v + '.jpg'; sample.play().catch(() => {});
-    if (user) { const st = $('places'), l = lab.offsetLeft - st.offsetLeft, r = l + lab.offsetWidth;   // bring the card fully into view, moving only the row
-      if (l < st.scrollLeft || r > st.scrollLeft + st.clientWidth) st.scrollTo({ left: Math.max(0, l - 8), behavior: 'smooth' }); }
-  }
-  document.querySelectorAll('input[name=bg]').forEach(r => r.onchange = () => pick(r, true));
-  const strip = $('places'); document.querySelectorAll('.pnav').forEach(b => b.onclick = () => strip.scrollBy({ left: (b.classList.contains('next') ? 1 : -1) * strip.clientWidth * .7, behavior: 'smooth' }));
-  pick(document.querySelector('input[name=bg]:checked'), false);
-  fetch(API + '/api/roshni-bgs').then(r => r.ok ? r.json() : null).then(b => { if (!b) return; document.querySelectorAll('input[name=bg]').forEach(i => { if (!b.includes(i.value)) i.closest('label').hidden = true; }); $('pcount').textContent = `· ${document.querySelectorAll('.place:not([hidden])').length} to choose from`; }).catch(() => {});   // show only the places the laptop can make
-  $('rf').addEventListener('submit', async e => {
-    e.preventDefault(); const err = $('r-err'), btn = $('r-send'); err.textContent = '';
-    const body = { greet: greet.value.trim(), from: $('r-from').value.trim(), line: $('r-line').value.trim(), bg: (document.querySelector('input[name=bg]:checked') || {}).value };
-    if (!body.greet) { err.textContent = 'Please write your greeting.'; return; }
-    if (!body.from) { err.textContent = 'Please write who it is from.'; return; }
-    btn.disabled = true; btn.textContent = 'Lighting the first diya…';
-    try { const r = await fetch(API + '/api/roshni', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) }), j = await r.json();
-      if (!r.ok) throw new Error(j.error || 'Please try again.');
-      try { localStorage.setItem('ck_roshni', j.link); } catch (x) {}
-      if (window.ckTrack) ckTrack('made', body.bg + ' ' + body.greet);
-      location.href = j.link;
-    } catch (x) { err.textContent = x.message === 'Failed to fetch' ? 'We could not reach our server. Please check your internet and try again.' : x.message; btn.disabled = false; btn.textContent = '🪔 Make my film, free'; }
-  });
-})();
 </script>
 <script src="t.js" defer></script>
 </body>
