@@ -27,23 +27,32 @@ video { width: 100%; aspect-ratio: 9 / 16; border-radius: 18px; background: #000
 .pulse button { font: 15px system-ui; margin: 3px; padding: 9px 13px; border-radius: 999px; border: 1px solid rgba(251, 242, 226, .3); background: none; color: #fbf2e2; cursor: pointer; }
 .tipbox { background: rgba(243, 194, 107, .12); border: 1px solid rgba(243, 194, 107, .4); border-radius: 14px; padding: 12px 14px; font: 15px/1.45 system-ui; color: #fff3d6; margin: 0 0 10px; }
 .tipbox .btn { margin: 10px 0 0; }
+.keep { margin: -4px 0 12px; font: 15px/1.4 system-ui; color: #fff3d6; }
+.ask { margin: 18px 0 14px; padding: 12px 12px 6px; border: 1px solid rgba(251, 242, 226, .18); border-radius: 16px; }
+.ask .q { margin: 10px 0 6px; font: 600 15px system-ui; color: #fff3d6; }
+.ask .chips { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+.ask .chips button { font: 14px system-ui; padding: 7px 11px; border-radius: 999px; border: 1px solid rgba(251, 242, 226, .3); background: none; color: #fbf2e2; cursor: pointer; }
+.ask .chips button.on { background: #f3c26b; border-color: #f3c26b; color: #2a1a05; }
 [hidden] { display: none !important; }
 </style>
 </head>
 <body><main>
   <h1 id="greet">🪔</h1><p class="from" id="from"></p>
   <div id="wait"><div class="lamp"></div><p class="big">Your film is being made…</p><div class="bar"><i id="barfill"></i></div><p class="small" id="eta">Getting ready…</p>
-    <button class="btn ghost" type="button" id="copy">Copy my film's link</button><p class="small">You can close this page and open the link later: your film will be waiting.</p></div>
+    <div class="ask" id="ask"><p class="small">While we paint, two quick taps (optional, anonymous):</p>
+      <p class="q">Who will you send it to?</p><div class="chips" data-q="who"><button type="button">Family</button><button type="button">Friends</button><button type="button">Partner</button><button type="button">Colleagues</button><button type="button">Everyone</button></div>
+      <p class="q">Your age group</p><div class="chips" data-q="age"><button type="button">Under 18</button><button type="button">18–24</button><button type="button">25–34</button><button type="button">35–44</button><button type="button">45–54</button><button type="button">55+</button></div></div>
+    <button class="btn ghost" type="button" id="copy">Copy my film's link</button><p class="small">You can close this page: your film waits here for 1 hour after it's ready.</p></div>
   <div id="done" hidden>
     <video id="v" controls playsinline autoplay muted loop></video>
+    <p class="keep">⏳ Your film stays here for <b>1 hour</b>. Save it to your phone now.</p>
     <p class="tipbox" id="iab" hidden></p>
     <button class="btn" type="button" id="save" hidden>Save to my phone</button>
     <a class="btn" id="dl" download>Download the film</a>
-    <a class="btn ghost" id="wa">Send this page on WhatsApp</a>
     <div class="pulse" id="pulse"><p>Did you like it?</p><button type="button" data-r="loved">❤️ Loved it</button><button type="button" data-r="liked">🙂 Nice</button><button type="button" data-r="meh">😐 Meh</button></div>
-    <p class="small">Tip: download the film, then send it as a video in your groups and status. This page stays for 30 days.</p>
+    <p class="small">Then send it as a video in your groups and status.</p>
   </div>
-  <p id="err" hidden>We couldn't find this film. <a href="diwali.html#roshni" style="color:#f3c26b">Make a new one</a>.</p>
+  <p id="err" hidden>We couldn't find this film. Films are kept for 1 hour after they're made. <a href="diwali.html#roshni" style="color:#f3c26b">Make a new one</a> (it's free, about a minute).</p>
   <p class="made">Made with <a href="./">Chitrakissa</a> · <a href="diwali.html#roshni">make one for someone else</a></p>
 </main>
 <script>
@@ -74,7 +83,7 @@ video { width: 100%; aspect-ratio: 9 / 16; border-radius: 18px; background: #000
     let j; try { const r = await fetch(`${API}/api/r/${id}?k=${encodeURIComponent(key)}`); if (r.status === 404) { $('wait').hidden = true; $('err').hidden = false; return; } j = await r.json(); } catch (e) { setTimeout(check, 10000); return; }
     $('greet').textContent = j.greet; $('from').textContent = 'from ' + j.from; document.title = `${j.greet} · from ${j.from}`;
     if (j.status === 'done' && !shown) {
-      shown = true; $('wait').hidden = true; $('done').hidden = false; $('v').src = j.film; $('v').poster = j.poster; $('dl').href = j.film; $('dl').onclick = () => window.ckTrack && ckTrack('download'); $('wa').onclick = () => window.ckTrack && ckTrack('share', 'whatsapp');
+      shown = true; $('wait').hidden = true; $('done').hidden = false; $('v').src = j.film; $('v').poster = j.poster; $('dl').href = j.film; $('dl').onclick = () => window.ckTrack && ckTrack('download');
       $('dl').setAttribute('download', 'Diwali-' + j.from.replace(/[^\w]+/g, '-') + '.mp4');
       $('dl').href = j.film + '&dl=1';   // the server says "save this", so one tap downloads (a link's download attribute is ignored across addresses)
       // Save to my phone: the phone's own share sheet (Save Video → Photos/Gallery, or WhatsApp), where it can take a video file
@@ -91,7 +100,6 @@ video { width: 100%; aspect-ratio: 9 / 16; border-radius: 18px; background: #000
           await navigator.share({ files: [file], title: j.greet });
         } catch (e) { b.textContent = 'Save to my phone'; b.disabled = false; if (e && e.name !== 'AbortError') location.href = $('dl').href; }
       };
-      $('wa').href = 'https://wa.me/?text=' + encodeURIComponent('🪔 ' + j.greet + ' · ' + location.href);
       if (window.ckTrack) ckTrack('made', 'ready');
       return;
     }
@@ -103,6 +111,11 @@ video { width: 100%; aspect-ratio: 9 / 16; border-radius: 18px; background: #000
     setTimeout(check, 8000);
   }
   check();
+  document.querySelectorAll('.ask .chips').forEach(c => c.onclick = e => {   // one tap per question, counted anonymously (who it's for, age group)
+    const b = e.target.closest('button'); if (!b || c.dataset.done) return; c.dataset.done = 1; b.classList.add('on');
+    if (window.ckTrack) ckTrack(c.dataset.q, b.textContent.replace('–', '-'));
+    if (document.querySelectorAll('.ask .chips[data-done]').length === 2) $('ask').innerHTML = '<p class="small">Thank you 🪔 Your film is almost here.</p>';
+  });
   document.querySelectorAll('#pulse button').forEach(b => b.onclick = () => { if (window.ckTrack) ckTrack('react', b.dataset.r); fetch(API + '/api/voice', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ page: 'roshni', answers: { reaction: [b.dataset.r] } }) }).catch(() => {});
     $('pulse').innerHTML = b.dataset.r === 'meh' ? '<p>Thank you for telling us. We will make it better.</p>' : '<p>Thank you! Share it, and tag <b>@chitrakissa</b> 🪔</p>'; });
 })();
