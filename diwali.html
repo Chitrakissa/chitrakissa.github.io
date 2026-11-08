@@ -100,18 +100,34 @@ section { padding: 70px 0; }
 .more3 img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
 .more3 div { padding: 14px 16px 18px; } .more3 b { font: 400 22px var(--display); display: block; } .more3 span { color: var(--cream-2); font-size: 15px; }
 @media (max-width: 860px) { .more3 { grid-template-columns: 1fr; } }
-.maker { margin-top: 22px; display: grid; gap: 6px; max-width: 520px; }
+.maker { margin-top: 22px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px; max-width: 520px; }
 .maker .f { font-size: 15px; color: var(--cream-2); margin-top: 12px; }
 .maker input[type=text] { width: 100%; font: 17px var(--body); color: var(--cream); background: var(--raat-2); border: 1px solid var(--line); border-radius: 12px; padding: 13px 14px; }
 .maker input[type=text]:focus { outline: none; border-color: var(--diya); }
-.places { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-.place { position: relative; cursor: pointer; border-radius: 14px; overflow: hidden; border: 2px solid transparent; background: var(--raat-2); }
-.place input { position: absolute; opacity: 0; }
-.place img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; object-position: 50% 45%; }
-.place span { display: block; padding: 7px 8px 9px; font-size: 12.5px; line-height: 1.3; color: var(--cream-3); }
+.fstep { display: flex; align-items: center; gap: 10px; margin-top: 18px; font: 600 18px var(--body); color: var(--cream); }
+.fstep label { font: inherit; color: inherit; }
+.fstep .num { flex: none; width: 28px; height: 28px; border-radius: 50%; background: var(--diya); color: #2a1a05; display: grid; place-items: center; font-size: 15px; }
+.fstep em { font-style: normal; font-weight: 400; color: var(--cream-3); font-size: 15px; }
+.hero .grid > div { min-width: 0; }
+.pwrap { position: relative; margin: 6px 0 0; }
+.places { display: flex; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 6px 2px 8px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.places::-webkit-scrollbar { display: none; }
+.place { position: relative; flex: 0 0 40%; max-width: 190px; scroll-snap-align: start; cursor: pointer; border-radius: 16px; overflow: hidden; border: 2px solid transparent; background: var(--raat-2); transition: transform .2s, opacity .2s, border-color .2s; }
 .place[hidden] { display: none; }
-.place b { display: block; color: var(--cream); font-size: 14px; font-weight: 600; }
-.place:has(input:checked) { border-color: var(--diya); }
+.place input { position: absolute; opacity: 0; }
+.place .pic { position: relative; display: block; aspect-ratio: 3 / 4; overflow: hidden; }
+.place .pic img, .place .pic video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.place .cap { display: block; padding: 8px 10px 10px; font-size: 12.5px; line-height: 1.3; color: var(--cream-3); }
+.place b { display: block; color: var(--cream); font-size: 15px; font-weight: 600; }
+.places:has(input:checked) .place:not(:has(input:checked)) { opacity: .62; }
+.place:has(input:checked) { border-color: var(--diya); box-shadow: 0 0 0 3px rgba(243, 185, 77, .25), 0 10px 30px -10px rgba(243, 185, 77, .5); }
+.place:has(input:checked)::after { content: '✓'; position: absolute; top: 8px; right: 8px; width: 26px; height: 26px; border-radius: 50%; background: var(--diya); color: #2a1a05; display: grid; place-items: center; font: 700 15px var(--body); }
+.place:has(input:focus-visible) { outline: 2px solid var(--cream); outline-offset: 2px; }
+.picked { margin: 2px 0 0; font-size: 15px; color: var(--cream-2); } .picked b { color: var(--diya); } .picked .swipe { color: var(--cream-3); }
+.pnav { display: none; position: absolute; top: 38%; width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--line); background: rgba(16, 12, 26, .85); color: var(--cream); font-size: 22px; line-height: 1; cursor: pointer; }
+.pnav.prev { left: 2px; } .pnav.next { right: 2px; }
+@media (hover: hover) and (min-width: 861px) { .pnav { display: block; } .place { flex-basis: 30%; } .picked .swipe { display: none; } }
+@media (max-width: 860px) { .phone { display: none; } }   /* on phones the chosen card plays its own preview */
 .gchips { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 6px; }
 .gchips button { font: 15px var(--body); padding: 8px 13px; border-radius: 999px; border: 1.5px solid rgba(251, 242, 226, .22); background: none; color: var(--cream-2); cursor: pointer; }
 .gchips button.on { background: var(--diya); border-color: var(--diya); color: #2a1a05; }
@@ -143,22 +159,26 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 18px; } footer a { color: va
     <a class="lastfilm" id="lastfilm" hidden>🪔 Your film is ready · <b>open it</b></a>
     <span class="eyebrow">Diwali 2026 · free · no photos needed</span>
     <h1>Roshni: your Diwali greeting, as a film.</h1>
-    <p class="lede">On the darkest night of the year, one diya is lit. Its flame passes from lamp to lamp, across the water, until a whole city glows, and your greeting appears in light, from you. Ready in about two minutes, free, to send to everyone you love.</p>
+    <p class="lede">One diya, a whole city of light, and your greeting written in it. Free, ready in about two minutes.</p>
     <form class="maker" id="rf" novalidate>
-      <label class="f">Where should it happen?</label>
+      <div class="fstep"><span class="num">1</span><span>Pick your place <em id="pcount">· 7 to choose from</em></span></div>
+      <div class="pwrap">
       <div class="places" id="places">
-        <label class="place"><input type="radio" name="bg" value="north" checked><img src="media/roshni_north.jpg" alt="" loading="lazy"><span><b>River ghats</b>temples across the river</span></label>
-        <label class="place"><input type="radio" name="bg" value="south"><img src="media/roshni_south.jpg" alt="" loading="lazy"><span><b>Temple tank</b>a gopuram and a lamp pillar</span></label>
-        <label class="place"><input type="radio" name="bg" value="west"><img src="media/roshni_west.jpg" alt="" loading="lazy"><span><b>Marine Drive</b>the Queen's Necklace</span></label>
-        <label class="place"><input type="radio" name="bg" value="jaipur"><img src="media/roshni_jaipur.jpg" alt="" loading="lazy"><span><b>Jaipur</b>the Hawa Mahal and the fort</span></label>
-        <label class="place"><input type="radio" name="bg" value="udaipur"><img src="media/roshni_udaipur.jpg" alt="" loading="lazy"><span><b>Udaipur</b>a palace on the lake</span></label>
-        <label class="place"><input type="radio" name="bg" value="kolkata"><img src="media/roshni_kolkata.jpg" alt="" loading="lazy"><span><b>Kolkata</b>the Howrah Bridge</span></label>
-        <label class="place"><input type="radio" name="bg" value="london"><img src="media/roshni_london.jpg" alt="" loading="lazy"><span><b>London</b>Tower Bridge on the Thames</span></label>
+        <label class="place" data-name="River ghats"><input type="radio" name="bg" value="north" checked><span class="pic"><img src="media/place/north.jpg" alt="River ghats" loading="lazy"></span><span class="cap"><b>River ghats</b>temples across the river</span></label>
+        <label class="place" data-name="Temple tank"><input type="radio" name="bg" value="south"><span class="pic"><img src="media/place/south.jpg" alt="Temple tank" loading="lazy"></span><span class="cap"><b>Temple tank</b>a gopuram and a lamp pillar</span></label>
+        <label class="place" data-name="Marine Drive"><input type="radio" name="bg" value="west"><span class="pic"><img src="media/place/west.jpg" alt="Marine Drive" loading="lazy"></span><span class="cap"><b>Marine Drive</b>the Queen's Necklace</span></label>
+        <label class="place" data-name="Jaipur"><input type="radio" name="bg" value="jaipur"><span class="pic"><img src="media/place/jaipur.jpg" alt="Jaipur" loading="lazy"></span><span class="cap"><b>Jaipur</b>the Hawa Mahal and the fort</span></label>
+        <label class="place" data-name="Udaipur"><input type="radio" name="bg" value="udaipur"><span class="pic"><img src="media/place/udaipur.jpg" alt="Udaipur" loading="lazy"></span><span class="cap"><b>Udaipur</b>a palace on the lake</span></label>
+        <label class="place" data-name="Kolkata"><input type="radio" name="bg" value="kolkata"><span class="pic"><img src="media/place/kolkata.jpg" alt="Kolkata" loading="lazy"></span><span class="cap"><b>Kolkata</b>the Howrah Bridge</span></label>
+        <label class="place" data-name="London"><input type="radio" name="bg" value="london"><span class="pic"><img src="media/place/london.jpg" alt="London" loading="lazy"></span><span class="cap"><b>London</b>Tower Bridge on the Thames</span></label>
       </div>
-      <label class="f" for="r-greet">Your greeting</label>
+      <button type="button" class="pnav prev" aria-label="Previous places">‹</button><button type="button" class="pnav next" aria-label="More places">›</button>
+      </div>
+      <p class="picked" id="picked">You picked <b>River ghats</b> · <span class="swipe">swipe for more →</span></p>
+      <div class="fstep"><span class="num">2</span><label for="r-greet">Your greeting</label></div>
       <div class="gchips" id="gchips"><button type="button" data-g="Happy Diwali" class="on">Happy Diwali</button><button type="button" data-g="Shubh Deepawali">Shubh Deepawali</button><button type="button" data-g="शुभ दीपावली">शुभ दीपावली</button><button type="button" data-g="Happy Deepavali">Happy Deepavali</button></div>
       <input type="text" id="r-greet" maxlength="28" value="Happy Diwali" aria-label="Your greeting (write your own)">
-      <label class="f" for="r-from">From</label>
+      <div class="fstep"><span class="num">3</span><label for="r-from">Who is it from?</label></div>
       <input type="text" id="r-from" maxlength="30" placeholder="your name, or Riya &amp; Kabir, or the Sharmas">
       <label class="f" for="r-line">A line from you <span style="color:var(--cream-3)">(optional)</span></label>
       <input type="text" id="r-line" maxlength="60" placeholder="Wishing your home light, laughter and love">
@@ -221,8 +241,23 @@ lb.querySelector('button').onclick = shut; lb.onclick = e => { if (e.target === 
   })();
   chips.onclick = e => { const b = e.target.closest('button'); if (!b) return; chips.querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); greet.value = b.dataset.g; };
   greet.oninput = () => chips.querySelectorAll('button').forEach(x => x.classList.toggle('on', x.dataset.g === greet.value.trim()));
-  document.querySelectorAll('input[name=bg]').forEach(r => r.onchange = () => { const v = r.value; sample.src = 'media/roshni_' + v + '.mp4#t=4'; sample.poster = 'media/roshni_' + v + '.jpg'; sample.play().catch(() => {}); });
-  fetch(API + '/api/roshni-bgs').then(r => r.ok ? r.json() : null).then(b => { if (b) document.querySelectorAll('input[name=bg]').forEach(i => { if (!b.includes(i.value)) i.closest('label').hidden = true; }); }).catch(() => {});   // show only the places the laptop can make
+  // the place: the chosen card plays its own preview, the line under the cards and the button say what was picked
+  const send = $('r-send');
+  function pick(r, user) {
+    const lab = r.closest('label'), v = r.value, name = lab.dataset.name;
+    document.querySelectorAll('.place .pic video').forEach(x => { x.pause(); x.remove(); });
+    const vid = document.createElement('video'); Object.assign(vid, { src: 'media/roshni_' + v + '.mp4#t=9', muted: true, loop: true, playsInline: true, autoplay: true, poster: 'media/place/' + v + '.jpg' });
+    vid.setAttribute('playsinline', ''); vid.setAttribute('muted', ''); lab.querySelector('.pic').appendChild(vid); vid.play().catch(() => {});
+    $('picked').innerHTML = `You picked <b>${name}</b> · <span class="swipe">swipe for more →</span>`;
+    send.textContent = `🪔 Make my ${name} film, free`;
+    sample.src = 'media/roshni_' + v + '.mp4#t=4'; sample.poster = 'media/roshni_' + v + '.jpg'; sample.play().catch(() => {});
+    if (user) { const st = $('places'), l = lab.offsetLeft - st.offsetLeft, r = l + lab.offsetWidth;   // bring the card fully into view, moving only the row
+      if (l < st.scrollLeft || r > st.scrollLeft + st.clientWidth) st.scrollTo({ left: Math.max(0, l - 8), behavior: 'smooth' }); }
+  }
+  document.querySelectorAll('input[name=bg]').forEach(r => r.onchange = () => pick(r, true));
+  const strip = $('places'); document.querySelectorAll('.pnav').forEach(b => b.onclick = () => strip.scrollBy({ left: (b.classList.contains('next') ? 1 : -1) * strip.clientWidth * .7, behavior: 'smooth' }));
+  pick(document.querySelector('input[name=bg]:checked'), false);
+  fetch(API + '/api/roshni-bgs').then(r => r.ok ? r.json() : null).then(b => { if (!b) return; document.querySelectorAll('input[name=bg]').forEach(i => { if (!b.includes(i.value)) i.closest('label').hidden = true; }); $('pcount').textContent = `· ${document.querySelectorAll('.place:not([hidden])').length} to choose from`; }).catch(() => {});   // show only the places the laptop can make
   $('rf').addEventListener('submit', async e => {
     e.preventDefault(); const err = $('r-err'), btn = $('r-send'); err.textContent = '';
     const body = { greet: greet.value.trim(), from: $('r-from').value.trim(), line: $('r-line').value.trim(), bg: (document.querySelector('input[name=bg]:checked') || {}).value };
